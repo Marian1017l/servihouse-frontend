@@ -62,6 +62,8 @@
 .register-links a {
     color: #444;
     text-decoration: none;
+    font-size: 1.0rem;
+    font-weight: 500;
 }
 
 .register-links a:hover {

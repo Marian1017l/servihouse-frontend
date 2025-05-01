@@ -26,6 +26,7 @@
 .login-subtitle {
     margin: 10px 0 30px;
     font-size: 0.85rem;
+    font-weight: 500;
     color: #666;
     letter-spacing: 1px;
 }
@@ -68,6 +69,8 @@
 .login-links a {
     color: #444;
     text-decoration: none;
+    font-size: 1.0rem;
+    font-weight: 500;
 }
 
 .login-links a:hover {
