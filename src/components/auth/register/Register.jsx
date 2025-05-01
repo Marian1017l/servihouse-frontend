@@ -8,7 +8,7 @@ const SignUp = () => {
       <div className="register-container">
         <h2 className="register-title">CREATE A NEW ACCOUNT</h2>
         <form className="register-form">
-          <input type="name" placeholder="Name" required />
+          <input type="text" placeholder="Name" required />
           <input type="email" placeholder="Email" required />
           <input type="password" placeholder="Password" required />
           <input type="number" placeholder="Phone" required />
