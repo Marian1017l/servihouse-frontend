@@ -33,11 +33,11 @@
 }
 
 .footer-nav{
-    margin-bottom: 10px;
+    margin: 0;
 }
 .footer-links {
     list-style: none;
-    display: block; 
+    display: flex; 
     margin: 0;
     padding: 0;
 }

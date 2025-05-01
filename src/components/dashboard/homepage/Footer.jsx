@@ -14,7 +14,6 @@ const Footer = () => {
                     <p>ServiHouse</p>
                 </div>
                 <nav className="footer-nav">
-                    <h2>Information</h2>
                     <ul className="footer-links">
                         <li><a href="/contact">About us</a></li>
                         <li><a href="/privacy">Privacy Policy</a></li>
