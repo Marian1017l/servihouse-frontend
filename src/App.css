@@ -2,3 +2,11 @@
   margin-top: 100px;
   margin-bottom: 100px;
 }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
