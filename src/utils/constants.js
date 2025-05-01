@@ -4,8 +4,7 @@ const ROUTE_USERS = import.meta.env.VITE_USERS_ROUTE;
 
 export const ENV ={
     BASE_PATH: SERVER_IP,
-    ROUTE_AUTH: AUTH_ROUTE,
-    ROUTE_USERS: ROUTE_USERS,
+    BASE_API_AUTH_USERS: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_USERS}`,
     API_ROUTES:{
         SIGNIN: '/SignIn',
         SIGNUP: '/SignUp',
