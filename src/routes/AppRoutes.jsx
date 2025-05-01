@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../components/auth/login/Login";
 import SignUp from "../components/auth/register/Register";
 import VerifyCodePhone from "../components/auth/verifycodeP/VerifyCodePhone";
+import VerifyCodeEmail from "../components/auth/verifycodeE/VerifyCodeEmail";
 
 
 export const AppRoutes = () => {
@@ -11,6 +12,7 @@ export const AppRoutes = () => {
         <Route path={"/auth/login"} element={<Login />} />
         <Route path={"/auth/signup"} element={<SignUp />} />
         <Route path={"/auth/verify-code-phone"} element={<VerifyCodePhone />} />
+        <Route path={"/auth/verify-code-email"} element={<VerifyCodeEmail />} />
     </Routes>
   );
 };
