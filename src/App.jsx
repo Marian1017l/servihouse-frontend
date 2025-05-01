@@ -7,10 +7,12 @@ function App() {
   return (
     <>
       <Header /> {/* El Header estará siempre visible */}
-      <AppRoutes /> {/* Aquí se renderizan las rutas */}
+      <main className='main'>
+        <AppRoutes /> {/* Aquí se renderizan las rutas */}
+      </main>
       <Footer /> {/* El Footer estará siempre visible */}
     </>
   )
 }
 
-export default App
+export default App;
