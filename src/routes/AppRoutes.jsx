@@ -4,7 +4,7 @@ import SignUp from "../components/auth/register/Register";
 import VerifyCodePhone from "../components/auth/verifycodeP/VerifyCodePhone";
 import VerifyCodeEmail from "../components/auth/verifycodeE/VerifyCodeEmail";
 import ResetPassword from "../components/auth/resetpsw/ResetPassword";
-
+import ChangePassword from "../components/auth/changepsw/ChangePasword";
 
 export const AppRoutes = () => {
   return (
@@ -15,6 +15,7 @@ export const AppRoutes = () => {
         <Route path={"/auth/verify-code-phone"} element={<VerifyCodePhone />} />
         <Route path={"/auth/verify-code-email"} element={<VerifyCodeEmail />} />
         <Route path={"/auth/reset-password"} element={<ResetPassword />} />
+        <Route path={"/auth/change-password"} element={<ChangePassword />} />
     </Routes>
   );
 };
