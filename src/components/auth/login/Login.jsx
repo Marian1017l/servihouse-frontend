@@ -3,10 +3,13 @@ import './Login.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setAutheticated, setLoading } from '../../../redux/authSlice';
+import Swal from 'sweetalert2';
+import { auth } from '../../../api/auth'; // Adjust the import path as necessary
+
 const Login = () => {
   const [formData, setFormData] = React.useState({
-    email: '',
-    current_password: ''
+    userName: '',
+    password: '',
   });
 
   const dispatch = useDispatch();
@@ -23,17 +26,15 @@ const Login = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!formData.email) {
-      newErrors.email = "Email is required!";
-    } else if (!/^[^\s@]+@servihouse\.com$/.test(formData.email)) {
-      newErrors.email = "Email must be a valid @servihouse.com address";
+
+    if (!formData.userName) {
+      newErrors.userName = "Username is required!";
     }
-    
-    if (!formData.current_password) {
-      newErrors.current_password = "Password is required!";
+
+    if (!formData.password) {
+      newErrors.password = "Password is required!";
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -42,31 +43,46 @@ const Login = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoginError(null);
-    
-    if (!validateForm()) {
-      return;
-    }
-    
-    dispatch(setLoading(true));
-    try {
-      const response = await auth.signIn(formData);
-      console.log(response);
-      
-      if (response.token) {
-        dispatch(setAutheticated(true));
-      } else {
-        setLoginError(response.message || "Login failed");
-        dispatch(setLoading(false));
+
+    if (!validateForm()) return;
+
+    Swal.fire({
+      title: "Choose how to receive the code",
+      icon: "question",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Email",
+      denyButtonText: "SMS",
+      cancelButtonText: "Cancel"
+    }).then(async (result) => {
+      if (result.isConfirmed || result.isDenied) {
+        const emailNotification = result.isConfirmed; // true = email, false = sms
+        dispatch(setLoading(true));
+
+        try {
+          const response = await auth.signIn({ ...formData, emailNotification });
+          if (emailNotification) {
+            navigate("/auth/verify-code-email");
+          } else {
+            navigate("/auth/verify-code-phone");
+          }
+          if (response.token) {
+            dispatch(setAutheticated(true));
+          } else {
+            setLoginError(response.message || "Login failed");
+            dispatch(setLoading(false));
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          setLoginError("Invalid email or password");
+          dispatch(setLoading(false));
+        }
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      setLoginError("Invalid email or password");
-      dispatch(setLoading(false));
-    }
+    });
   };
 
   return (
@@ -74,10 +90,20 @@ const Login = () => {
       <div className="login-container">
         <h2 className="login-title">LOG IN</h2>
         <p className="login-subtitle">WELCOME TO SERVIHOUSE</p>
-        <form className="login-form">
-          <input type="email" name="email" id="email" placeholder="Email" required />
-          <input type="password" name="current_password" id="current_password" placeholder="Password" required />
-          <button type="submit">CONTINUE</button>
+        <form onSubmit={handleSubmit} className="login-form">
+          <input type="text" name="userName" id="userName" value={formData.userName}
+            onChange={handleChange} placeholder="Username" required />
+          <input type="password" name="password" id="password" value={formData.password}
+            onChange={handleChange} placeholder="Password" required />
+          <button type="submit" disabled={loading}>
+            {loading ? (
+              <span className="loading-text">
+                <span className="loading-spinner"></span>
+                Signing in...
+              </span>
+            ) : (
+              "CONTINUE"
+            )}</button>
         </form>
         <div className="login-links">
           <a href="/auth/signup">Sign Up</a>
