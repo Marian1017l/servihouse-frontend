@@ -2,13 +2,26 @@ import React from 'react';
 import './VerifyCodeEmail.css'
 import { useState } from 'react';
 import { auth } from '../../../api/auth';
-
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setAutheticated, setLoading, setUser } from '../../../redux/authSlice';
 
 
 const VerifyCodeEmail = () => {
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { loading, isAuthenticated } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/admin");
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleCodeChange = (e) => {
         setCode(e.target.value);
@@ -30,15 +43,19 @@ const VerifyCodeEmail = () => {
 
             console.log("Server response:", response);
 
-            if (result.success) {
+            if (response.success) {
                 setSuccess(true);
-                console.log("Token:", result.token);
-    
-                localStorage.setItem("token", result.token);
-    
-                navigate("/dashboard");
+
+                dispatch(setAutheticated(true));
+                dispatch(setUser({
+                    isAuthenticated: true,
+                    token: response.token,
+                    currentUser: { userName },
+                }));
+
+                localStorage.setItem("token", response.token);
             } else {
-                setError(result.message || "Invalid verification code.");
+                setError(response.message || "Invalid verification code.");
             }
 
         } catch (error) {
@@ -56,7 +73,22 @@ const VerifyCodeEmail = () => {
                 </p>
                 <input type="text" placeholder="Code" className="verification-input" value={code}
                     onChange={handleCodeChange} />
-                <button onClick={handleSubmit} className="verification-button">CONTINUE</button>
+                {error && <p className="error-message">{error}</p>}
+                {success && <p className="success-message">Code verified successfully!</p>}
+                <button
+                    onClick={handleSubmit}
+                    className="verification-button"
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <span className="loading-text">
+                            <span className="loading-spinner"></span>
+                            Verifying...
+                        </span>
+                    ) : (
+                        "CONTINUE"
+                    )}
+                </button>
                 <a className="resend-code">Resend code</a>
             </div>
         </div>

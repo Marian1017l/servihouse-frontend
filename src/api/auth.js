@@ -16,8 +16,8 @@ export class Auth {
             });
             console.log(payload);
             console.log(response);
-            
-            
+
+
             const result = await response.json();
 
             if (response.ok && result.success) {
@@ -42,10 +42,10 @@ export class Auth {
                 },
                 body: JSON.stringify(payload),
             });
-            
-            console.log(payload);
-            console.log(response);
-            
+
+            console.log("Payload sent:", payload);
+            console.log("Response object:", response);
+
             const result = await response.json();
             return result;
         } catch (error) {
