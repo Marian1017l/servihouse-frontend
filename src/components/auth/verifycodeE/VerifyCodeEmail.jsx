@@ -28,14 +28,17 @@ const VerifyCodeEmail = () => {
             const userName = localStorage.getItem("pendingUser");
             const response = await auth.verifyCode({ userName, code });
 
-            const result = await response.json();
-            console.log(result);
+            console.log("Server response:", response);
 
-
-            if (response.ok) {
+            if (result.success) {
                 setSuccess(true);
+                console.log("Token:", result.token);
+    
+                localStorage.setItem("token", result.token);
+    
+                navigate("/dashboard");
             } else {
-                setError(result.message || 'Invalid verification code.');
+                setError(result.message || "Invalid verification code.");
             }
 
         } catch (error) {
