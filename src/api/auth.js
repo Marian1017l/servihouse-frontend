@@ -31,7 +31,7 @@ export class Auth {
         }
     }
 
-    async verifyCode(data) {
+    async verifyCode2fa(data) {
         try {
             const { userName, code } = data;
             const payload = { userName, code };

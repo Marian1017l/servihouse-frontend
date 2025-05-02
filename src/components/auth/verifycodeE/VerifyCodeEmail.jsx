@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './VerifyCodeEmail.css'
-import { useState } from 'react';
 import { auth } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setAutheticated, setLoading, setUser } from '../../../redux/authSlice';
 
 
@@ -39,7 +38,7 @@ const VerifyCodeEmail = () => {
 
         try {
             const userName = localStorage.getItem("pendingUser");
-            const response = await auth.verifyCode({ userName, code });
+            const response = await auth.verifyCode2fa({ userName, code });
 
             console.log("Server response:", response);
 
@@ -73,8 +72,7 @@ const VerifyCodeEmail = () => {
                 </p>
                 <input type="text" placeholder="Code" className="verification-input" value={code}
                     onChange={handleCodeChange} />
-                {error && <p className="error-message">{error}</p>}
-                {success && <p className="success-message">Code verified successfully!</p>}
+            
                 <button
                     onClick={handleSubmit}
                     className="verification-button"
