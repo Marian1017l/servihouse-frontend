@@ -2,6 +2,9 @@ import React from "react";
 import "./Header.css";
 
 const Header = () => {
+    
+    const { isAuthenticated } = useSelector((state) => state.auth);
+
     return (
         <header className="header">
             <div className="header-content">
