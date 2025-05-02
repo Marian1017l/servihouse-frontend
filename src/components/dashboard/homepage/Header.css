@@ -57,8 +57,13 @@
     color: black;
 }
 
-
-
+.logout-button{
+    background-color: #006769;
+    padding: 20px 20px;
+    min-width: 120px;
+    text-align: center;
+    border-radius: 0px; 
+}
 
 
 
