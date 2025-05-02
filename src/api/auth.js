@@ -30,6 +30,29 @@ export class Auth {
             throw error;
         }
     }
+
+    async verifyCode(data) {
+        try {
+            const { userName, code } = data;
+            const payload = { userName, code };
+            const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.VERIFY2FACODE}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+            
+            console.log(payload);
+            console.log(response);
+            
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error in verifyCode:", error);
+            throw error;
+        }
+    }
 }
 
 export const auth = new Auth();
