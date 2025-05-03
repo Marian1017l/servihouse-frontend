@@ -3,7 +3,6 @@ import './ActivateAccountPhone.css'
 import { auth } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import e from 'express';
 
 
 const ActivateAccountPhone = () => {

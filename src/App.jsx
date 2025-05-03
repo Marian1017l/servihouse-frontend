@@ -5,14 +5,14 @@ import  Footer from './components/dashboard/homepage/Footer'
 import {AppRoutes} from './routes/AppRoutes' 
 function App() {
   return (
-    <>
-      <Header /> {/* El Header estará siempre visible */}
-      <main className='main'>
+    <div className="app-container"> {/* Contenedor principal con Flexbox */}
+      <Header /> {/* El Header estará siempre visible en la parte superior */}
+      <main className="main-content">
         <AppRoutes /> {/* Aquí se renderizan las rutas */}
       </main>
-      <Footer /> {/* El Footer estará siempre visible */}
-    </>
-  )
+      <Footer /> {/* El Footer estará siempre visible en la parte inferior */}
+    </div>
+  );
 }
 
 export default App;

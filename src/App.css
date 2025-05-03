@@ -1,12 +1,25 @@
-.main{
-  margin-top: 100px;
-  margin-bottom: 100px;
-}
-html, body {
-  height: 100%;
+html,
+body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  font-family: sans-serif;
-  box-sizing: border-box;
+  height: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  flex-shrink: 0;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+footer {
+  flex-shrink: 0;
 }

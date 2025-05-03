@@ -2,9 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 50px; 
     background-color: #ffffff;
-    min-height: calc(100vh - 200px);
+    min-height: calc(100vh - 150px);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -13,11 +12,9 @@
     padding: 40px;
     border-radius: 10px;
     width: 100%;
-    margin-bottom: 200px;
     max-width: 400px;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
 }
 
 .register-title {
@@ -28,7 +25,7 @@
 }
 
 .register-form input {
-    width: calc(100% - 25%); 
+    width: calc(100% - 25%);
     padding: 12px;
     margin-bottom: 20px;
     border: none;
