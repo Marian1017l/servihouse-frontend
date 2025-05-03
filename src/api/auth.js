@@ -77,6 +77,29 @@ export class Auth {
         }
     }
 
+    async signUp(data) {
+        try {
+            const { user_name, full_name, email, password, phone, rol_name, email_notification } = data;
+            const payload = { user_name, full_name, email, password, phone, rol_name, email_notification };
+            const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.SIGNUP}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            console.log("Payload sent:", payload);
+            console.log("Response object:", response);
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error in signUp:", error);
+            throw error;
+        }
+    }
+
 }
 
 export const auth = new Auth();
