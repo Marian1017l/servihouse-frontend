@@ -2,6 +2,7 @@ import React from "react";
 import "./Header.css";
 import { useSelector } from "react-redux";
 import LogOut from "../../auth/logout/LogOut";
+import geoLogo from '../../../images/geolocalizacion.png'
 
 const Header = () => {
 
@@ -12,6 +13,7 @@ const Header = () => {
         <header className="header">
             <div className="header-content">
                 <div className="logo">
+                    <img src={geoLogo} alt="Geolocation Logo" className="geo-logo" />
                     <h1>ServiHouse</h1>
                 </div>
                 <nav>

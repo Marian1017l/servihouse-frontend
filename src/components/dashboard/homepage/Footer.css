@@ -67,3 +67,12 @@
     text-transform: uppercase; 
     letter-spacing: 1px; 
 }
+
+.geo-logo {
+    width: auto;
+    height: auto; 
+    max-width: 100%; 
+    max-height: 30px;
+    margin-right: 8px; 
+    vertical-align: middle; 
+}

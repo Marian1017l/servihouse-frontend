@@ -1,16 +1,13 @@
 import React from 'react';
 import './Footer.css';
+import geoLogo from '../../../images/geolocalizacion.png'
 
 const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-content">
                 <div className="footer-logo">
-                    <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaTcseGiTYARcT2dzjpu2m8aRfA9nd1oYOww&s"
-                        alt="Logo"
-                        className="footer-logo-img"
-                    />
+                    <img src={geoLogo} alt="Geolocation Logo" className="geo-logo" />
                     <p>ServiHouse</p>
                 </div>
                 <nav className="footer-nav">

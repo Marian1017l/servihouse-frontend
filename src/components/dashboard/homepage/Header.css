@@ -21,6 +21,8 @@
 }
 
 .logo {
+    display: flex;
+    align-items: center;
     font-size: 0.6rem;
     font-weight: 700;
     margin: 0;
@@ -31,7 +33,7 @@
     padding: 20px 20px;
     min-width: 120px;
     text-align: center;
-    border-radius: 0px; 
+    border-radius: 0px;
 }
 
 .nav-links {
@@ -53,15 +55,16 @@
 
 .nav-links a:focus {
     background-color: #C7FFD8;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     color: black;
 }
+
 .logout-button {
     background-color: #006769;
-    padding:0;
+    padding: 0;
     min-width: unset;
     text-align: center;
-    border-radius: 0px; 
+    border-radius: 0px;
     color: white;
     font-weight: bold;
     text-decoration: none;
@@ -72,4 +75,13 @@
 .logout-button:hover {
     background-color: #004d4d;
     color: #ffffff;
+}
+
+.geo-logo {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
 }
