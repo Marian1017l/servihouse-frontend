@@ -58,8 +58,8 @@
 }
 .logout-button {
     background-color: #006769;
-    padding: 20px 20px;
-    min-width: 120px;
+    padding:0;
+    min-width: unset;
     text-align: center;
     border-radius: 0px; 
     color: white;

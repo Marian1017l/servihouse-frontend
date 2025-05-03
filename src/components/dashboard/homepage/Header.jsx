@@ -16,9 +16,9 @@ const Header = () => {
                 </div>
                 <nav>
                     <ul className="nav-links">
-                        <li><a href="/">Home</a></li>
                         {!isAuthenticated ? (
                             <>
+                                <li><a href="/">Home</a></li>
                                 <li><a href={"/auth/login"}>Log in</a></li>
                                 <li><a href={"/auth/signup"} className="signup-btn">Sign up</a></li>
                             </>
@@ -29,8 +29,8 @@ const Header = () => {
                                         href="#"
                                         className="logout-button"
                                         onClick={(e) => {
-                                            e.preventDefault(); 
-                                            handleLogOut(); 
+                                            e.preventDefault();
+                                            handleLogOut();
                                         }}
                                     >
                                         Log out
