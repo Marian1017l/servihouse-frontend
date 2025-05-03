@@ -1,10 +1,12 @@
 import React from "react";
 import "./Header.css";
 import { useSelector } from "react-redux";
+import LogOut from "../../auth/logout/LogOut";
 
 const Header = () => {
 
     const { isAuthenticated } = useSelector((state) => state.auth);
+    const { handleLogOut } = LogOut();
 
     return (
         <header className="header">
@@ -22,7 +24,18 @@ const Header = () => {
                             </>
                         ) : (
                             <>
-                                <li><a className="logout-button" href={"/auth/log-out"}>Log out</a></li>
+                                <li>
+                                    <a
+                                        href="#"
+                                        className="logout-button"
+                                        onClick={(e) => {
+                                            e.preventDefault(); 
+                                            handleLogOut(); 
+                                        }}
+                                    >
+                                        Log out
+                                    </a>
+                                </li>
                             </>
                         )}
                     </ul>
