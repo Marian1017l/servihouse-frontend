@@ -9,6 +9,7 @@ import ChangePassword from "../components/auth/changepsw/ChangePasword";
 import AdminDashBoard from "../components/dashboard/admin/AdminDashBoard";
 import LogOut from "../components/auth/logout/LogOut";
 import  ActivateAccountEmail from "../components/auth/verifyactivationE/ActivateAccountEmail";
+import  ActivateAccountPhone from "../components/auth/verifyactivationP/ActivateAccountPhone";
 
 export const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ export const AppRoutes = () => {
         <Route path={"/auth/log-out"} element={<LogOut />} />
         <Route path={"/admin"} element={<AdminDashBoard />} />
         <Route path={"/auth/activate-account-email"} element={<ActivateAccountEmail />} />
+        <Route path={"/auth/activate-account-phone"} element={<ActivateAccountPhone />} />
     </Routes>
   );
 };
