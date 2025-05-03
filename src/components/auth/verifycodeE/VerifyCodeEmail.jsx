@@ -37,8 +37,8 @@ const VerifyCodeEmail = () => {
         }
 
         try {
-            const userName = localStorage.getItem("pendingUser");
-            const response = await auth.verifyCode2fa({ userName, code });
+            const user_name = localStorage.getItem("pendingUser");
+            const response = await auth.verifyCode2fa({ user_name, code });
 
             console.log("Server response:", response);
 
@@ -49,7 +49,7 @@ const VerifyCodeEmail = () => {
                 dispatch(setUser({
                     isAuthenticated: true,
                     token: response.token,
-                    currentUser: { userName },
+                    currentUser: { user_name },
                 }));
 
                 localStorage.setItem("token", response.token);

@@ -33,8 +33,8 @@ export class Auth {
 
     async verifyCode2fa(data) {
         try {
-            const { userName, code } = data;
-            const payload = { userName, code };
+            const { user_name, code } = data;
+            const payload = { user_name, code };
             const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.VERIFY2FACODE}`, {
                 method: "POST",
                 headers: {
