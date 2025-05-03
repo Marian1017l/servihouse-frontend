@@ -5,8 +5,8 @@ export class Auth {
     async signIn(data) {
         try {
 
-            const { userName, password, emailNotification } = data;
-            const payload = { userName, password, emailNotification };
+            const { user_name, password, email_notification } = data;
+            const payload = { user_name, password, email_notification };
             const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.SIGNIN}`, {
                 method: "POST",
                 headers: {
@@ -21,7 +21,7 @@ export class Auth {
             const result = await response.json();
 
             if (response.ok && result.success) {
-                localStorage.setItem("pendingUser", data.userName);
+                localStorage.setItem("pendingUser", data.user_name);
             }
 
             return result;

@@ -8,7 +8,7 @@ import { auth } from '../../../api/auth'; // Adjust the import path as necessary
 
 const Login = () => {
   const [formData, setFormData] = React.useState({
-    userName: '',
+    user_name: '',
     password: '',
   });
 
@@ -27,8 +27,8 @@ const Login = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.userName) {
-      newErrors.userName = "Username is required!";
+    if (!formData.user_name) {
+      newErrors.user_name = "Username is required!";
     }
 
     if (!formData.password) {
@@ -60,12 +60,12 @@ const Login = () => {
       cancelButtonText: "Cancel"
     }).then(async (result) => {
       if (result.isConfirmed || result.isDenied) {
-        const emailNotification = result.isConfirmed; // true = email, false = sms
+        const email_notification = result.isConfirmed; // true = email, false = sms
         dispatch(setLoading(true));
 
         try {
-          const response = await auth.signIn({ ...formData, emailNotification });
-          if (emailNotification) {
+          const response = await auth.signIn({ ...formData, email_notification });
+          if (email_notification) {
             navigate("/auth/verify-code-email");
           } else {
             navigate("/auth/verify-code-phone");
@@ -91,7 +91,7 @@ const Login = () => {
         <h2 className="login-title">LOG IN</h2>
         <p className="login-subtitle">WELCOME TO SERVIHOUSE</p>
         <form onSubmit={handleSubmit} className="login-form">
-          <input type="text" name="userName" id="userName" value={formData.userName}
+          <input type="text" name="user_name" id="user_name" value={formData.user_name}
             onChange={handleChange} placeholder="Username" required />
           <input type="password" name="password" id="password" value={formData.password}
             onChange={handleChange} placeholder="Password" required />
