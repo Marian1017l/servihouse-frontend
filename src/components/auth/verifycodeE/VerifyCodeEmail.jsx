@@ -4,6 +4,7 @@ import { auth } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAutheticated, setLoading, setUser } from '../../../redux/authSlice';
+import Resend2faCode from '../resend2facode/Resend2faCode';
 
 
 const VerifyCodeEmail = () => {
@@ -13,6 +14,7 @@ const VerifyCodeEmail = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { handleResendCode } = Resend2faCode();
 
     const { loading, isAuthenticated } = useSelector((state) => state.auth);
 
@@ -72,7 +74,7 @@ const VerifyCodeEmail = () => {
                 </p>
                 <input type="text" placeholder="Code" className="verification-input" value={code}
                     onChange={handleCodeChange} />
-            
+
                 <button
                     onClick={handleSubmit}
                     className="verification-button"
@@ -87,7 +89,15 @@ const VerifyCodeEmail = () => {
                         "CONTINUE"
                     )}
                 </button>
-                <a className="resend-code">Resend code</a>
+                <a
+                    className="resend-code"
+                    onClick={(e) => {
+                        e.preventDefault(); 
+                        handleResendCode(dispatch, navigate); 
+                    }}
+                >
+                    Resend code
+                </a>
             </div>
         </div>
     );
