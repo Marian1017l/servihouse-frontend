@@ -65,17 +65,26 @@ const Login = () => {
 
         try {
           const response = await auth.signIn({ ...formData, email_notification });
+
+          if (!response.success) {
+            setLoginError(response.message || "Login failed");
+            dispatch(setLoading(false));
+            return; 
+          }
+
           if (email_notification) {
             navigate("/auth/verify-code-email");
           } else {
             navigate("/auth/verify-code-phone");
           }
+          
           if (response.token) {
             dispatch(setAutheticated(true));
           } else {
             setLoginError(response.message || "Login failed");
             dispatch(setLoading(false));
           }
+
         } catch (error) {
           console.error("Login error:", error);
           setLoginError("Invalid email or password");
