@@ -100,6 +100,28 @@ export class Auth {
         }
     }
 
+    async verifyActivationCode(data) {
+        try {
+            const { user_name, code } = data;
+            const payload = { user_name, code };
+            const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.VERIFYCODE}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            console.log("Payload sent:", payload);
+            console.log("Response object:", response);
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error in verifyActivationCode:", error);
+            throw error;
+        }
+    }
 }
 
 export const auth = new Auth();

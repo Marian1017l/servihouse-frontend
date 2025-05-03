@@ -80,6 +80,8 @@ const SignUp = () => {
 
 
           if (response.success) {
+            localStorage.setItem('pendingUser', formData.user_name);
+
             Swal.fire({
               title: 'Registration Successful',
               text: 'Please check your email or phone for the verification code.',
@@ -92,7 +94,7 @@ const SignUp = () => {
           }
 
           if (email_notification) {
-            navigate('/auth/verify-code-email');
+            navigate('/auth/activate-account-email');
           } else {
             navigate('/auth/verify-code-phone');
           }
