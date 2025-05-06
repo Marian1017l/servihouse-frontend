@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   isAuthenticated: false,
   token: null,
+  role: null
 };
 
 const authSlice = createSlice({
@@ -25,13 +26,16 @@ const authSlice = createSlice({
       state.isAuthenticated = action.payload.isAuthenticated;
       state.token = action.payload.token;
       state.loading = false;
+      state.role = action.payload.role;
     },
     logoutUser: (state) => {
       state.currentUser = null;
       state.isAuthenticated = false;
       state.token = null;
       state.loading = false;
+      state.role = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("pendingUser");
     },
   },
 });

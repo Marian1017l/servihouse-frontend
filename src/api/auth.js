@@ -1,5 +1,6 @@
 import { ENV } from "../utils";
 const { BASE_PATH, API_ROUTES } = ENV;
+import { jwtDecode } from "jwt-decode";
 
 export class Auth {
     async signIn(data) {
@@ -120,6 +121,16 @@ export class Auth {
         } catch (error) {
             console.error("Error in verifyActivationCode:", error);
             throw error;
+        }
+    }
+
+    getRoleFromToken(token) {
+        try {
+            const decoded = jwtDecode(token);
+            return decoded.rol;
+        } catch (error) {
+            console.error("Error decoding token:", error);
+            return null;
         }
     }
 }

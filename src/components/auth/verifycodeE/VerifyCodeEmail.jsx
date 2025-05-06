@@ -20,7 +20,7 @@ const VerifyCodeEmail = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate("/admin");
+            navigate("/home-all");
         }
     }, [isAuthenticated, navigate]);
 

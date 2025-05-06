@@ -20,7 +20,7 @@ const VerifyCodePhone = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate("/admin");
+            navigate("/home-all");
         }
     }, [isAuthenticated, navigate]);
 

@@ -1,13 +1,18 @@
 import React from "react";
 import "./Header.css";
-import { useSelector } from "react-redux";
-import LogOut from "../../auth/logout/LogOut";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../../redux/authSlice"; 
 import geoLogo from '../../../images/geolocalizacion.png'
 
 const Header = () => {
 
     const { isAuthenticated } = useSelector((state) => state.auth);
-    const { handleLogOut } = LogOut();
+    const dispatch = useDispatch();
+
+    const handleLogOut = (e) => {
+        e.preventDefault();
+        dispatch(logoutUser());
+    };
 
     return (
         <header className="header">
@@ -30,10 +35,7 @@ const Header = () => {
                                     <a
                                         href="#"
                                         className="logout-button"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            handleLogOut();
-                                        }}
+                                        onClick={handleLogOut}
                                     >
                                         Log out
                                     </a>

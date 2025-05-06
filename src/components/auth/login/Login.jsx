@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setAutheticated, setLoading } from '../../../redux/authSlice';
 import Swal from 'sweetalert2';
-import { auth } from '../../../api/auth'; // Adjust the import path as necessary
+import { auth } from '../../../api/auth'; 
 
 const Login = () => {
   const [formData, setFormData] = React.useState({
@@ -20,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/admin");
+      navigate("/home-all");
     }
   }, [isAuthenticated, navigate]);
 
