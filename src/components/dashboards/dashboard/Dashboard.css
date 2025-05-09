@@ -1,0 +1,15 @@
+.custom-menu .ant-menu-item {
+    background-color: #208679;
+    color: white; 
+}
+
+.custom-menu .ant-menu-item:hover {
+    background-color: #03A791;
+    color: #ffffff; 
+}
+
+/* Estilo del elemento seleccionado */
+.custom-menu .ant-menu-item-selected {
+    background-color: #03A791; /* Fondo del elemento seleccionado */
+    color: #ffffff; /* Color del texto del elemento seleccionado */
+}

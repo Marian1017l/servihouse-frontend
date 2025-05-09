@@ -1,10 +1,12 @@
 import React from "react";
 import "./Header.css";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutUser } from "../../../redux/authSlice"; 
+import { logoutUser } from "../../../redux/authSlice";
 import geoLogo from '../../../images/geolocalizacion.png'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import menuIcon from '../../../images/menu.png';
 
-const Header = () => {
+const Header = ({ collapsed, setCollapsed }) => {
 
     const { isAuthenticated } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -18,6 +20,26 @@ const Header = () => {
         <header className="header">
             <div className="header-content">
                 <div className="logo">
+                    {isAuthenticated && (
+                        <button
+                            className="toggle-sider"
+                            onClick={() => setCollapsed(!collapsed)}
+                            style={{
+                                background: "none",
+                                border: "none",
+                                cursor: "pointer",
+                                fontSize: "18px",
+                                marginRight: "16px",
+                            }}
+                        >
+                            <img
+                                src={menuIcon}
+                                alt="Toggle menu"
+                                style={{ width: "24px", height: "24px" }}
+                            />
+                        </button>
+                    )}
+
                     <img src={geoLogo} alt="Geolocation Logo" className="geo-logo" />
                     <h1>ServiHouse</h1>
                 </div>

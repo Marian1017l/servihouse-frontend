@@ -1,8 +1,15 @@
 import React from 'react';
 import './Footer.css';
 import geoLogo from '../../../images/geolocalizacion.png'
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
+    const {isAuthenticated} = useSelector(state=> state.auth); 
+
+    if (isAuthenticated) {
+        return null;
+    }
+
     return (
         <footer className="footer">
             <div className="footer-content">
