@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setAutheticated, setLoading } from '../../../redux/authSlice';
 import Swal from 'sweetalert2';
-import { auth } from '../../../api/auth'; 
+import { auth } from '../../../api/auth';
 
 const Login = () => {
   const [formData, setFormData] = React.useState({
@@ -20,7 +20,10 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home-all");
+      const userRole = localStorage.getItem("userRole");
+      if (userRole) {
+        navigate(`/${userRole.toLowerCase()}/profile`); 
+      }
     }
   }, [isAuthenticated, navigate]);
 
@@ -69,7 +72,7 @@ const Login = () => {
           if (!response.success) {
             setLoginError(response.message || "Login failed");
             dispatch(setLoading(false));
-            return; 
+            return;
           }
 
           if (email_notification) {
@@ -77,7 +80,7 @@ const Login = () => {
           } else {
             navigate("/auth/verify-code-phone");
           }
-          
+
           if (response.token) {
             dispatch(setAutheticated(true));
           } else {
@@ -116,7 +119,7 @@ const Login = () => {
         </form>
         <div className="login-links">
           <a href="/auth/signup">Sign Up</a>
-          <a href="/auth/forgot-password">Did you forget your password?</a>
+          <a href="/auth/change-password">Did you forget your password?</a>
         </div>
       </div>
     </div>

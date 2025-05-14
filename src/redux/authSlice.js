@@ -36,6 +36,8 @@ const authSlice = createSlice({
       state.role = null;
       localStorage.removeItem("token");
       localStorage.removeItem("pendingUser");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("email");
     },
   },
 });

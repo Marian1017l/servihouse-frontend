@@ -2,23 +2,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 50vh;
     background-color: white;
     overflow: hidden;
-    padding: 0;
-    margin: 0;
-
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .verification-box {
     background-color: #f0f0f0;
-    padding: 60px;
+    padding: 60px 30px;
     border-radius: 10px;
     text-align: center;
-    max-width: 400px;
-    width: 90vw;
+
+    width: 100%;
     box-sizing: border-box;
-    transform: translateY(-130px);
+    transform: none;
+    margin-bottom: -200px;
 }
 
 .verification-title {

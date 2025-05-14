@@ -20,7 +20,10 @@ const VerifyCodePhone = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate("/home-all");
+            const userRole = localStorage.getItem("userRole");
+            if (userRole) {
+                navigate(`/${userRole.toLowerCase()}/profile`);
+            }
         }
     }, [isAuthenticated, navigate]);
 

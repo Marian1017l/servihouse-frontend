@@ -20,7 +20,10 @@ const VerifyCodeEmail = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate("/home-all");
+            const userRole = localStorage.getItem("userRole");
+            if (userRole) {
+                navigate(`/${userRole.toLowerCase()}/profile`); 
+            }
         }
     }, [isAuthenticated, navigate]);
 
@@ -92,8 +95,8 @@ const VerifyCodeEmail = () => {
                 <a
                     className="resend-code"
                     onClick={(e) => {
-                        e.preventDefault(); 
-                        handleResendCode(dispatch, navigate); 
+                        e.preventDefault();
+                        handleResendCode(dispatch, navigate);
                     }}
                 >
                     Resend code

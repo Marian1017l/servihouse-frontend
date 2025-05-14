@@ -20,6 +20,15 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+      if (isAuthenticated) {
+        const userRole = localStorage.getItem("userRole");
+        if (userRole) {
+          navigate(`/${userRole.toLowerCase()}/profile`); 
+        }
+      }
+    }, [isAuthenticated, navigate]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,

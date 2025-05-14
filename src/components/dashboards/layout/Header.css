@@ -1,10 +1,11 @@
 .header {
+    display: block;
     top: 0;
     left: 0;
     width: 100%;
     background-color: #03A791;
     color: white;
-    padding: 4px 8px;
+    padding: 0;
     z-index: 1000;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     font-family: sans-serif;
@@ -15,7 +16,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
     gap: 16px;
 }
@@ -62,21 +64,22 @@
 
 .logout-button {
     background-color: #006769;
-    padding: 0;
-    min-width: unset;
+    padding: 6px 12px;
     text-align: center;
-    border-radius: 0px;
+    border-radius: 4px;
     color: white;
     font-weight: bold;
     text-decoration: none;
-    display: inline-block;
     cursor: pointer;
+    border: none;
+    font-size: 1.1rem;
 }
 
 .logout-button:hover {
     background-color: #004d4d;
     color: #ffffff;
 }
+
 
 .geo-logo {
     width: auto;

@@ -18,3 +18,11 @@ export const ENV ={
         FORGOTPASSWORD: '/ForgotPassword',
     }
 }
+
+export const ROLES = { 
+    SUPERADMIN: 'SUPERADMIN',
+    MANAGER: 'MANAGER',
+    DISPACHER: 'DISPATCHER',    
+    DELIVERY: 'DELIVERY',
+    GUEST: 'GUEST'
+}
