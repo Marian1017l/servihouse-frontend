@@ -33,6 +33,7 @@ export const AppRoutes = () => {
       console.log(role);
       localStorage.setItem("userRole", role);
       setUserRole(role);
+      
     }
     setChecking(false);
   }, [isAuthenticated]);

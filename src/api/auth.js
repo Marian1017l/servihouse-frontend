@@ -124,10 +124,42 @@ export class Auth {
         }
     }
 
+    getUserById = async (userId) => {
+        try {
+            const url = `${ENV.BASE_API_AUTH_USERS}/GetUserById/${userId}`;
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error fetching user: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching user by ID:", error);
+            throw error;
+        }
+    };
+
     getRoleFromToken(token) {
         try {
             const decoded = jwtDecode(token);
             return decoded.rol;
+        } catch (error) {
+            console.error("Error decoding token:", error);
+            return null;
+        }
+    }
+
+    getUserIdFromToken(token) {
+        try {
+            const decoded = jwtDecode(token);
+            return decoded.id;
         } catch (error) {
             console.error("Error decoding token:", error);
             return null;
