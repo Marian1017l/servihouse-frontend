@@ -146,6 +146,28 @@ export class Auth {
         }
     };
 
+    getAllUsers = async () => {
+        try {
+            const url = `${ENV.BASE_API_AUTH_USERS}${API_ROUTES.GETALLUSERS}`;
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error fetching users: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching all users:", error);
+            throw error;
+        }
+    };
+
     getRoleFromToken(token) {
         try {
             const decoded = jwtDecode(token);

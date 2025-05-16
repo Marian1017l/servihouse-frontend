@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './Register.css';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../api/auth';
 import { setLoading } from '../../../redux/authSlice'
@@ -15,7 +15,7 @@ const SignUp = () => {
     phone: '',
     rol_name: 'DELIVERY'
   });
-
+  const {isAuthenticated} = useSelector(state => state.auth); // Agrega esto
   const [errors, setErrors] = React.useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -1,7 +1,6 @@
-version: '3.8'
 services:
   frontend:
-    build: ./servi-frontend
+    build: .
     ports:
       - "4000:80"
     restart: always

@@ -24,7 +24,7 @@ const { Header, Sider, Content, Footer } = Layout;
 
 const LayoutDashboard = () => {
     const { isAuthenticated } = useSelector((state) => state.auth);
-    const userRole = localStorage.getItem("userRole");
+    const userRole = localStorage.getItem("userRole") || "guest"; // Cambia esto según tu lógica de autenticación
     const [collapsed, setCollapsed] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const navigate = useNavigate();

@@ -16,7 +16,8 @@ export const ENV ={
         SENDRESETPASSWORD: '/SendResetPassword',
         RESTOREPASSWORD: '/ResetPassword',
         FORGOTPASSWORD: '/ForgotPassword',
-        GETUSERBYID:  '/GetUserById/:id'
+        GETUSERBYID:  '/GetUserById/:id',
+        GETALLUSERS: '/GetAllUsers',
     }
 }
 
