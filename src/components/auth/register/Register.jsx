@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import './Register.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,27 +7,34 @@ import { setLoading } from '../../../redux/authSlice'
 import Swal from 'sweetalert2';
 
 const SignUp = () => {
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     user_name: '',
     full_name: '',
     email: '',
     password: '',
     phone: '',
-    rol_name: 'DELIVERY'
+    rol_name: 'DELIVERY',
+    city: '',
+    department: '',
   });
-  const {isAuthenticated} = useSelector(state => state.auth); // Agrega esto
-  const [errors, setErrors] = React.useState({});
+
+  const { isAuthenticated } = useSelector(state => state.auth);
+  const [errors, setErrors] = useState({});
+  const [departments, setDepartments] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-      if (isAuthenticated) {
-        const userRole = localStorage.getItem("userRole");
-        if (userRole) {
-          navigate(`/${userRole.toLowerCase()}/profile`); 
-        }
+    fetchDepartments();
+    if (isAuthenticated) {
+      const userRole = localStorage.getItem("userRole");
+      if (userRole) {
+        navigate(`/${userRole.toLowerCase()}/profile`);
       }
-    }, [isAuthenticated, navigate]);
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     setFormData({
@@ -61,6 +68,12 @@ const SignUp = () => {
 
     if (!formData.phone || !/^\d{10,}$/.test(formData.phone)) {
       newErrors.phone = 'Phone must be at least 10 digits';
+    }
+    if (!formData.city) {
+      newErrors.city = 'City is required';
+    }
+    if (!formData.department) {
+      newErrors.department = 'Department is required';
     }
 
     setErrors(newErrors);
@@ -118,6 +131,44 @@ const SignUp = () => {
     });
   };
 
+  const fetchDepartments = async () => {
+    try {
+      const response = await auth.getDepartments();
+      if (response.success) {
+        setDepartments(response.data);
+      } else {
+        console.error('Error fetching departments:', response.message);
+      }
+    } catch (error) {
+      console.error('Error fetching departments:', error);
+    }
+  }
+
+  const fetchCities = async (department) => {
+    try {
+      const response = await auth.getCitiesByDepartment(department);
+      if (response.success) {
+        setCities(response.data);
+      } else {
+        setCities([]);
+        console.error('Error fetching cities:', response.message);
+      }
+    } catch (error) {
+      setCities([]);
+      console.error('Error fetching cities:', error);
+    }
+  };
+
+  const handleDepartmentChange = (e) => {
+    setSelectedDepartment(e.target.value);
+    setFormData({ ...formData, department: e.target.value, city: '' });
+    fetchCities(e.target.value);
+  };
+
+  const handleCityChange = (e) => {
+    setFormData({ ...formData, city: e.target.value });
+  };
+
   return (
     <div className="register-page">
       <div className="register-container">
@@ -163,6 +214,30 @@ const SignUp = () => {
             onChange={handleChange}
             required
           />
+          <select
+            name="department"
+            value={formData.department}
+            onChange={handleDepartmentChange}
+            required
+          >
+            <option value="">Select Department</option>
+            {departments.map(dep => (
+              <option key={dep} value={dep}>{dep}</option>
+            ))}
+          </select>
+          <select
+            name="city"
+            value={formData.city}
+            onChange={handleCityChange}
+            required
+            disabled={!selectedDepartment}
+          >
+            <option value="">Select City</option>
+            {cities.map(city => (
+              <option key={city} value={city}>{city}</option>
+            ))}
+          </select>
+
           <button type="submit">CONTINUE</button>
         </form>
         <div className="register-links">

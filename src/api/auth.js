@@ -80,8 +80,8 @@ export class Auth {
 
     async signUp(data) {
         try {
-            const { user_name, full_name, email, password, phone, rol_name, email_notification } = data;
-            const payload = { user_name, full_name, email, password, phone, rol_name, email_notification };
+            const { user_name, full_name, email, password, phone, city, department ,rol_name, email_notification } = data;
+            const payload = { user_name, full_name, email, password, phone,  city, department, rol_name, email_notification };
             const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.SIGNUP}`, {
                 method: "POST",
                 headers: {
@@ -185,6 +185,53 @@ export class Auth {
         } catch (error) {
             console.error("Error decoding token:", error);
             return null;
+        }
+    }
+    
+    async getDepartments(){
+        try {
+            const url = `${ENV.BASE_API_UTILITIES}${API_ROUTES.GETALLDEPARTMENTS}`;
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error fetching departments: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching departments:", error);
+            throw error;
+        }
+    
+    }
+
+    getCitiesByDepartment = async (departmentId) => {
+        try {
+            const url = `${ENV.BASE_API_UTILITIES}/cities/${encodeURIComponent(departmentId)}`;
+            console.log(url);
+            
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error fetching cities: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching cities by department:", error);
+            throw error;
         }
     }
 }

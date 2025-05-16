@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DataTable from 'react-data-table-component';
 import { auth } from '../../../api/auth';
@@ -62,13 +62,12 @@ const UserDashboard = () => {
         }
     }
 
-     const [records, setRecords] = React.useState([]);
+     const [records, setRecords] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchUsers = async () => {
 
             const response = await auth.getAllUsers();
-            console.log("Response:", response);
             
             if (response.status === 200) {
                 

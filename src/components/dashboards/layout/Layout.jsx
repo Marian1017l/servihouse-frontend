@@ -145,7 +145,7 @@ const LayoutDashboard = () => {
                             boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
                             zIndex: 2,
                         }}
-                        width={240}
+                        width={150}
                     >
                         <Menu
                             theme={isDarkMode ? "dark" : "light"}

@@ -1,10 +1,11 @@
 const SERVER_IP = import.meta.env.VITE_DEV_API_URL;
 const AUTH_ROUTE = import.meta.env.VITE_AUTH_ROUTE;
 const ROUTE_USERS = import.meta.env.VITE_USERS_ROUTE;
-
+const ROUTE_UTILITIES = import.meta.env.VITE_UTILITIES_ROUTE;
 export const ENV ={
     BASE_PATH: SERVER_IP,
     BASE_API_AUTH_USERS: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_USERS}`,
+    BASE_API_UTILITIES: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_UTILITIES}`,
     API_ROUTES:{
         SIGNIN: '/SignIn',
         SIGNUP: '/SignUp',
@@ -18,6 +19,8 @@ export const ENV ={
         FORGOTPASSWORD: '/ForgotPassword',
         GETUSERBYID:  '/GetUserById/:id',
         GETALLUSERS: '/GetAllUsers',
+        GETALLDEPARTMENTS: '/departments/getAll',
+        GETCITIESBYDEPARTMENT: '/cities/:department',
     }
 }
 
