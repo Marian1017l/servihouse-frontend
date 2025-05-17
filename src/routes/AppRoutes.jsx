@@ -18,6 +18,7 @@ import InventoryDashboard from "../components/dashboards/inventorydashboard/Inve
 import OrdersDashboard from "../components/dashboards/orderdashboard/OrdersDashboard";
 import ReportsDashboard from "../components/dashboards/reportdashboard/ReportsDashboard";
 import MapsDashboard from "../components/dashboards/mapsdashboard/MapsDashboard";
+import ViewRoleDashboard from "../components/dashboards/roledashboard/viewroledashboard/viewRoleDashboard";
 import LayoutDashboard from "../components/dashboards/layout/Layout";
 import { ROLES } from "../utils/constants";
 
@@ -42,11 +43,12 @@ export const AppRoutes = () => {
     [ROLES.SUPERADMIN]: [
       { path: "profile", element: <ProfileDashboard /> },
       { path: "users", element: <UserDashboard /> },
-      { path: "roles", element: <RolesDashboard /> },
+      { path: "createRole", element: <RolesDashboard /> },
       { path: "inventory", element: <InventoryDashboard /> },
       { path: "orders", element: <OrdersDashboard /> },
       { path: "reports", element: <ReportsDashboard /> },
       { path: "maps", element: <MapsDashboard /> },
+      { path: "roles/viewroles", element: <ViewRoleDashboard /> },
     ],
     [ROLES.MANAGER]: [
       { path: "profile", element: <ProfileDashboard /> },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import "./Header.css";
 import "./Footer.css";
 import "./Sidebar.css"
@@ -24,7 +24,7 @@ const { Header, Sider, Content, Footer } = Layout;
 
 const LayoutDashboard = () => {
     const { isAuthenticated } = useSelector((state) => state.auth);
-    const userRole = localStorage.getItem("userRole") || "guest"; // Cambia esto según tu lógica de autenticación
+    const userRole = localStorage.getItem("userRole") || "guest";
     const [collapsed, setCollapsed] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const navigate = useNavigate();
@@ -35,48 +35,97 @@ const LayoutDashboard = () => {
         dispatch(logoutUser());
     };
 
-    const menuItems = [
-        {
-            key: `${userRole.toLowerCase()}/profile`,
-            icon: <img src={profileIcon} alt="Profile" style={{ width: "20px", height: "20px" }} />,
-            label: "Profile",
-        },
-        {
-            key: `${userRole.toLowerCase()}/users`,
-            icon: <img src={usersIcon} alt="Users" style={{ width: "20px", height: "20px" }} />,
-            label: "Users",
-        },
-        {
-            key: `${userRole.toLowerCase()}/roles`,
-            icon: <img src={rolesIcon} alt="Roles" style={{ width: "20px", height: "20px" }} />,
-            label: "Roles",
-        },
-        {
-            key: `${userRole.toLowerCase()}/inventory`,
-            icon: <img src={inventoryIcon} alt="Inventory" style={{ width: "20px", height: "20px" }} />,
-            label: "Inventory",
-        },
-        {
-            key: `${userRole.toLowerCase()}/orders`,
-            icon: <img src={ordersIcon} alt="Orders" style={{ width: "20px", height: "20px" }} />,
-            label: "Orders",
-        },
-        {
-            key: `${userRole.toLowerCase()}/reports`,
-            icon: <img src={reportsIcon} alt="Reports" style={{ width: "20px", height: "20px" }} />,
-            label: "Reports",
-        },
-        {
-            key: `${userRole.toLowerCase()}/maps`,
-            icon: <img src={mapsIcon} alt="Maps" style={{ width: "20px", height: "20px" }} />,
-            label: "Maps",
-        },
-    ];
+    useEffect(() => {
+        if (isAuthenticated && localStorage.getItem("userRole")) {
+            const role = localStorage.getItem("userRole").toLowerCase();
+            navigate(`/${role}/profile`);
+        }
+    }, [isAuthenticated]);
 
-    const handleMenuClick = ({ key }) => {
-        navigate(`/${key}`); // Navega a la ruta dinámica
+
+    const roleMenuKeys = {
+        superadmin: [
+            "superadmin/profile",
+            "superadmin/users",
+            "superadmin/roles/viewroles",
+            "superadmin/inventory",
+            "superadmin/orders",
+            "superadmin/reports",
+            "superadmin/maps",
+        ],
+        manager: [
+            "manager/profile",
+            "manager/users",
+            "manager/inventory",
+            "manager/orders",
+            "manager/reports",
+            "manager/maps",
+        ],
+        delivery: [
+            "delivery/profile",
+            "delivery/orders",
+            "delivery/maps",
+        ],
+        dispacher: [
+            "dispacher/profile",
+            "dispacher/inventory",
+            "dispacher/orders",
+            "dispacher/reports",
+            "dispacher/maps",
+        ],
     };
 
+    let menuItems = [];
+    let filteredMenuItems = [];
+    if (
+        isAuthenticated &&
+        userRole &&
+        roleMenuKeys[userRole.toLowerCase()]
+    ) {
+        menuItems = [
+            {
+                key: `${userRole.toLowerCase()}/profile`,
+                icon: <img src={profileIcon} alt="Profile" style={{ width: "20px", height: "20px" }} />,
+                label: "Profile",
+            },
+            {
+                key: `${userRole.toLowerCase()}/users`,
+                icon: <img src={usersIcon} alt="Users" style={{ width: "20px", height: "20px" }} />,
+                label: "Users",
+            },
+            {
+                key: `${userRole.toLowerCase()}/roles/viewroles`,
+                icon: <img src={rolesIcon} alt="Roles" style={{ width: "20px", height: "20px" }} />,
+                label: "Roles",
+            },
+            {
+                key: `${userRole.toLowerCase()}/inventory`,
+                icon: <img src={inventoryIcon} alt="Inventory" style={{ width: "20px", height: "20px" }} />,
+                label: "Inventory",
+            },
+            {
+                key: `${userRole.toLowerCase()}/orders`,
+                icon: <img src={ordersIcon} alt="Orders" style={{ width: "20px", height: "20px" }} />,
+                label: "Orders",
+            },
+            {
+                key: `${userRole.toLowerCase()}/reports`,
+                icon: <img src={reportsIcon} alt="Reports" style={{ width: "20px", height: "20px" }} />,
+                label: "Reports",
+            },
+            {
+                key: `${userRole.toLowerCase()}/maps`,
+                icon: <img src={mapsIcon} alt="Maps" style={{ width: "20px", height: "20px" }} />,
+                label: "Maps",
+            },
+        ];
+        const allowedMenuKeys = roleMenuKeys[userRole.toLowerCase()];
+        filteredMenuItems = menuItems.filter(item => allowedMenuKeys.includes(item.key));
+    }
+
+    const handleMenuClick = ({ key }) => {
+        navigate(`/${key}`);
+    };
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
@@ -131,7 +180,7 @@ const LayoutDashboard = () => {
 
             {/* SIDEBAR Y CONTENIDO */}
             <Layout>
-                {isAuthenticated && (
+                {isAuthenticated && filteredMenuItems.length > 0 && (
                     <Sider
                         trigger={null}
                         collapsible
@@ -151,7 +200,7 @@ const LayoutDashboard = () => {
                             theme={isDarkMode ? "dark" : "light"}
                             mode="inline"
                             defaultSelectedKeys={["1"]}
-                            items={menuItems}
+                            items={filteredMenuItems}
                             onClick={handleMenuClick}
                             style={{
                                 borderRight: 0,

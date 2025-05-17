@@ -80,8 +80,8 @@ export class Auth {
 
     async signUp(data) {
         try {
-            const { user_name, full_name, email, password, phone, city, department ,rol_name, email_notification } = data;
-            const payload = { user_name, full_name, email, password, phone,  city, department, rol_name, email_notification };
+            const { user_name, full_name, email, password, phone, city, department, rol_name, email_notification } = data;
+            const payload = { user_name, full_name, email, password, phone, city, department, rol_name, email_notification };
             const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.SIGNUP}`, {
                 method: "POST",
                 headers: {
@@ -187,8 +187,8 @@ export class Auth {
             return null;
         }
     }
-    
-    async getDepartments(){
+
+    async getDepartments() {
         try {
             const url = `${ENV.BASE_API_UTILITIES}${API_ROUTES.GETALLDEPARTMENTS}`;
             const response = await fetch(url, {
@@ -208,14 +208,14 @@ export class Auth {
             console.error("Error fetching departments:", error);
             throw error;
         }
-    
+
     }
 
     getCitiesByDepartment = async (departmentId) => {
         try {
             const url = `${ENV.BASE_API_UTILITIES}/cities/${encodeURIComponent(departmentId)}`;
             console.log(url);
-            
+
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -234,6 +234,45 @@ export class Auth {
             throw error;
         }
     }
+
+    async createRole({ name, description, permissions }) {
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${ENV.BASE_API_ROLES}${API_ROUTES.CREATEROL}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({ name, description, permissions }),
+            });
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error creating rol:", error);
+            throw error;
+        }
+    }
+
+    async getAllRoles() {
+    try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${ENV.BASE_API_ROLES}${API_ROUTES.GETALLROLES}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error("Error fetching all roles:", error);
+        throw error;
+    }
+}
 }
 
 export const auth = new Auth();

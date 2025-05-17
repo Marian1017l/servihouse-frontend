@@ -1,0 +1,134 @@
+.role-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 32px 24px 32px;
+
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+}
+
+.role-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.role-dashboard-title {
+    color: #222;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 16px;
+}
+
+.role-dashboard-view-btn {
+    background: #fff;
+    color: #03a791;
+    border: 2px solid #03a791;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 0;
+}
+
+.role-dashboard-view-btn:hover {
+    background: #03a791;
+    color: #fff;
+}
+
+.role-dashboard-create-btn {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.role-dashboard-create-btn:hover {
+    background: #028c7e;
+}
+
+.role-dashboard-form label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.role-dashboard-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    background: #ededed;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.role-dashboard-textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    background: #ededed;
+    font-size: 16px;
+    resize: none;
+    margin-bottom: 8px;
+}
+
+.role-dashboard-permissions {
+    margin-top: 24px;
+}
+
+.role-dashboard-permissions>span {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.role-dashboard-permissions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.role-dashboard-permissions-grid>div {
+    min-width: 120px;
+    margin-right: 4px;
+}
+
+.role-dashboard-permissions-grid b {
+    display: block;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    font-size: 13px;
+}
+
+.role-dashboard-permissions-grid label {
+    font-size: 12px;
+    margin-bottom: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.role-dashboard-permissions-grid input[type="checkbox"] {
+    margin-right: 4px;
+    width: 13px;
+    height: 13px;
+}
+
+.role-dashboard-permissions-grid div>div {
+    margin-bottom: 1px;
+}

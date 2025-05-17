@@ -18,15 +18,6 @@ const VerifyCodeEmail = () => {
 
     const { loading, isAuthenticated } = useSelector((state) => state.auth);
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            const userRole = localStorage.getItem("userRole");
-            if (userRole) {
-                navigate(`/${userRole.toLowerCase()}/profile`); 
-            }
-        }
-    }, [isAuthenticated, navigate]);
-
     const handleCodeChange = (e) => {
         setCode(e.target.value);
         setError('');
@@ -58,6 +49,11 @@ const VerifyCodeEmail = () => {
                 }));
 
                 localStorage.setItem("token", response.token);
+
+                if (response.rol) {
+                    localStorage.setItem("userRole", response.rol);
+                    navigate(`/${response.rol.toLowerCase()}/profile`);
+                }
             } else {
                 setError(response.message || "Invalid verification code.");
             }
