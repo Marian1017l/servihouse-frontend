@@ -84,3 +84,33 @@
 .btn-delete-role:hover {
     background:rgb(1, 104, 94);
 }
+
+.swal2-input, .swal2-textarea {
+    border-radius: 6px !important;
+    border: 1px solid #03a791 !important;
+    padding: 10px 14px !important;
+    font-size: 16px !important;
+    background: #E8E7E7 !important;
+    color: #222 !important;
+    margin-bottom: 10px !important;
+    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important; 
+}
+
+.swal2-confirm, .swal2-cancel {
+    background: #03a791 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 24px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin: 0 8px !important;
+    box-shadow: none !important;
+    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important; 
+}
+
+.swal2-confirm:hover, .swal2-cancel:hover {
+    background: #028c7e !important;
+    color: #fff !important;
+    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important; 
+}
