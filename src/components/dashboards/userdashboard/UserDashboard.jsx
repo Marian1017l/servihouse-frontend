@@ -7,6 +7,8 @@ import './UserDashboard.css';
 import SearchIcon from '../../../images/image.png';
 import updateIcon from '../../../images/actualizar (1).png';
 import deleteIcon from '../../../images/eliminar.png';
+import Swal from 'sweetalert2';
+import { setLoading } from '../../../redux/authSlice';
 
 const UserDashboard = () => {
 
@@ -53,7 +55,7 @@ const UserDashboard = () => {
                 <div className='btn-actions-user'>
                     <button className='btn-update-user'><img src={updateIcon} alt="Update" 
                         style={{ width: "25px", height: "25px" }} /></button>
-                    <button className='btn-delete-user'><img src={deleteIcon} alt="Delete" 
+                    <button className='btn-delete-user' onClick={() => handleDelete(row.id)}><img src={deleteIcon} alt="Delete" 
                         style={{ width: "25px", height: "25px" }}/></button>
                 </div>
             ),
@@ -130,7 +132,39 @@ const UserDashboard = () => {
             row.rol.toLowerCase().includes(event.target.value.toLowerCase())
     })
     setRecords(newData);
-}
+    }
+
+    const handleDelete = (userId) => {
+        Swal.fire({
+                title: 'Do you want to delete this user?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                showConfirmButton: true,
+              }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const response = await auth.deleteUser(userId);
+                        if (response.status === 200) {
+                            Swal.fire({
+                                title: 'Deleted!',
+                                text: 'User has been deleted.',
+                                icon: 'success',
+                            });
+                            setRecords(records.filter(record => record.id !== userId));
+                        } else {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed to delete user.',
+                                icon: 'error',
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error deleting user:', error);
+                    }
+                }
+              });
+    }
     
     
     return (
@@ -138,7 +172,7 @@ const UserDashboard = () => {
             <div className="user-dashboard-header">
                 <div className="user-dashboard-header-left">
                     <h1 className="user-dashboard-title">Users</h1>
-                    <div class="search-box">
+                    <div className="search-box">
                         <input type="text" placeholder="Search" onChange={handleFilter}/>
                         <span className="icon"><img src={SearchIcon} alt="Search" 
                             style={{ width: "20px", height: "20px" }} /></span>

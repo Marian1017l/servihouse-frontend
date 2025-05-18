@@ -214,7 +214,6 @@ export class Auth {
     getCitiesByDepartment = async (departmentId) => {
         try {
             const url = `${ENV.BASE_API_UTILITIES}/cities/${encodeURIComponent(departmentId)}`;
-            console.log(url);
 
             const response = await fetch(url, {
                 method: 'GET',
@@ -272,7 +271,53 @@ export class Auth {
         console.error("Error fetching all roles:", error);
         throw error;
     }
+
+    
 }
+    async createUser(data) {
+        try {
+            const { user_name, full_name, email, phone,rol_name, department, city   } = data;
+            const payload = { user_name, full_name, email, phone,rol_name, department, city };
+            const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.CREATEUSER}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            console.log("Payload sent:", payload);
+            console.log("Response object:", response);
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error in signUp:", error);
+            throw error;
+        }
+    }
+
+    deleteUser = async (userId) => {
+        try {
+            const url = `${ENV.BASE_API_AUTH_USERS}${API_ROUTES.DELETEUSER}/${userId}`;
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error deleting user: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error deleting user:", error);
+            throw error;
+        }
+    }
 }
 
 export const auth = new Auth();

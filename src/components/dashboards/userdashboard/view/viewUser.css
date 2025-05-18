@@ -13,7 +13,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+}
+
+.view-user-btn-container{
+    display: flex;
+    gap: 16px;
+}
+
+.view-user-back-btn{
+    background: #fff;
+    color: #03a791;
+    border: 2px solid #03a791;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 0;
+}
+
+.view-user-back-btn:hover {
+    background: #03a791;
+    color: #fff;
 }
 
 .view-user-create-btn {
@@ -33,7 +54,7 @@
 
 .user-form label {
     display: block;
-    margin-top: 18px;
+    margin-top: 12px;
     margin-bottom: 6px;
     font-weight: 500;
 }
@@ -48,20 +69,12 @@
     font-size: 16px;
 }
 
-.password-container{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.password-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px; /* espacio entre las columnas */
-  margin-bottom: 20px;
-}
-
-.password-group {
+.selector-container {
   display: flex;
-  flex-direction: column;
+  gap: 20px; /* espacio entre columnas */
+  align-items: flex-start; /* alinea las etiquetas arriba */
+}
+
+.selector-group {
+  flex: 1; /* hace que cada columna tenga el mismo ancho */
 }
