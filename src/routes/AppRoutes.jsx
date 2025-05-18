@@ -20,6 +20,7 @@ import ReportsDashboard from "../components/dashboards/reportdashboard/ReportsDa
 import MapsDashboard from "../components/dashboards/mapsdashboard/MapsDashboard";
 import ViewRoleDashboard from "../components/dashboards/roledashboard/viewroledashboard/viewRoleDashboard";
 import LayoutDashboard from "../components/dashboards/layout/Layout";
+import ViewUser from "../components/dashboards/userdashboard/view/viewUser"
 import { ROLES } from "../utils/constants";
 
 export const AppRoutes = () => {
@@ -31,7 +32,7 @@ export const AppRoutes = () => {
     const token = localStorage.getItem("token");
     if (token) {
       const role = auth.getRoleFromToken(token);
-      console.log(role);
+      // console.log(role);
       localStorage.setItem("userRole", role);
       setUserRole(role);
       
@@ -49,6 +50,7 @@ export const AppRoutes = () => {
       { path: "reports", element: <ReportsDashboard /> },
       { path: "maps", element: <MapsDashboard /> },
       { path: "roles/viewroles", element: <ViewRoleDashboard /> },
+      { path: "users/create", element: <ViewUser /> },
     ],
     [ROLES.MANAGER]: [
       { path: "profile", element: <ProfileDashboard /> },

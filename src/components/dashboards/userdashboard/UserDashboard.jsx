@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { auth } from '../../../api/auth';
+import './UserDashboard.css';
+import SearchIcon from '../../../images/image.png';
+import updateIcon from '../../../images/actualizar (1).png';
+import deleteIcon from '../../../images/eliminar.png';
 
 const UserDashboard = () => {
 
     const { isAuthenticated } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
     const columns = [
         {
@@ -44,25 +50,62 @@ const UserDashboard = () => {
         {
             name:'Actions',
             cell: row => (
-                <div>
-                    <button className='btn btn-primary'>Edit</button>
-                    <button className='btn btn-danger'>Delete</button>
+                <div className='btn-actions-user'>
+                    <button className='btn-update-user'><img src={updateIcon} alt="Update" 
+                        style={{ width: "25px", height: "25px" }} /></button>
+                    <button className='btn-delete-user'><img src={deleteIcon} alt="Delete" 
+                        style={{ width: "25px", height: "25px" }}/></button>
                 </div>
             ),
         }
     ];
 
-    const users = async () => {
-        const response = (await auth.getAllUsers()).data;
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            console.error("Error fetching users:", response);
-            return [];
-        }
-    }
+    const customStyles = {
+        header: {
+            style: {
+                background: '#F6F6F6',
+                padding: '12px 8px',
+                fontWeight: '600',
+                textAlign: 'left'
+            },
+        },
+        headRow: {
+            style: {
+                background: '#F6F6F6',
+                padding: '12px 8px',
+                fontWeight: '600',
+                textAlign: 'left'
+            },
+        },
+        headCells: {
+            style: {
+                color: '#202124',
+            },
+        },
+        rows: {
+            style: {
+                backgroundColor: '#E8E7E7',
+                padding: '12px 8px',
+                minHeight: '48px',
+                '&:not(:last-of-type)': {
+                    borderBottomStyle: 'solid',
+                    borderBottomWidth: '1px',
+                    borderBottomColor: '#e0e0e0',
+                },
+            },
+        },
+        pagination: {
+            style: {
+                borderTopStyle: 'solid',
+                borderTopWidth: '1px',
+                borderTopColor: '#e0e0e0',
+                padding: '10px',
+            },
+        },
+    };
 
      const [records, setRecords] = useState([]);
+     const [allUsers, setAllUsers] = useState([]);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -72,41 +115,45 @@ const UserDashboard = () => {
             if (response.status === 200) {
                 
                 setRecords(response.data);
+                setAllUsers(response.data);
             } else {
                 setRecords([]);
+                setAllUsers([]);
             }
         };
         fetchUsers();
     }, []);
-    
+
+    const handleFilter = (event) => {
+        const newData = allUsers.filter(row => {
+          return row.user_name.toLowerCase().includes(event.target.value.toLowerCase())  || 
+            row.rol.toLowerCase().includes(event.target.value.toLowerCase())
+    })
+    setRecords(newData);
+}
     
     
     return (
-        <div className="w-full px-4 py-4 bg-white rounded-lg shadow mb-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        {/* Título y barra de búsqueda */}
-        <div className="flex items-center gap-4 flex-1">
-          <h2 className="text-xl font-semibold">Users</h2>
-
-          <div className="relative w-full max-w-sm">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        {/* Botón de crear */}
-        <button className="self-start md:self-auto bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-md text-sm font-semibold">
-          CREATE
-        </button>
-      </div>
+        <div className="user-dashboard-content">
+            <div className="user-dashboard-header">
+                <div className="user-dashboard-header-left">
+                    <h1 className="user-dashboard-title">Users</h1>
+                    <div class="search-box">
+                        <input type="text" placeholder="Search" onChange={handleFilter}/>
+                        <span className="icon"><img src={SearchIcon} alt="Search" 
+                            style={{ width: "20px", height: "20px" }} /></span>
+                    </div>
+                </div>
+                <button className="user-dashboard-create-btn"
+                    onClick={() => navigate('/superadmin/users/create')}>CREATE</button>
+            </div>
             <DataTable
                 columns={columns}
                 data={records}
                 pagination
+                customStyles={customStyles}
             />
+    
         </div>
     );
 }  

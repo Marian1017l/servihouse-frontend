@@ -54,3 +54,33 @@
     background: #E8E7E7;
     padding: 12px 8px;
 }
+
+.btn-actions-role{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.btn-update-role {
+    background: #03a791;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 6px;
+    cursor: pointer;
+}
+
+.btn-update-role:hover {
+    background: #028c7e;
+}
+
+.btn-delete-role {
+    background:rgb(2, 124, 108);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 6px;
+    cursor: pointer;
+}
+
+.btn-delete-role:hover {
+    background:rgb(1, 104, 94);
+}

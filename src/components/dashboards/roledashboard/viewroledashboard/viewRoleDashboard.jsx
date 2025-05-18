@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './ViewRoleDashboard.css';
 import { Auth } from '../../../../api/auth';
 import { useNavigate } from 'react-router-dom';
+import updateIcon from '../../../../images/actualizar (1).png';
+import deleteIcon from '../../../../images/eliminar.png';
+
 
 const ViewRoleDashboard = () => {
     const [roles, setRoles] = useState([]);
@@ -59,8 +62,12 @@ const ViewRoleDashboard = () => {
                                 }
                             </td>
                             <td>
-                                <button onClick={() => handleEdit(role.id)} className="icon-btn" style={{ marginRight: "8px" }}>Editar</button>
-                                <button onClick={() => handleDelete(role.id)} className="icon-btn">Eliminar</button>
+                                <div className='btn-actions-role'>
+                                    <button onClick={() => handleEdit(role.id)} className="btn-update-role" 
+                                        style={{ marginRight: "8px" }}><img src={updateIcon} alt="Update" style={{ width: "25px", height: "25px" }} /></button>
+                                    <button onClick={() => handleDelete(role.id)} className="btn-delete-role">
+                                        <img src={deleteIcon} alt="Delete" style={{ width: "25px", height: "25px" }}/></button>
+                                </div>
                             </td>
                         </tr>
                     ))}

@@ -1,0 +1,67 @@
+.view-user-content {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 32px 24px 32px;
+
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+}
+
+.view-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.view-user-create-btn {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.view-user-create-btn:hover {
+    background: #028c7e;
+}
+
+.user-form label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.user-form-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    background: #ededed;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.password-container{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.password-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px; /* espacio entre las columnas */
+  margin-bottom: 20px;
+}
+
+.password-group {
+  display: flex;
+  flex-direction: column;
+}
