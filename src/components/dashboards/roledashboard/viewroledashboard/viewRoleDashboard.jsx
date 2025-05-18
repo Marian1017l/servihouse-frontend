@@ -49,11 +49,12 @@ const ViewRoleDashboard = () => {
             }
         }).then(async (result) => {
             if (result.isConfirmed) {
-                // Aquí llamas a tu función para actualizar el rol en el backend
                 try {
-                    //await auth.updateRole(roleId, result.value);
+                    const response = await auth.updateRole(roleId, result.value);
+                    console.log(response);
+
                     Swal.fire('Updated!', 'Role updated successfully.', 'success');
-                    fetchRoles(); 
+                    fetchRoles();
                 } catch (error) {
                     Swal.fire('Error', 'Could not update role.', 'error');
                 }
@@ -62,7 +63,31 @@ const ViewRoleDashboard = () => {
     };
 
     const handleDelete = (roleId) => {
-        alert(`Eliminar rol con id: ${roleId}`);
+        const role = roles.find(r => r.id === roleId);
+        if (!role) return;
+
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to delete the role "${role.name}"?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete',
+            cancelButtonText: 'Cancel',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await auth.deleteRole(roleId);
+                    if (response.success) {
+                        Swal.fire('Deleted!', 'Role deleted successfully.', 'success');
+                        fetchRoles();
+                    } else {
+                        Swal.fire('Error', response.message || 'Could not delete role.', 'error');
+                    }
+                } catch (error) {
+                    Swal.fire('Error', 'Could not delete role.', 'error');
+                }
+            }
+        });
     };
 
     return (

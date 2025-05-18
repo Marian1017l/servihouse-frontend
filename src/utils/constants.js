@@ -24,9 +24,12 @@ export const ENV ={
         GETALLDEPARTMENTS: '/departments/getAll',
         GETCITIESBYDEPARTMENT: '/cities/:department',
         CREATEROL : '/Create',
+        UPDATEROL : '/Update',
+        DELETEROL: '/Delete',
         GETALLROLES: '/GetAll',
         CREATEUSER: '/',
         DELETEUSER: '/:id',
+        
     }
 }
 

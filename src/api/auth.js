@@ -255,29 +255,29 @@ export class Auth {
     }
 
     async getAllRoles() {
-    try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${ENV.BASE_API_ROLES}${API_ROUTES.GETALLROLES}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-            },
-        });
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch(`${ENV.BASE_API_ROLES}${API_ROUTES.GETALLROLES}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
 
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        console.error("Error fetching all roles:", error);
-        throw error;
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error fetching all roles:", error);
+            throw error;
+        }
+
+
     }
-
-    
-}
     async createUser(data) {
         try {
-            const { user_name, full_name, email, phone,rol_name, department, city   } = data;
-            const payload = { user_name, full_name, email, phone,rol_name, department, city };
+            const { user_name, full_name, email, phone, rol_name, department, city } = data;
+            const payload = { user_name, full_name, email, phone, rol_name, department, city };
             const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.CREATEUSER}`, {
                 method: "POST",
                 headers: {
@@ -315,6 +315,47 @@ export class Auth {
             return data;
         } catch (error) {
             console.error("Error deleting user:", error);
+            throw error;
+        }
+    }
+
+    async updateRole(roleId, { name, description, permissions }) {
+        try {
+            const token = localStorage.getItem("token");
+            const url = `${ENV.BASE_API_ROLES}${API_ROUTES.UPDATEROL}/${roleId}`;
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({ name, description, permissions }),
+            });
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error updating rol:", error);
+            throw error;
+        }
+    }
+
+    async deleteRole(roleId) {
+        try {
+            const token = localStorage.getItem("token");
+            const url = `${ENV.BASE_API_ROLES}${API_ROUTES.DELETEROL}/${roleId}`;
+            const response = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error deleting rol:", error);
             throw error;
         }
     }
