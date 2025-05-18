@@ -74,6 +74,12 @@ const RolesDashboard = () => {
             const response = await auth.createRole(data);
             console.log(response);
 
+            if (response.success) {
+                setRoleName('');
+                setRoleDesc('');
+                setCheckedPermissions({});
+            }
+
         } catch (error) {
             console.error("Error creating role:", error);
         }
