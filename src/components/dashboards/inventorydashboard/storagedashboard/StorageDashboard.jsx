@@ -7,7 +7,7 @@ import SearchIcon from '../../../../images/image.png';
 import updateIcon from '../../../../images/actualizar (1).png';
 import deleteIcon from '../../../../images/eliminar.png';
 import './StorageDashboard.css';
-import { auth } from '../../../../api/auth';
+import { inven } from '../../../../api/inventory';
 
 const StorageDashboard = () => {
     const navigate = useNavigate();
@@ -98,7 +98,7 @@ const StorageDashboard = () => {
     
     useEffect(() => {
         const fetchStorages = async () => {
-            const response = await auth.getAllStorages();    
+            const response = await inven.getAllStorages();    
         if (response.status === 200) {
             setRecords(response.data);
             setAllStorages(response.data);

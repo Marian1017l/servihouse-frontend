@@ -5,9 +5,10 @@ import SearchIcon from '../../../../images/image.png';
 import updateIcon from '../../../../images/actualizar (1).png';
 import deleteIcon from '../../../../images/eliminar.png';
 import './ProductsDashboard.css';
-import { auth } from '../../../../api/auth';
+import { inven } from '../../../../api/inventory';
 
 const ProductsDashboard = () => {
+    const userRole = localStorage.getItem("userRole");
     const navigate = useNavigate();
 
     const columns = [
@@ -92,7 +93,7 @@ const ProductsDashboard = () => {
     
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await auth.getAllProducts();    
+            const response = await inven.getAllProducts();    
         if (response.status === 200) {
             setRecords(response.data);
             setAllProducts(response.data);
@@ -126,7 +127,7 @@ const ProductsDashboard = () => {
                     </div>
                 </div>
                 <div className="product-dashboard-btn-container">
-                    <button className="product-dashboard-back-btn" onClick={() => navigate("/superadmin/inventory")}>BACK</button>
+                    <button className="product-dashboard-back-btn" onClick={() => navigate(`/${userRole.toLowerCase()}/inventory`)}>BACK</button>
                     <button className="product-dashboard-create-btn"
                         onClick={() => navigate('/superadmin/inventory/products/create')}>CREATE</button>
                 </div>
