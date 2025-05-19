@@ -1,0 +1,96 @@
+.storages-dashboard-content {
+    padding: 32px 40px 32px 40px;
+    min-height: 100vh;
+    background: #fff;
+}
+
+.storages-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.storages-dashboard-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.storages-dashboard-create-btn {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.storages-dashboard-create-btn:hover {
+    background: #028c7e;
+}
+
+.storages-dashboard-table-container {
+    width: 100%;
+}
+
+.storages-dashboard-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.storages-dashboard-table th {
+    background: #F6F6F6;
+    padding: 12px 8px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.storages-dashboard-table td {
+    background: #E8E7E7;
+    padding: 12px 8px;
+}
+
+.btn-actions-storage {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.btn-update-storage {
+    background: #03a791;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 6px;
+    cursor: pointer;
+}
+
+.btn-update-storage:hover {
+    background: #028c7e;
+}
+
+.btn-delete-storage {
+    background: rgb(2, 124, 108);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 6px;
+    cursor: pointer;
+}
+
+.btn-delete-storage:hover {
+    background: rgb(1, 104, 94);
+}
+
+.storages-dashboard-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 12px;
+    gap: 8px;
+}
