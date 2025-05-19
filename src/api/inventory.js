@@ -3,6 +3,7 @@ const { API_ROUTES_INVENTORY } = ENV;
 import { jwtDecode } from "jwt-decode";
 
 export class Inventory {
+    
     async getAllStorages() {
         try {
             // const token = localStorage.getItem("token");
@@ -24,7 +25,7 @@ export class Inventory {
         }
     }
 
-    async getAllProducts(){
+    async getAllProducts() {
         try {
             // const token = localStorage.getItem("token");
             const url = `${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.GETALLPRODUCTS}`;
@@ -45,19 +46,20 @@ export class Inventory {
     }
 
     async createProduct(data) {
+        const token = localStorage.getItem("token");
         try {
-            const { name, category, description, price } = data;
-            const payload = { name, category, description, price };
+            const { name, category, description, price, picture = "", fragile = false } = data;
+            const payload = { name, category, description, price, picture, fragile };
+            const token = localStorage.getItem("token");
+
             const response = await fetch(`${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.CREATEPRODUCT}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
             });
-
-            console.log("Payload sent:", payload);
-            console.log("Response object:", response);
 
             const result = await response.json();
             return result;
