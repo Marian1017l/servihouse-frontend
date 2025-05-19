@@ -58,6 +58,7 @@ export const ENV ={
         CREATEPRODUCT: '/create',
         UPDATEPRODUCT: '/update',
         DELETEPRODUCT: '/delete/:id',
+        GETPRODUCTSBYSTORAGE: '/getProductsByStorage/',
     },
 
     BASE_PATH_BUSINESS: SERVER_BUSINESS_IP,

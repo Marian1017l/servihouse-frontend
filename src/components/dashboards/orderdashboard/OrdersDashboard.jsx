@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './OrdersDashboard.css';
 import viewIcon from '../../../images/view.png';
 import { inven } from '../../../api/inventory';
+import { useNavigate } from 'react-router-dom';
 
 const OrdersDashboard = () => {
     const [storages, setStorages] = useState([]);
+    const navigate = useNavigate();
 
     const fetchStorages = async () => {
         const token = localStorage.getItem("token");
@@ -14,6 +16,10 @@ const OrdersDashboard = () => {
         } else {
             setStorages([]);
         }
+    };
+
+    const handleViewProducts = (storageId) => {
+        navigate(`/orders/products/${storageId}`);
     };
 
     useEffect(() => {
@@ -33,7 +39,7 @@ const OrdersDashboard = () => {
                         <div className="orders-dashboard-card-address">
                             {storage.location?.address}, {storage.location?.city}, {storage.location?.department}
                         </div>
-                        <button className="orders-dashboard-view-btn">
+                        <button className="orders-dashboard-view-btn" onClick={() => handleViewProducts(storage.id)}>
                             <img src={viewIcon} alt="View" style={{ width: "18px", height: "18px" }} />
                         </button>
                     </div>

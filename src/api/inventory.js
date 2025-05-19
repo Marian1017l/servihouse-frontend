@@ -3,7 +3,7 @@ const { API_ROUTES_INVENTORY } = ENV;
 import { jwtDecode } from "jwt-decode";
 
 export class Inventory {
-    
+
     async getAllStorages() {
         try {
             // const token = localStorage.getItem("token");
@@ -66,6 +66,24 @@ export class Inventory {
             console.error("Error in createProduct:", error);
             throw error;
         }
+    }
+
+    async getProductsByStorage(storageId) {
+        const token = localStorage.getItem("token");
+        const url = `${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.GETPRODUCTSBYSTORAGE}${storageId}`;
+
+        return fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+            .then(response => response.json())
+            .catch(error => {
+                console.error("Error fetching products by storage ID:", error);
+                throw error;
+            });
     }
 
 }
