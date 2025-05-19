@@ -190,7 +190,6 @@ const LayoutDashboard = () => {
                         style={{
                             backgroundColor: "#208679",
                             overflow: "auto",
-                            height: "100vh",
                             boxShadow: "2px 0 8px rgba(0,0,0,0.1)",
                             zIndex: 2,
                         }}
