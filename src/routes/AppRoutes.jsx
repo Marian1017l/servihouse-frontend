@@ -27,6 +27,7 @@ import StorageDashboard from "../components/dashboards/inventorydashboard/storag
 import ProviderDashboard from "../components/dashboards/inventorydashboard/providerdashboard/ProviderDashboard";
 import StockTransactionDashboard from "../components/dashboards/inventorydashboard/stocktransactiondashboard/StockTransactionDashboard";
 import ViewProduct from "../components/dashboards/inventorydashboard/productdashboard/view/viewProduct";
+import ProductStorageDashboard from "../components/dashboards/orderdashboard/productstoragedashboard/ProductStorageDashboard";
 import { ROLES } from "../utils/constants";
 
 export const AppRoutes = () => {
@@ -66,6 +67,7 @@ export const AppRoutes = () => {
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
       //orders
       { path: "orders", element: <OrdersDashboard /> },
+      { path: "orders/products", element: <ProductStorageDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps      
@@ -86,6 +88,7 @@ export const AppRoutes = () => {
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
       //orders
       { path: "orders", element: <OrdersDashboard /> },
+      { path: "orders/products", element: <ProductStorageDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
@@ -94,7 +97,7 @@ export const AppRoutes = () => {
     [ROLES.DELIVERY]: [
       //profile
       { path: "profile", element: <ProfileDashboard /> },
-      //orders
+      //orders itself
       { path: "orders", element: <OrdersDashboard /> },
       //maps 
       { path: "maps", element: <MapsDashboard /> },
@@ -108,6 +111,7 @@ export const AppRoutes = () => {
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
       //orders
       { path: "orders", element: <OrdersDashboard /> },
+      { path: "orders/products", element: <ProductStorageDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
