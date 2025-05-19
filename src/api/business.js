@@ -26,7 +26,7 @@ export class Business {
         }
     }
 
-     async getAllManagers(token) {
+    async getAllManagers(token) {
         try {
             const response = await fetch(
                 `${ENV.BASE_PATH_BUSINESS_MANAGER}${API_ROUTES_BUSINESS.GETMANAGERS}`,
@@ -44,6 +44,29 @@ export class Business {
             return {
                 success: false,
                 message: "Error fetching managers",
+                error: error.message,
+            };
+        }
+    }
+
+    async getStockByDispatcher(dispatcherId, token) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_STOCK}/dispatcher/${dispatcherId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching stock",
                 error: error.message,
             };
         }

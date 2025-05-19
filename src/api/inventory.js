@@ -48,9 +48,8 @@ export class Inventory {
     async createProduct(data) {
         const token = localStorage.getItem("token");
         try {
-            const { name, category, description, price, picture = "", fragile = false } = data;
-            const payload = { name, category, description, price, picture, fragile };
-            const token = localStorage.getItem("token");
+            const { id, name, category, description, price, picture = "", fragile = false } = data;
+            const payload = { id, name, category, description, price, picture, fragile };
 
             const response = await fetch(`${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.CREATEPRODUCT}`, {
                 method: "POST",

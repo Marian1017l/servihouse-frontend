@@ -43,8 +43,6 @@ const ViewProduct = () => {
             return;
         }
 
-        console.log(formData);
-
 
         Swal.fire({
             title: 'Do you want to create this product?',
@@ -61,6 +59,8 @@ const ViewProduct = () => {
                         price: Number(formData.price),
                         picture: "images/uploadimage.jpg",
                     };
+                    console.log(payload);
+                    
                     const response = await inven.createProduct(payload);
 
                     if (response.success) {
