@@ -1,4 +1,4 @@
-.storages-dashboard-content {
+/* .storages-dashboard-content {
     padding: 32px 40px 32px 40px;
     min-height: 100vh;
     background: #fff;
@@ -117,4 +117,66 @@
 .storages-dashboard-pagination button:disabled {
     background: #bdbdbd;
     cursor: not-allowed;
+} */
+
+.storage-dashboard-content {
+    padding: 32px 40px 32px 40px;
+    /* Arriba, derecha, abajo, izquierda */
+    min-height: 100vh;
+    background: #fff;
+}
+
+.storage-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.storage-dashboard-header-left{
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.storage-dashboard-title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #ddd;
+  border-radius: 20px;
+  padding: 5px 10px;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 5px;
+}
+
+.icon {
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.storage-dashboard-create-btn {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.storage-dashboard-create-btn:hover {
+    background: #028c7e;
 }

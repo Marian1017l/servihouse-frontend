@@ -26,6 +26,7 @@ import ManagerDashboard from "../components/dashboards/inventorydashboard/manage
 import StorageDashboard from "../components/dashboards/inventorydashboard/storagedashboard/StorageDashboard";
 import ProviderDashboard from "../components/dashboards/inventorydashboard/providerdashboard/ProviderDashboard";
 import StockTransactionDashboard from "../components/dashboards/inventorydashboard/stocktransactiondashboard/StockTransactionDashboard";
+import ViewProduct from "../components/dashboards/inventorydashboard/productdashboard/view/viewProduct";
 import { ROLES } from "../utils/constants";
 
 export const AppRoutes = () => {
@@ -58,6 +59,7 @@ export const AppRoutes = () => {
       //inventory
       { path: "inventory", element: <InventoryDashboard /> },
       { path: "inventory/products", element: <ProductsDashboard /> },
+      { path: "inventory/products/create", element: <ViewProduct /> },
       { path: "inventory/managers", element: <ManagerDashboard /> },
       { path: "inventory/storages", element: <StorageDashboard /> },
       { path: "inventory/providers", element: <ProviderDashboard /> },

@@ -53,6 +53,12 @@ export const ENV ={
         GETALLSTORAGES: '/GetAll',
         CREATEASTORAGE: '/create',
     },
+    API_ROUTES_INVENTORY_PRODUCT:{
+        GETALLPRODUCTS: '/GetAll',
+        CREATEPRODUCT: '/create',
+        UPDATEPRODUCT: '/update',
+        DELETEPRODUCT: '/delete/:id',
+    },
 
     BASE_PATH_BUSINESS: SERVER_BUSINESS_IP,
     BASE_PATH_BUSINESS_LOCATION: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_LOCATION}`,

@@ -1,5 +1,5 @@
 import { ENV } from "../utils";
-const { BASE_PATH, API_ROUTES } = ENV;
+const { BASE_PATH, API_ROUTES, API_ROUTES_INVENTORY, BASE_PATH_INVEN_STORAGE } = ENV;
 import { jwtDecode } from "jwt-decode";
 
 export class Auth {
@@ -359,6 +359,71 @@ export class Auth {
             throw error;
         }
     }
+
+    async getAllStorages(){
+        try {
+            // const token = localStorage.getItem("token");
+            const url = `${BASE_PATH_INVEN_STORAGE}${API_ROUTES_INVENTORY.GETALLSTORAGES}`;
+            
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                    // "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error fetching all storages:", error);
+            throw error;
+        }
+    }
+
+    async getAllProducts(){
+        try {
+            // const token = localStorage.getItem("token");
+            const url = `${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.GETALLPRODUCTS}`;
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                    // "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error fetching all storages:", error);
+            throw error;
+        }
+    }
+
+    async createProduct(data) {
+        try {
+            const { name, category, description, price } = data;
+            const payload = { name, category, description, price };
+            const response = await fetch(`${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.CREATEPRODUCT}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            console.log("Payload sent:", payload);
+            console.log("Response object:", response);
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error in createProduct:", error);
+            throw error;
+        }
+    }
+
 }
 
 export const auth = new Auth();
