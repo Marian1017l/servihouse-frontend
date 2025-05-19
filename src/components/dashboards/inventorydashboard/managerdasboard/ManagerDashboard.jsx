@@ -1,6 +1,6 @@
 import react, { useEffect, useState } from 'react';
 
-const ManagerDasboard = () => {
+const ManagerDashboard = () => {
 
     return (
         <div className="manager-dashboard-container">
@@ -10,4 +10,4 @@ const ManagerDasboard = () => {
     );
 }
 
-export default ManagerDasboard;
+export default ManagerDashboard;

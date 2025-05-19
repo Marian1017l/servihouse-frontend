@@ -21,6 +21,11 @@ import MapsDashboard from "../components/dashboards/mapsdashboard/MapsDashboard"
 import ViewRoleDashboard from "../components/dashboards/roledashboard/viewroledashboard/viewRoleDashboard";
 import LayoutDashboard from "../components/dashboards/layout/Layout";
 import ViewUser from "../components/dashboards/userdashboard/view/viewUser"
+import ProductsDashboard from "../components/dashboards/inventorydashboard/productdashboard/ProductsDashboard";
+import ManagerDashboard from "../components/dashboards/inventorydashboard/managerdasboard/ManagerDashboard";
+import StorageDashboard from "../components/dashboards/inventorydashboard/storagedashboard/StorageDashboard";
+import ProviderDashboard from "../components/dashboards/inventorydashboard/providerdashboard/ProviderDashboard";
+import StockTransactionDashboard from "../components/dashboards/inventorydashboard/stocktransactiondashboard/StockTransactionDashboard";
 import { ROLES } from "../utils/constants";
 
 export const AppRoutes = () => {
@@ -35,41 +40,75 @@ export const AppRoutes = () => {
       // console.log(role);
       localStorage.setItem("userRole", role);
       setUserRole(role);
-      
+
     }
     setChecking(false);
   }, [isAuthenticated]);
 
   const roleRoutes = {
     [ROLES.SUPERADMIN]: [
+      //profile
       { path: "profile", element: <ProfileDashboard /> },
+      //users
       { path: "users", element: <UserDashboard /> },
-      { path: "createRole", element: <RolesDashboard /> },
-      { path: "inventory", element: <InventoryDashboard /> },
-      { path: "orders", element: <OrdersDashboard /> },
-      { path: "reports", element: <ReportsDashboard /> },
-      { path: "maps", element: <MapsDashboard /> },
-      { path: "roles/viewroles", element: <ViewRoleDashboard /> },
       { path: "users/create", element: <ViewUser /> },
+      //roles
+      { path: "roles/viewroles", element: <ViewRoleDashboard /> },
+      { path: "createRole", element: <RolesDashboard /> },
+      //inventory
+      { path: "inventory", element: <InventoryDashboard /> },
+      { path: "inventory/products", element: <ProductsDashboard /> },
+      { path: "inventory/managers", element: <ManagerDashboard /> },
+      { path: "inventory/storages", element: <StorageDashboard /> },
+      { path: "inventory/providers", element: <ProviderDashboard /> },
+      { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
+      //orders
+      { path: "orders", element: <OrdersDashboard /> },
+      //reports
+      { path: "reports", element: <ReportsDashboard /> },
+      //maps      
+      { path: "maps", element: <MapsDashboard /> },
     ],
     [ROLES.MANAGER]: [
+      //profile
       { path: "profile", element: <ProfileDashboard /> },
+      //users
       { path: "users", element: <UserDashboard /> },
+      { path: "users/create", element: <ViewUser /> },
+      //inventory
       { path: "inventory", element: <InventoryDashboard /> },
+      { path: "inventory/products", element: <ProductsDashboard /> },
+      { path: "inventory/managers", element: <ManagerDashboard /> },
+      { path: "inventory/storages", element: <StorageDashboard /> },
+      { path: "inventory/providers", element: <ProviderDashboard /> },
+      { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
+      //orders
       { path: "orders", element: <OrdersDashboard /> },
+      //reports
       { path: "reports", element: <ReportsDashboard /> },
+      //maps 
       { path: "maps", element: <MapsDashboard /> },
     ],
     [ROLES.DELIVERY]: [
+      //profile
       { path: "profile", element: <ProfileDashboard /> },
+      //orders
       { path: "orders", element: <OrdersDashboard /> },
+      //maps 
       { path: "maps", element: <MapsDashboard /> },
     ],
-    [ROLES.DISPACHER]: [
+    [ROLES.DISPATCHER]: [
+      //profile
       { path: "profile", element: <ProfileDashboard /> },
+      //inventory
       { path: "inventory", element: <InventoryDashboard /> },
+      { path: "inventory/products", element: <ProductsDashboard /> },
+      { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
+      //orders
       { path: "orders", element: <OrdersDashboard /> },
+      //reports
       { path: "reports", element: <ReportsDashboard /> },
+      //maps 
       { path: "maps", element: <MapsDashboard /> },
     ],
   };

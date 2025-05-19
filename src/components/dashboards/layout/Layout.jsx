@@ -66,12 +66,12 @@ const LayoutDashboard = () => {
             "delivery/orders",
             "delivery/maps",
         ],
-        dispacher: [
-            "dispacher/profile",
-            "dispacher/inventory",
-            "dispacher/orders",
-            "dispacher/reports",
-            "dispacher/maps",
+        dispatcher: [
+            "dispatcher/profile",
+            "dispatcher/inventory",
+            "distpatcher/orders",
+            "dispatcher/reports",
+            "dispatcher/maps",
         ],
     };
 

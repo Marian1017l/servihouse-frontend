@@ -36,7 +36,7 @@ export const ENV ={
 export const ROLES = { 
     SUPERADMIN: 'SUPERADMIN',
     MANAGER: 'MANAGER',
-    DISPACHER: 'DISPATCHER',    
+    DISPATCHER: 'DISPATCHER',    
     DELIVERY: 'DELIVERY',
     GUEST: 'GUEST'
 }
