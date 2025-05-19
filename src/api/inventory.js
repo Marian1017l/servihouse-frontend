@@ -1,55 +1,76 @@
-import { ENV } from "../utils";
-const { API_ROUTES_INVENTORY } = ENV;
-import { jwtDecode } from "jwt-decode";
+const SERVER_IP = import.meta.env.VITE_DEV_AUTH_URL;
+const SERVER_BUSINESS_IP = import.meta.env.VITE_DEV_BUS_URL;
+const SERVER_INVENTORY_IP = import.meta.env.VITE_DEV_INVEN_URL;
+const AUTH_ROUTE = import.meta.env.VITE_AUTH_ROUTE;
+const INVENTORY_ROUTE = import.meta.env.VITE_INVENTORY_ROUTE;
+const ROUTE_USERS = import.meta.env.VITE_USERS_ROUTE;
+const ROUTE_UTILITIES = import.meta.env.VITE_UTILITIES_ROUTE;
+const ROUTE_ROLES = import.meta.env.VITE_ROLES_ROUTE;
+const ROUTE_STORAGE = import.meta.env.VITE_STORAGE_ROUTE;
+const ROUTE_STOCK = import.meta.env.VITE_STOCK_ROUTE;
+const ROUTE_PRODUCT = import.meta.env.VITE_PRODUCT_ROUTE;
+const ROUTE_LOCATION = import.meta.env.VITE_LOCATION_ROUTE;
+const ROUTE_MANAGER = import.meta.env.VITE_MANAGER_ROUTE;
+const ROUTE_DELIVERY = import.meta.env.VITE_DELIVERY_ROUTE;
+const ROUTE_DISPATCHER = import.meta.env.VITE_DISPATCHER_ROUTE;
+const ROUTE_PRVIDER = import.meta.env.VITE_PROVIDER_ROUTE;
+const ROUTE_ORDERS = import.meta.env.VITE_ORDER_ROUTE;
+const BUSINESS_ROUTE = import.meta.env.VITE_BUSINESS_ROUTE;
 
-export class Inventory {
-    async getAllStorages(token) {
-        try {
-            const response = await fetch(
-                `${ENV.BASE_PATH_INVEN_STORAGE}${API_ROUTES_INVENTORY.GETALLSTORAGES}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            const result = await response.json();
-            return result;
-        } catch (error) {
-            return {
-                success: false,
-                message: "Error fetching storages",
-                error: error.message,
-            };
-        }
+export const ENV ={
+    BASE_PATH: SERVER_IP,
+    BASE_API_AUTH_USERS: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_USERS}`,
+    BASE_API_UTILITIES: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_UTILITIES}`,
+    BASE_API_ROLES: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_ROLES}`,
+    API_ROUTES:{
+        SIGNIN: '/SignIn',
+        SIGNUP: '/SignUp',
+        RESENDCODE: '/resendVerifyCode',
+        RESEND2FACODE: '/resend2FACode',
+        VERIFYCODE: '/VerifyCode',
+        VERIFY2FACODE: '/Verify2FACode',
+        SENDFORGOTPASSWORD: '/SendForgotPassword',
+        SENDRESETPASSWORD: '/SendResetPassword',
+        RESTOREPASSWORD: '/ResetPassword',
+        FORGOTPASSWORD: '/ForgotPassword',
+        GETUSERBYID:  '/GetUserById/:id',
+        GETALLUSERS: '/GetAllUsers',
+        GETALLDEPARTMENTS: '/departments/getAll',
+        GETCITIESBYDEPARTMENT: '/cities/:department',
+        CREATEROL : '/Create',
+        UPDATEROL : '/Update',
+        DELETEROL: '/Delete',
+        GETALLROLES: '/GetAll',
+        CREATEUSER: '/',
+        DELETEUSER: '/:id',
+    },
+
+    BASE_PATH_INVENTORY: SERVER_INVENTORY_IP,
+    BASE_PATH_INVEN_STORAGE: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_STORAGE}`,
+    BASE_PATH_INVEN_STOCK: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_STOCK}`,
+    BASE_PATH_INVEN_PRODUCT: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_PRODUCT}`,
+    API_ROUTES_INVENTORY:{
+        GETALLSTORAGES: '/GetAll',
+        CREATEASTORAGE: '/create',
+    },
+
+    BASE_PATH_BUSINESS: SERVER_BUSINESS_IP,
+    BASE_PATH_BUSINESS_LOCATION: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_LOCATION}`,
+    BASE_PATH_BUSINESS_MANAGER: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_MANAGER}`,
+    BASE_PATH_BUSINESS_DELIVERY: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_DELIVERY}`,
+    BASE_PATH_BUSINESS_DISPATCHER: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_DISPATCHER}`,
+    BASE_PATH_BUSINESS_PROVIDER: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_PRVIDER}`,
+    BASE_PATH_BUSINESS_ORDERS: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_ORDERS}`,
+    API_ROUTES_BUSINESS:{
+        GETALLLOCATIONS: '/get',
+        GETMANAGERS: '/get'
     }
-
-    async createStorage(token, data) {
-        try {
-            const response = await fetch(
-                `${ENV.BASE_PATH_INVEN_STORAGE}/create`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: JSON.stringify(data),
-                }
-            );
-            const result = await response.json();
-            return result;
-        } catch (error) {
-            return {
-                success: false,
-                message: "Error creating storage",
-                error: error.message,
-            };
-        }
-    }
-
 }
 
-export const inven = new Inventory();
+export const ROLES = { 
+    SUPERADMIN: 'SUPERADMIN',
+    MANAGER: 'MANAGER',
+    DISPATCHER: 'DISPATCHER',    
+    DELIVERY: 'DELIVERY',
+    GUEST: 'GUEST'
+}
