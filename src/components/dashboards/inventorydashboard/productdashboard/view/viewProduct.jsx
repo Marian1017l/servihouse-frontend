@@ -60,7 +60,7 @@ const ViewProduct = () => {
                         picture: "images/uploadimage.jpg",
                     };
                     console.log(payload);
-                    
+
                     const response = await inven.createProduct(payload);
 
                     if (response.success) {
@@ -69,6 +69,12 @@ const ViewProduct = () => {
                             icon: 'success',
                         });
                         navigate(`/${userRole.toLowerCase()}/inventory/products`)
+                    } else if (response.status === 409) {
+                        Swal.fire({
+                            title: 'This ID already exists',
+                            text: 'Please use a different ID',
+                            icon: 'error',
+                        });
                     } else {
                         setErrors({ general: response.message || 'Creation failed' });
                         Swal.fire(

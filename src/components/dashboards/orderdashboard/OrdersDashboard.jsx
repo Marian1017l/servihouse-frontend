@@ -19,7 +19,7 @@ const OrdersDashboard = () => {
     };
 
     const handleViewProducts = (storageId) => {
-        navigate(`/orders/products/${storageId}`);
+        navigate(`products/${storageId}`);
     };
 
     useEffect(() => {

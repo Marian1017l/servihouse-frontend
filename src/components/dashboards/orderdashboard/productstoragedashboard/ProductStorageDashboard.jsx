@@ -4,12 +4,16 @@ import { useParams } from "react-router-dom";
 import { inven } from "../../../../api/inventory";
 
 const ProductStorageDashboard = () => {
-    const { storageId } = useParams();
+    const { storageid } = useParams();
+    
+    
     const [products, setProducts] = useState([]);
+    const [selectedProducts, setSelectedProducts] = useState([]);
 
     useEffect(() => {
+        console.log(storageid);
         const fetchProducts = async () => {
-            const response = await inven.getProductsByStorage(storageId);
+            const response = await inven.getProductsByStorage(storageid);
             if (response.success) {
                 setProducts(response.data);
             } else {
@@ -17,7 +21,7 @@ const ProductStorageDashboard = () => {
             }
         };
         fetchProducts();
-    }, [storageId]);
+    }, [storageid]);
 
     return (
         <div className="orders-dashboard-container">
