@@ -69,7 +69,8 @@ export const ENV ={
     BASE_PATH_BUSINESS_ORDERS: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_ORDERS}`,
     API_ROUTES_BUSINESS:{
         GETALLLOCATIONS: '/get',
-        GETMANAGERS: '/get'
+        GETMANAGERS: '/get',
+        GETSTOCKBYDISPATCHER: '/getStock/',
     }
 }
 

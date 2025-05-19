@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './VerifyCodePhone.css'
 import { auth } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';

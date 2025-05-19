@@ -6,7 +6,8 @@ import updateIcon from '../../../../images/actualizar (1).png';
 import deleteIcon from '../../../../images/eliminar.png';
 import './ProductsDashboard.css';
 import { inven } from '../../../../api/inventory';
-
+import { business } from '../../../../api/business';
+import { auth } from '../../../../api/auth';
 const ProductsDashboard = () => {
     const userRole = localStorage.getItem("userRole");
     const navigate = useNavigate();
@@ -25,21 +26,21 @@ const ProductsDashboard = () => {
             selector: row => row.description,
         },
         {
-            name:'Price',
+            name: 'Price',
             selector: row => row.price,
         },
         {
-            name:'Fragile',
+            name: 'Fragile',
             selector: row => row.fragile.toString(),
         },
         {
-            name:'Actions',
+            name: 'Actions',
             cell: row => (
                 <div className='btn-actions-user'>
-                    <button className='btn-update-user'><img src={updateIcon} alt="Update" 
+                    <button className='btn-update-user'><img src={updateIcon} alt="Update"
                         style={{ width: "25px", height: "25px" }} /></button>
-                    <button className='btn-delete-user'><img src={deleteIcon} alt="Delete" 
-                        style={{ width: "25px", height: "25px" }}/></button>
+                    <button className='btn-delete-user'><img src={deleteIcon} alt="Delete"
+                        style={{ width: "25px", height: "25px" }} /></button>
                 </div>
             ),
         }
@@ -90,16 +91,34 @@ const ProductsDashboard = () => {
 
     const [records, setRecords] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
-    
+
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await inven.getAllProducts();    
-        if (response.status === 200) {
-            setRecords(response.data);
-            setAllProducts(response.data);
-        } else {
-            setRecords([]);
-            setAllProducts([]);
+            if (userRole === "DISPATCHER") {
+                const token = localStorage.getItem("token");
+                const dispatcherId = auth.getUserIdFromToken(token);
+                const response = await business.getStockByDispatcher(dispatcherId, token);
+                if (response.success) {
+                    const products = response.data.map(item => ({
+                        ...item.Product,
+                        amount: item.amount,
+                        storage_id: item.storage_id,
+                    }));
+                    setRecords(products);
+                    setAllProducts(products);
+                } else {
+                    setRecords([]);
+                    setAllProducts([]);
+                }
+            } else {
+                const response = await inven.getAllProducts();
+                if (response.status === 200) {
+                    setRecords(response.data);
+                    setAllProducts(response.data);
+                } else {
+                    setRecords([]);
+                    setAllProducts([]);
+                }
             }
         };
         fetchProducts();
@@ -107,11 +126,11 @@ const ProductsDashboard = () => {
 
     const handleFilter = (event) => {
         const newData = allProducts.filter(row => {
-          return row.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
-          row.price.toLowerCase().includes(event.target.value.toLowerCase()) ||
-            row.category.toLowerCase().includes(event.target.value.toLowerCase()) 
-    })
-    setRecords(newData);
+            return row.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+                row.price.toLowerCase().includes(event.target.value.toLowerCase()) ||
+                row.category.toLowerCase().includes(event.target.value.toLowerCase())
+        })
+        setRecords(newData);
     }
 
 
@@ -122,14 +141,16 @@ const ProductsDashboard = () => {
                     <h1 className="product-dashboard-title">Products</h1>
                     <div className="search-box">
                         <input type="text" placeholder="Search" onChange={handleFilter} />
-                        <span className="icon"><img src={SearchIcon} alt="Search" 
+                        <span className="icon"><img src={SearchIcon} alt="Search"
                             style={{ width: "20px", height: "20px" }} /></span>
                     </div>
                 </div>
                 <div className="product-dashboard-btn-container">
                     <button className="product-dashboard-back-btn" onClick={() => navigate(`/${userRole.toLowerCase()}/inventory`)}>BACK</button>
-                    <button className="product-dashboard-create-btn"
-                        onClick={() => navigate('/superadmin/inventory/products/create')}>CREATE</button>
+                    {userRole.toLowerCase() !== "dispatcher" && (
+                        <button className="product-dashboard-create-btn"
+                            onClick={() => navigate('/superadmin/inventory/products/create')}>CREATE</button>
+                    )}
                 </div>
             </div>
             <DataTable
@@ -138,7 +159,7 @@ const ProductsDashboard = () => {
                 pagination
                 customStyles={customStyles}
             />
-    
+
         </div>
     );
 }

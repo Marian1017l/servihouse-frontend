@@ -52,7 +52,7 @@ export class Business {
     async getStockByDispatcher(dispatcherId, token) {
         try {
             const response = await fetch(
-                `${ENV.BASE_PATH_STOCK}/dispatcher/${dispatcherId}`,
+                `${ENV.BASE_PATH_STOCK}${API_ROUTES_BUSINESS.GETSTOCKBYDISPATCHER}${dispatcherId}`,
                 {
                     method: "GET",
                     headers: {
