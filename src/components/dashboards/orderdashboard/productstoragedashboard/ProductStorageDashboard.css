@@ -7,6 +7,13 @@
     padding-bottom: 100px;
 }
 
+.orders-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
 .orders-dashboard-title {
     font-size: 1.5rem;
     margin-bottom: 16px;
@@ -26,6 +33,21 @@
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 1rem;
+}
+
+.order-create-btn {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.order-create-btn:hover {
+    background: #028c7e;
 }
 
 .orders-dashboard-cards {
