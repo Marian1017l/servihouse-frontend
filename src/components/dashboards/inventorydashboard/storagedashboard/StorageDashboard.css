@@ -94,3 +94,27 @@
     margin-top: 12px;
     gap: 8px;
 }
+
+.storages-dashboard-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 12px;
+    gap: 8px;
+}
+
+.storages-dashboard-pagination button {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.storages-dashboard-pagination button:disabled {
+    background: #bdbdbd;
+    cursor: not-allowed;
+}
