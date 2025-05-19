@@ -1,8 +1,15 @@
-const SERVER_IP = import.meta.env.VITE_DEV_API_URL;
+const SERVER_IP = import.meta.env.VITE_DEV_AUTH_URL;
+const SERVER_BUSSINESS_IP = import.meta.env.VITE_DEV_BUS_URL;
+const SERVER_INVENTORY_IP = import.meta.env.VITE_DEV_INVEN_URL;
 const AUTH_ROUTE = import.meta.env.VITE_AUTH_ROUTE;
+const INVENTORY_ROUTE = import.meta.env.VITE_INVENTORY_ROUTE;
 const ROUTE_USERS = import.meta.env.VITE_USERS_ROUTE;
 const ROUTE_UTILITIES = import.meta.env.VITE_UTILITIES_ROUTE;
 const ROUTE_ROLES = import.meta.env.VITE_ROLES_ROUTE;
+const ROUTE_STORAGE = import.meta.env.VITE_STORAGE_ROUTE;
+const ROUTE_STOCK = import.meta.env.VITE_STOCK_ROUTE;
+const ROUTE_PRODUCT = import.meta.env.VITE_PRODUCT_ROUTE;
+
 export const ENV ={
     BASE_PATH: SERVER_IP,
     BASE_API_AUTH_USERS: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_USERS}`,
@@ -29,7 +36,14 @@ export const ENV ={
         GETALLROLES: '/GetAll',
         CREATEUSER: '/',
         DELETEUSER: '/:id',
-        
+    },
+
+    BASE_PATH_INVENTORY: SERVER_INVENTORY_IP,
+    BASE_PATH_INVEN_STORAGE: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_STORAGE}`,
+    BASE_PATH_INVEN_STOCK: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_STOCK}`,
+    BASE_PATH_INVEN_PRODUCT: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_PRODUCT}`,
+    API_ROUTES_INVENTORY:{
+        GETALLSTORAGES: '/GetAll',
     }
 }
 
