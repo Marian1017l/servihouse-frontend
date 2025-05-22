@@ -6,6 +6,13 @@
     height: 100%;
 }
 
+.stock-transaction-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
 .stock-transaction-dashboard-container h1 {
     color: #222;
     font-size: 1.5rem;
@@ -43,4 +50,22 @@
 
 .orders-table tr:hover {
     background: #e6f7f4;
+}
+
+
+.stock-dashboard-back-btn {
+    background: #fff;
+    color: #03a791;
+    border: 2px solid #03a791;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.stock-dashboard-back-btn:hover {
+    background: #03a791;
+    color: #fff;
 }

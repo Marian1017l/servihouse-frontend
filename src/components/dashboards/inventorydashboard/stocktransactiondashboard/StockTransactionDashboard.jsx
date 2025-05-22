@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./StockTransactionDashboard.css";
 import { business } from "../../../../api/business";
+import { useNavigate } from "react-router-dom";
 
 const stockTransactionColumns = [
     { name: "ID", selector: row => row.id },
@@ -17,6 +18,8 @@ const stockTransactionColumns = [
 
 const StockTransaction = () => {
     const [transactions, setTransactions] = useState([]);
+    const userRole = localStorage.getItem("userRole");  
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchTransactions();
@@ -31,7 +34,15 @@ const StockTransaction = () => {
 
     return (
         <div className="stock-transaction-dashboard-container">
-            <h1>Stock Transactions</h1>
+            <div className="stock-transaction-dashboard-header">
+                <h1>Stock Transactions</h1>
+                <button
+                    className="stock-dashboard-back-btn"
+                    onClick={() => navigate(`/${userRole.toLowerCase()}/inventory`)}
+                >
+                    BACK
+                </button>
+            </div>
             {transactions.length === 0 ? (
                 <p>No stock transactions to display.</p>
             ) : (
