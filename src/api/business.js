@@ -163,6 +163,52 @@ export class Business {
         }
     }
 
+    async getOrderWithDelivery(orderId) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETORDERWITHDELIVERY}${orderId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching order with delivery",
+                error: error.message,
+            };
+        }
+    }
+
+    async getOrderStorage(orderId) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETSTORAGEBYORDERID}${orderId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching order storages",
+                error: error.message,
+            };
+        }
+    }
+
 }
 
 export const business = new Business();

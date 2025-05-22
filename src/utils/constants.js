@@ -17,12 +17,12 @@ const ROUTE_PRVIDER = import.meta.env.VITE_PROVIDER_ROUTE;
 const ROUTE_ORDERS = import.meta.env.VITE_ORDER_ROUTE;
 const BUSINESS_ROUTE = import.meta.env.VITE_BUSINESS_ROUTE;
 
-export const ENV ={
+export const ENV = {
     BASE_PATH: SERVER_IP,
     BASE_API_AUTH_USERS: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_USERS}`,
     BASE_API_UTILITIES: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_UTILITIES}`,
     BASE_API_ROLES: `${SERVER_IP}${AUTH_ROUTE}${ROUTE_ROLES}`,
-    API_ROUTES:{
+    API_ROUTES: {
         SIGNIN: '/SignIn',
         SIGNUP: '/SignUp',
         RESENDCODE: '/resendVerifyCode',
@@ -33,12 +33,12 @@ export const ENV ={
         SENDRESETPASSWORD: '/SendResetPassword',
         RESTOREPASSWORD: '/ResetPassword',
         FORGOTPASSWORD: '/ForgotPassword',
-        GETUSERBYID:  '/GetUserById/:id',
+        GETUSERBYID: '/GetUserById/:id',
         GETALLUSERS: '/GetAllUsers',
         GETALLDEPARTMENTS: '/departments/getAll',
         GETCITIESBYDEPARTMENT: '/cities/:department',
-        CREATEROL : '/Create',
-        UPDATEROL : '/Update',
+        CREATEROL: '/Create',
+        UPDATEROL: '/Update',
         DELETEROL: '/Delete',
         GETALLROLES: '/GetAll',
         CREATEUSER: '/',
@@ -49,11 +49,11 @@ export const ENV ={
     BASE_PATH_INVEN_STORAGE: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_STORAGE}`,
     BASE_PATH_INVEN_STOCK: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_STOCK}`,
     BASE_PATH_INVEN_PRODUCT: `${SERVER_INVENTORY_IP}${INVENTORY_ROUTE}${ROUTE_PRODUCT}`,
-    API_ROUTES_INVENTORY:{
+    API_ROUTES_INVENTORY: {
         GETALLSTORAGES: '/GetAll',
         CREATEASTORAGE: '/create',
     },
-    API_ROUTES_INVENTORY_PRODUCT:{
+    API_ROUTES_INVENTORY_PRODUCT: {
         GETALLPRODUCTS: '/GetAll',
         CREATEPRODUCT: '/create',
         UPDATEPRODUCT: '/update',
@@ -68,7 +68,7 @@ export const ENV ={
     BASE_PATH_BUSINESS_DISPATCHER: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_DISPATCHER}`,
     BASE_PATH_BUSINESS_PROVIDER: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_PRVIDER}`,
     BASE_PATH_BUSINESS_ORDERS: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_ORDERS}`,
-    API_ROUTES_BUSINESS:{
+    API_ROUTES_BUSINESS: {
         GETALLLOCATIONS: '/get',
         GETMANAGERS: '/get',
         GETSTOCKBYDISPATCHER: '/getStock/',
@@ -76,13 +76,15 @@ export const ENV ={
         GETORDERSBYDISPATCHER: '/getOrdersByDispatcherId/',
         GETORDERSBYSTORAGE: '/getOrdersByStorageId/',
         GETSTORAGEBYMANAGER: '/getStorageByManagerId/',
+        GETORDERWITHDELIVERY: '/getOrderWithDelivery/',
+        GETSTORAGEBYORDERID: '/getOrderStorage/',
     }
 }
 
-export const ROLES = { 
+export const ROLES = {
     SUPERADMIN: 'SUPERADMIN',
     MANAGER: 'MANAGER',
-    DISPATCHER: 'DISPATCHER',    
+    DISPATCHER: 'DISPATCHER',
     DELIVERY: 'DELIVERY',
     GUEST: 'GUEST'
 }
