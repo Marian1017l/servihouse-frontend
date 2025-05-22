@@ -209,6 +209,30 @@ export class Business {
         }
     }
 
+    async getAllStockTransactions() {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_STOCK_TRANSACTION}${API_ROUTES_BUSINESS.GETALLSTOCKTRANSACTIONS}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching stock transactions",
+                error: error.message,
+            };
+        }
+    }
+
+
 }
 
 export const business = new Business();
