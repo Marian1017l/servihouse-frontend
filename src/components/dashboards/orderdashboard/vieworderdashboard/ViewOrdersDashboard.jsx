@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux'
 import { business } from '../../../../api/business'
 import { auth } from '../../../../api/auth'
 import './ViewOrdersDashboard.css'
+import DataTable from 'react-data-table-component'
+
 
 
 export const orderColumns = [
@@ -44,6 +46,42 @@ export const orderColumns = [
     selector: row => new Date(row.updatedAt).toLocaleString(), sortable: true
   },
 ];
+
+const customStyles = {
+  headRow: {
+    style: {
+      background: '#F6F6F6',
+      padding: '12px 8px',
+      fontWeight: '600',
+      textAlign: 'left'
+    },
+  },
+  headCells: {
+    style: {
+      color: '#03a791',
+    },
+  },
+  rows: {
+    style: {
+      backgroundColor: '#E8E7E7',
+      padding: '12px 8px',
+      minHeight: '48px',
+      '&:not(:last-of-type)': {
+        borderBottomStyle: 'solid',
+        borderBottomWidth: '1px',
+        borderBottomColor: '#e0e0e0',
+      },
+    },
+  },
+  pagination: {
+    style: {
+      borderTopStyle: 'solid',
+      borderTopWidth: '1px',
+      borderTopColor: '#e0e0e0',
+      padding: '10px',
+    },
+  },
+};
 
 const ViewOrdersDashboard = () => {
   const [orders, setOrders] = useState([])
@@ -117,32 +155,13 @@ const ViewOrdersDashboard = () => {
   return (
     <div className="orders-table-container">
       <h2 className="orders-table-title">Orders</h2>
-      {orders.length === 0 ? (
-        <p>No orders to display.</p>
-      ) : (
-        <table className="orders-table">
-          <thead>
-            <tr>
-              {orderColumns.map(col => (
-                <th key={col.name}>{col.name}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map(order => (
-              <tr key={order.id}>
-                {orderColumns.map(col => (
-                  <td key={col.name}>
-                    {typeof col.selector(order) === 'string' || typeof col.selector(order) === 'number'
-                      ? col.selector(order)
-                      : ''}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <DataTable
+        columns={orderColumns}
+        data={orders}
+        pagination
+        customStyles={customStyles}
+        className="orders-table"
+      />
     </div>
   );
 }
