@@ -71,6 +71,98 @@ export class Business {
             };
         }
     }
+
+    async getAllOrders(token) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETALLORDERS}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching orders",
+                error: error.message,
+            };
+        }
+    }
+
+    async getOrdersByDispatcherId(dispatcherId, token) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETORDERSBYDISPATCHER}/${dispatcherId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching orders by dispatcher",
+                error: error.message,
+            };
+        }
+    }
+    async getOrdersByStorageId(storageId, token) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETORDERSBYSTORAGE}/${storageId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching orders by storage",
+                error: error.message,
+            };
+        }
+    }
+
+    async getStorageByManagerId(managerId) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_MANAGER}${API_ROUTES_BUSINESS.GETSTORAGEBYMANAGER}/${managerId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching storages by manager",
+                error: error.message,
+            };
+        }
+    }
+
 }
 
 export const business = new Business();

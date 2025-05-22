@@ -72,6 +72,10 @@ export const ENV ={
         GETALLLOCATIONS: '/get',
         GETMANAGERS: '/get',
         GETSTOCKBYDISPATCHER: '/getStock/',
+        GETALLORDERS: '/getAll',
+        GETORDERSBYDISPATCHER: '/getOrdersByDispatcherId/',
+        GETORDERSBYSTORAGE: '/getOrdersByStorageId/',
+        GETSTORAGEBYMANAGER: '/getStorageByManagerId/',
     }
 }
 

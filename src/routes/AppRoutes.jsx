@@ -28,6 +28,7 @@ import ProviderDashboard from "../components/dashboards/inventorydashboard/provi
 import StockTransactionDashboard from "../components/dashboards/inventorydashboard/stocktransactiondashboard/StockTransactionDashboard";
 import ViewProduct from "../components/dashboards/inventorydashboard/productdashboard/view/viewProduct";
 import ProductStorageDashboard from "../components/dashboards/orderdashboard/productstoragedashboard/ProductStorageDashboard";
+import ViewOrdersDashboard from "../components/dashboards/orderdashboard/vieworderdashboard/ViewOrdersDashboard";
 import { ROLES } from "../utils/constants";
 
 export const AppRoutes = () => {
@@ -68,6 +69,7 @@ export const AppRoutes = () => {
       //orders
       { path: "orders", element: <OrdersDashboard /> },
       { path: "orders/products/:storageid", element: <ProductStorageDashboard /> },
+      { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps      
@@ -89,6 +91,7 @@ export const AppRoutes = () => {
       //orders
       { path: "orders", element: <OrdersDashboard /> },
       { path: "orders/products/:storageid", element: <ProductStorageDashboard /> },
+      { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
@@ -99,6 +102,7 @@ export const AppRoutes = () => {
       { path: "profile", element: <ProfileDashboard /> },
       //orders itself
       { path: "orders", element: <OrdersDashboard /> },
+      { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //maps 
       { path: "maps", element: <MapsDashboard /> },
     ],
@@ -112,6 +116,7 @@ export const AppRoutes = () => {
       //orders
       { path: "orders", element: <OrdersDashboard /> },
       { path: "orders/products/:storageid", element: <ProductStorageDashboard /> },
+      { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
