@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./StockTransactionDashboard.css";
 import { business } from "../../../../api/business";
 import { useNavigate } from "react-router-dom";
+import DataTable from "react-data-table-component";
+
 
 const stockTransactionColumns = [
     { name: "ID", selector: row => row.id },
@@ -15,10 +17,46 @@ const stockTransactionColumns = [
     { name: "Created At", selector: row => new Date(row.createdAt).toLocaleString() },
 ];
 
+const customStyles = {
+    headRow: {
+        style: {
+            background: '#F6F6F6',
+            padding: '12px 8px',
+            fontWeight: '600',
+            textAlign: 'left'
+        },
+    },
+    headCells: {
+        style: {
+            color: '#03a791',
+        },
+    },
+    rows: {
+        style: {
+            backgroundColor: '#E8E7E7',
+            padding: '12px 8px',
+            minHeight: '48px',
+            '&:not(:last-of-type)': {
+                borderBottomStyle: 'solid',
+                borderBottomWidth: '1px',
+                borderBottomColor: '#e0e0e0',
+            },
+        },
+    },
+    pagination: {
+        style: {
+            borderTopStyle: 'solid',
+            borderTopWidth: '1px',
+            borderTopColor: '#e0e0e0',
+            padding: '10px',
+        },
+    },
+};
+
 
 const StockTransaction = () => {
     const [transactions, setTransactions] = useState([]);
-    const userRole = localStorage.getItem("userRole");  
+    const userRole = localStorage.getItem("userRole");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,28 +81,14 @@ const StockTransaction = () => {
                     BACK
                 </button>
             </div>
-            {transactions.length === 0 ? (
-                <p>No stock transactions to display.</p>
-            ) : (
-                <table className="orders-table">
-                    <thead>
-                        <tr>
-                            {stockTransactionColumns.map(col => (
-                                <th key={col.name}>{col.name}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {transactions.map(tx => (
-                            <tr key={tx.id}>
-                                {stockTransactionColumns.map(col => (
-                                    <td key={col.name}>{col.selector(tx)}</td>
-                                ))}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+            <DataTable
+                columns={stockTransactionColumns}
+                data={transactions}
+                pagination
+                customStyles={customStyles}
+                className="orders-table"
+                noDataComponent={<p>No stock transactions to display.</p>}
+            />
         </div>
     );
 }
