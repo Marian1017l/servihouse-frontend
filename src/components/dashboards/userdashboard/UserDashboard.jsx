@@ -29,34 +29,34 @@ const UserDashboard = () => {
             selector: row => row.email,
         },
         {
-            name:'Phone',
+            name: 'Phone',
             selector: row => row.phone,
         },
         {
-            name:'Status',
+            name: 'Status',
             selector: row => row.status,
         },
         {
-            name:'Role',
+            name: 'Role',
             selector: row => row.rol,
         },
         {
-            name:'City',
+            name: 'City',
             selector: row => row.city
-,
+            ,
         },
         {
-            name:'Department',
+            name: 'Department',
             selector: row => row.department,
         },
         {
-            name:'Actions',
+            name: 'Actions',
             cell: row => (
                 <div className='btn-actions-user'>
-                    <button className='btn-update-user'><img src={updateIcon} alt="Update" 
+                    <button className='btn-update-user'><img src={updateIcon} alt="Update"
                         style={{ width: "25px", height: "25px" }} /></button>
-                    <button className='btn-delete-user' onClick={() => handleDelete(row.id)}><img src={deleteIcon} alt="Delete" 
-                        style={{ width: "25px", height: "25px" }}/></button>
+                    <button className='btn-delete-user' onClick={() => handleDelete(row.id)}><img src={deleteIcon} alt="Delete"
+                        style={{ width: "25px", height: "25px" }} /></button>
                 </div>
             ),
         }
@@ -81,7 +81,7 @@ const UserDashboard = () => {
         },
         headCells: {
             style: {
-                color: '#202124',
+                color: '#03a791',
             },
         },
         rows: {
@@ -106,16 +106,16 @@ const UserDashboard = () => {
         },
     };
 
-     const [records, setRecords] = useState([]);
-     const [allUsers, setAllUsers] = useState([]);
+    const [records, setRecords] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
 
     useEffect(() => {
         const fetchUsers = async () => {
 
             const response = await auth.getAllUsers();
-            
+
             if (response.status === 200) {
-                
+
                 setRecords(response.data);
                 setAllUsers(response.data);
             } else {
@@ -128,53 +128,53 @@ const UserDashboard = () => {
 
     const handleFilter = (event) => {
         const newData = allUsers.filter(row => {
-          return row.user_name.toLowerCase().includes(event.target.value.toLowerCase())  || 
-            row.rol.toLowerCase().includes(event.target.value.toLowerCase())
-    })
-    setRecords(newData);
+            return row.user_name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+                row.rol.toLowerCase().includes(event.target.value.toLowerCase())
+        })
+        setRecords(newData);
     }
 
     const handleDelete = (userId) => {
         Swal.fire({
-                title: 'Do you want to delete this user?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                showConfirmButton: true,
-              }).then(async (result) => {
-                if (result.isConfirmed) {
-                    try {
-                        const response = await auth.deleteUser(userId);
-                        if (response.status === 200) {
-                            Swal.fire({
-                                title: 'Deleted!',
-                                text: 'User has been deleted.',
-                                icon: 'success',
-                            });
-                            setRecords(records.filter(record => record.id !== userId));
-                        } else {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'Failed to delete user.',
-                                icon: 'error',
-                            });
-                        }
-                    } catch (error) {
-                        console.error('Error deleting user:', error);
+            title: 'Do you want to delete this user?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            showConfirmButton: true,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await auth.deleteUser(userId);
+                    if (response.status === 200) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'User has been deleted.',
+                            icon: 'success',
+                        });
+                        setRecords(records.filter(record => record.id !== userId));
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Failed to delete user.',
+                            icon: 'error',
+                        });
                     }
+                } catch (error) {
+                    console.error('Error deleting user:', error);
                 }
-              });
+            }
+        });
     }
-    
-    
+
+
     return (
         <div className="user-dashboard-content">
             <div className="user-dashboard-header">
                 <div className="user-dashboard-header-left">
                     <h1 className="user-dashboard-title">Users</h1>
                     <div className="search-box">
-                        <input type="text" placeholder="Search" onChange={handleFilter}/>
-                        <span className="icon"><img src={SearchIcon} alt="Search" 
+                        <input type="text" placeholder="Search" onChange={handleFilter} />
+                        <span className="icon"><img src={SearchIcon} alt="Search"
                             style={{ width: "20px", height: "20px" }} /></span>
                     </div>
                 </div>
@@ -187,9 +187,9 @@ const UserDashboard = () => {
                 pagination
                 customStyles={customStyles}
             />
-    
+
         </div>
     );
-}  
+}
 
 export default UserDashboard;

@@ -68,7 +68,7 @@ const StorageDashboard = () => {
         },
         headCells: {
             style: {
-                color: '#202124',
+                color: '#03a791',
             },
         },
         rows: {
