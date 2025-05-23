@@ -94,17 +94,21 @@ const ViewOrdersDashboard = () => {
     if (role === 'SUPERADMIN') {
       response = await business.getAllOrders(token);
     } else if (role === 'MANAGER') {
-      const storageResponse = await business.getStorageByManagerId(id_user, token);
+      const storageResponse = await business.getStorageByManagerId(id_user);
       if (storageResponse.success && storageResponse.data && storageResponse.data.length > 0) {
         const storageId = storageResponse.data[0].id;
-        response = await business.getOrdersByStorageId(storageId, token);
+        response = await business.getOrdersByStorageId(storageId);
       } else {
         console.error('No storage found for this manager');
         return;
       }
     } else if (role === 'DISPATCHER') {
-      response = await business.getOrdersByDispatcherId(id_user, token);
+      response = await business.getOrdersByDispatcherId(id_user);
     }
+    else if (role === 'DELIVERY') {
+      response = await business.getOrdersByDeliveryId(id_user);
+    }
+
     if (response && response.success) {
       // Para cada orden, trae delivery y storage y agrega los datos al objeto
       const ordersWithDetails = await Promise.all(
@@ -112,7 +116,7 @@ const ViewOrdersDashboard = () => {
           // Traer delivery
           let deliveryFullName = '';
           try {
-            const deliveryResp = await business.getOrderWithDelivery(order.id, token);
+            const deliveryResp = await business.getOrderWithDelivery(order.id);
             if (deliveryResp.success && deliveryResp.order && deliveryResp.order.delivery) {
               deliveryFullName = deliveryResp.order.delivery.full_name;
             }
@@ -122,7 +126,7 @@ const ViewOrdersDashboard = () => {
           let storageId = '';
           let storageName = '';
           try {
-            const storageResp = await business.getOrderStorage(order.id, token);
+            const storageResp = await business.getOrderStorage(order.id);
             if (
               storageResp.success &&
               storageResp.storages &&
