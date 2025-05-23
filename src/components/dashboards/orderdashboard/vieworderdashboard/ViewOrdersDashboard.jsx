@@ -89,6 +89,8 @@ const ViewOrdersDashboard = () => {
   const role = auth.getRoleFromToken(token);
   const id_user = auth.getUserIdFromToken(token);
 
+  const navigate = useNavigate();
+
   const fetchOrders = async () => {
     let response;
     if (role === 'SUPERADMIN') {
@@ -158,7 +160,17 @@ const ViewOrdersDashboard = () => {
 
   return (
     <div className="orders-table-container">
-      <h2 className="orders-table-title">Orders</h2>
+      <div className="orders-table-header">
+        <h2 className="orders-table-title">Orders</h2>
+        <div className="orders-table-btn-container">
+          <button
+            className="orders-table-create-btn"
+            onClick={() => navigate(`/${role.toLowerCase()}/orders/create`)}
+          >
+            CREATE
+          </button>
+        </div>
+      </div>
       <DataTable
         columns={orderColumns}
         data={orders}

@@ -67,7 +67,7 @@ export const AppRoutes = () => {
       { path: "inventory/providers", element: <ProviderDashboard /> },
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
       //orders
-      { path: "orders", element: <OrdersDashboard /> },
+      { path: "orders/create", element: <OrdersDashboard /> },
       { path: "orders/products/:storageid", element: <ProductStorageDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //reports
@@ -89,7 +89,7 @@ export const AppRoutes = () => {
       { path: "inventory/providers", element: <ProviderDashboard /> },
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
       //orders
-      { path: "orders", element: <OrdersDashboard /> },
+      { path: "orders/create", element: <OrdersDashboard /> },
       { path: "orders/products/:storageid", element: <ProductStorageDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //reports
@@ -101,7 +101,6 @@ export const AppRoutes = () => {
       //profile
       { path: "profile", element: <ProfileDashboard /> },
       //orders itself
-      { path: "orders", element: <OrdersDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //maps 
       { path: "maps", element: <MapsDashboard /> },
@@ -114,7 +113,7 @@ export const AppRoutes = () => {
       { path: "inventory/products", element: <ProductsDashboard /> },
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
       //orders
-      { path: "orders", element: <OrdersDashboard /> },
+      { path: "orders/create", element: <OrdersDashboard /> },
       { path: "orders/products/:storageid", element: <ProductStorageDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //reports

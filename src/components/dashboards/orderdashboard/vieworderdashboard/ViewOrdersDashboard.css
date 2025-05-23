@@ -43,5 +43,31 @@
 
 .orders-table tr:hover {
     background: #e6f7f4;
-    transition: background 0.2s;
+}
+
+.orders-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.orders-table-btn-container {
+    display: flex;
+    gap: 12px;
+}
+
+.orders-table-create-btn {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.orders-table-create-btn:hover {
+    background: #028c7e;
 }
