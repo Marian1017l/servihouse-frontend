@@ -162,14 +162,16 @@ const ViewOrdersDashboard = () => {
     <div className="orders-table-container">
       <div className="orders-table-header">
         <h2 className="orders-table-title">Orders</h2>
-        <div className="orders-table-btn-container">
-          <button
-            className="orders-table-create-btn"
-            onClick={() => navigate(`/${role.toLowerCase()}/orders/create`)}
-          >
-            CREATE
-          </button>
-        </div>
+        {role.toLowerCase() !== "DELIVERY" && (
+          <div className="orders-table-btn-container">
+            <button
+              className="orders-table-create-btn"
+              onClick={() => navigate(`/${role.toLowerCase()}/orders/create`)}
+            >
+              CREATE
+            </button>
+          </div>
+        )}
       </div>
       <DataTable
         columns={orderColumns}
