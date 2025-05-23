@@ -161,7 +161,7 @@ const ViewOrdersDashboard = () => {
   return (
     <div className="orders-table-container">
       <div className="orders-table-header">
-        <h2 className="orders-table-title">Orders</h2>
+        <h2 className="orders-table-title">Orders </h2>
         {role.toLowerCase() !== "DELIVERY" && (
           <div className="orders-table-btn-container">
             <button
