@@ -81,6 +81,7 @@ export const ENV = {
         GETORDERWITHDELIVERY: '/getOrderWithDelivery/',
         GETSTORAGEBYORDERID: '/getOrderStorage/',
         GETALLSTOCKTRANSACTIONS: '/get',
+        GETORDERSBYDELIVERY: '/getOrderByDeliveryId/'
     }
 }
 
