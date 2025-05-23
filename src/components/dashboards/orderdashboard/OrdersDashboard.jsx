@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 const OrdersDashboard = () => {
     const [storages, setStorages] = useState([]);
+    const role = localStorage.getItem("userRole");
     const navigate = useNavigate();
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
 
     const fetchStorages = async () => {
-        const token = localStorage.getItem("token");
-        const response = await inven.getAllStorages(token);
+        const response = await inven.getStoragesWithProducts();
         if (response.success) {
             setStorages(response.data);
         } else {
@@ -22,7 +22,7 @@ const OrdersDashboard = () => {
     };
 
     const handleViewProducts = (storageId) => {
-        navigate(`products/${storageId}`);
+        navigate(`/${role}/orders/products/${storageId}`);
     };
 
     useEffect(() => {

@@ -6,16 +6,18 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 const ProductStorageDashboard = () => {
-    const { storageid } = useParams();
+    const { storageId } = useParams();
     const MySwal = withReactContent(Swal);
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
-
+    
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await inven.getProductsByStorage(storageid);
+            const response = await inven.getProductsByStorage(storageId);
+            console.log(response);
+            
             if (response.success) {
                 setProducts(response.data);
                 
@@ -24,7 +26,7 @@ const ProductStorageDashboard = () => {
             }
         };
         fetchProducts();
-    }, [storageid]);
+    }, [storageId]);
 
     const handleProductSelect = (product) => {
         const amount = product.stock[0]?.amount;
@@ -56,7 +58,7 @@ const ProductStorageDashboard = () => {
                         confirmButtonText: "OK",
                     });
                 }else{
-                    const newData = { product_id: product.id, amount: document.getElementById("swal-input1").value, storage_id: storageid };
+                    const newData = { product_id: product.id, amount: document.getElementById("swal-input1").value, storage_id: storageId };
                     setSelectedProducts(prev => [...prev, newData]);
                     MySwal.fire({
                         title: "Product Selected",

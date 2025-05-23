@@ -86,6 +86,24 @@ export class Inventory {
             });
     }
 
+    async getStoragesWithProducts() {
+        const url = `${ENV.BASE_PATH_INVEN_STORAGE}${ENV.API_ROUTES_INVENTORY.GETSTORAGESWITHPRODUCTS}`;
+
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    //"Authorization": `Bearer ${token}`,
+                },
+            });
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error fetching storages with products:", error);
+            throw error;
+        }
+    }
 }
 
 export const inven = new Inventory();

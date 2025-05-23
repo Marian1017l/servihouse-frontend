@@ -53,6 +53,7 @@ export const ENV = {
     API_ROUTES_INVENTORY: {
         GETALLSTORAGES: '/GetAll',
         CREATEASTORAGE: '/create',
+        GETSTORAGESWITHPRODUCTS: '/withProducts/',
     },
     API_ROUTES_INVENTORY_PRODUCT: {
         GETALLPRODUCTS: '/GetAll',
