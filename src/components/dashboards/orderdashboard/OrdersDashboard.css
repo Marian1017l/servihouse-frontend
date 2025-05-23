@@ -90,3 +90,28 @@
     width: 18px;
     height: 18px;
 }
+
+.orders-dashboard-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.orders-dashboard-pagination button {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.orders-dashboard-pagination button:disabled {
+    background: #bdbdbd;
+    cursor: not-allowed;
+}

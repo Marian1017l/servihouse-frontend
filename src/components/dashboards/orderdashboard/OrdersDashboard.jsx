@@ -8,6 +8,9 @@ const OrdersDashboard = () => {
     const [storages, setStorages] = useState([]);
     const navigate = useNavigate();
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+
     const fetchStorages = async () => {
         const token = localStorage.getItem("token");
         const response = await inven.getAllStorages(token);
@@ -26,6 +29,12 @@ const OrdersDashboard = () => {
         fetchStorages();
     }, []);
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentStorages = storages.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(storages.length / itemsPerPage);
+
+
     return (
         <div className="orders-dashboard-container">
             <h2 className="orders-dashboard-title">Select the storage you want to make a order:</h2>
@@ -33,7 +42,7 @@ const OrdersDashboard = () => {
                 <input type="text" placeholder="Search..." />
             </div>
             <div className="orders-dashboard-cards">
-                {storages.map((storage, idx) => (
+                {currentStorages.map((storage, idx) => (
                     <div className="orders-dashboard-card" key={idx}>
                         <div className="orders-dashboard-card-title">{storage.name}</div>
                         <div className="orders-dashboard-card-address">
@@ -44,6 +53,21 @@ const OrdersDashboard = () => {
                         </button>
                     </div>
                 ))}
+            </div>
+            <div className="orders-dashboard-pagination">
+                <button
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                >
+                    Prev
+                </button>
+                <span>{currentPage} / {totalPages}</span>
+                <button
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                >
+                    Next
+                </button>
             </div>
         </div>
     );
