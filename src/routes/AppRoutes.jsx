@@ -30,6 +30,7 @@ import ViewProduct from "../components/dashboards/inventorydashboard/productdash
 import ProductStorageDashboard from "../components/dashboards/orderdashboard/productstoragedashboard/ProductStorageDashboard";
 import ViewOrdersDashboard from "../components/dashboards/orderdashboard/vieworderdashboard/ViewOrdersDashboard";
 import ViewLocationDashBoard from "../components/dashboards/mapsdashboard/viewlocationdashboard/ViewLocationDashBoard";
+import OrderView from "../components/dashboards/homepage/orderView/orderView";
 import { ROLES } from "../utils/constants";
 
 export const AppRoutes = () => {
@@ -144,6 +145,7 @@ export const AppRoutes = () => {
       {/* Rutas públicas */}
       <Route path="/" element={<LayoutDashboard />}>
         <Route path="home" element={<HomeDashboard />} />
+        <Route path="home/order" element={<OrderView />} />
         <Route path="auth/login" element={<Login />} />
         <Route path="auth/signup" element={<SignUp />} />
         <Route path="auth/verify-code-phone" element={<VerifyCodePhone />} />
