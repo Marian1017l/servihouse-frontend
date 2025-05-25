@@ -17,7 +17,7 @@ import RolesDashboard from "../components/dashboards/roledashboard/RoleDashboard
 import InventoryDashboard from "../components/dashboards/inventorydashboard/InventoryDashboard";
 import OrdersDashboard from "../components/dashboards/orderdashboard/OrdersDashboard";
 import ReportsDashboard from "../components/dashboards/reportdashboard/ReportsDashboard";
-import MapsDashboard from "../components/dashboards/mapsdashboard/MapsDashboard";
+// import MapsDashboard from "../components/dashboards/mapsdashboard/MapsDashboard";
 import ViewRoleDashboard from "../components/dashboards/roledashboard/viewroledashboard/viewRoleDashboard";
 import LayoutDashboard from "../components/dashboards/layout/Layout";
 import ViewUser from "../components/dashboards/userdashboard/view/viewUser"
@@ -29,6 +29,7 @@ import StockTransactionDashboard from "../components/dashboards/inventorydashboa
 import ViewProduct from "../components/dashboards/inventorydashboard/productdashboard/view/viewProduct";
 import ProductStorageDashboard from "../components/dashboards/orderdashboard/productstoragedashboard/ProductStorageDashboard";
 import ViewOrdersDashboard from "../components/dashboards/orderdashboard/vieworderdashboard/ViewOrdersDashboard";
+import ViewLocationDashBoard from "../components/dashboards/mapsdashboard/viewlocationdashboard/ViewLocationDashBoard";
 import { ROLES } from "../utils/constants";
 
 export const AppRoutes = () => {
@@ -73,7 +74,7 @@ export const AppRoutes = () => {
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps      
-      { path: "maps", element: <MapsDashboard /> },
+      { path: "inventory/storages/view-location/:id", element: <ViewLocationDashBoard/> },
     ],
     [ROLES.MANAGER]: [
       //profile
@@ -95,7 +96,7 @@ export const AppRoutes = () => {
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
-      { path: "maps", element: <MapsDashboard /> },
+
     ],
     [ROLES.DELIVERY]: [
       //profile
@@ -103,7 +104,6 @@ export const AppRoutes = () => {
       //orders itself
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //maps 
-      { path: "maps", element: <MapsDashboard /> },
     ],
     [ROLES.DISPATCHER]: [
       //profile
@@ -119,7 +119,6 @@ export const AppRoutes = () => {
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
-      { path: "maps", element: <MapsDashboard /> },
     ],
   };
 

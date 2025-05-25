@@ -11,7 +11,7 @@ import { inven } from '../../../../api/inventory';
 
 const StorageDashboard = () => {
     const navigate = useNavigate();
-
+    const userRole = localStorage.getItem("userRole") || '';
     const columns = [
         {
             name: 'Name',
@@ -41,14 +41,48 @@ const StorageDashboard = () => {
             name:'Actions',
             cell: row => (
                 <div className='btn-actions-user'>
-                    <button className='btn-update-user'><img src={updateIcon} alt="Update" 
-                        style={{ width: "25px", height: "25px" }} /></button>
-                    <button className='btn-delete-user'><img src={deleteIcon} alt="Delete" 
-                        style={{ width: "25px", height: "25px" }}/></button>
+                    <button
+                        className='btn-update-user'
+                        onClick={() => handleUpdate(row)}
+                    >
+                        <img src={updateIcon} alt="Update" style={{ width: "25px", height: "25px" }} />
+                    </button>
+                    <button
+                        className='btn-delete-user'
+                        onClick={() => handleDelete(row)}
+                    >
+                        <img src={deleteIcon} alt="Delete" style={{ width: "25px", height: "25px" }}/>
+                    </button>
+                    <button
+                        className='btn-view-user'
+                        onClick={() => navigate(`view-location/${row.id}`, { 
+                        state: { 
+                            lat: row.location.latitude, 
+                            lng: row.location.altitude, 
+                            label: row.name, 
+                            title: row.name ,
+                            obj: row,
+                        } 
+                        })}
+                    >
+                        View
+                    </button>
                 </div>
             ),
         }
     ];
+
+    // Example handler functions
+    const handleUpdate = (row) => {
+        // Pass row or row._id as needed
+        navigate(`/superadmin/inventory/storage/update/${row._id}`, { state: { storage: row } });
+    };
+
+    const handleDelete = (row) => {
+        // Implement delete logic, possibly open a confirmation dialog
+        // Example: deleteStorage(row._id)
+        console.log('Delete storage:', row);
+    };
     const customStyles = {
         header: {
             style: {
