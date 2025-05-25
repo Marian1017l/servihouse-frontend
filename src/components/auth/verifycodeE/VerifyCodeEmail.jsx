@@ -52,7 +52,8 @@ const VerifyCodeEmail = () => {
 
                 if (response.rol) {
                     localStorage.setItem("userRole", response.rol);
-                    navigate(`/${response.rol.toLowerCase()}/profile`);
+                    window.location.reload();
+                    navigate(`/home`);
                 }
             } else {
                 setError(response.message || "Invalid verification code.");

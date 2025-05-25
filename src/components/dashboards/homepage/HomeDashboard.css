@@ -1,0 +1,50 @@
+.home-dashboard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+
+.progress-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.input-container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.input-container input {
+  padding: 10px;
+  border: none;
+  border-radius: 20px 0 0 20px;
+  width: 350px;
+  font-size: 16px;
+}
+
+.input-container button {
+  background: #74B9AD;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0 20px 20px 0;
+  color: white;
+  cursor: pointer;
+}
+
+.input-container button:hover {
+  background: rgb(107, 170, 160);
+}
+
+.arrow {
+  font-size: 18px;
+  color: #000000;
+}
