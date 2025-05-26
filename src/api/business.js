@@ -276,7 +276,7 @@ export class Business {
             };
         }
     }
-    async getManagerByUserId(userId, token) {
+    async getManagerByUserId(userId) {
         try {
             const response = await fetch(
                 `${ENV.BASE_PATH_BUSINESS_MANAGER}${ENV.API_ROUTES_BUSINESS.GETMANAGERBYUSERID}${userId}`,
@@ -284,7 +284,7 @@ export class Business {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+                        //Authorization: `Bearer ${token}`,
                     },
                 }
             );
