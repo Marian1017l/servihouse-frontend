@@ -180,3 +180,13 @@
 .storage-dashboard-create-btn:hover {
     background: #028c7e;
 }
+.btn-view-user-green {
+    background-color: #27ae60; /* Verde */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 6px;
+    cursor: pointer;
+}
+.btn-view-user-green:hover {
+    background-color: #219150;
+}

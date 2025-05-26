@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchIcon from '../../../../images/image.png';
 import updateIcon from '../../../../images/actualizar (1).png';
 import deleteIcon from '../../../../images/eliminar.png';
+import viewIcon from '../../../../images/view.png';
 import './StorageDashboard.css';
 import { inven } from '../../../../api/inventory';
 
@@ -26,19 +27,19 @@ const StorageDashboard = () => {
             selector: row => row.location.address,
         },
         {
-            name:'Capacity',
+            name: 'Capacity',
             selector: row => row.capacity,
         },
         {
-            name:'City',
+            name: 'City',
             selector: row => row.location.city,
         },
         {
-            name:'Department',
+            name: 'Department',
             selector: row => row.location.department,
         },
         {
-            name:'Actions',
+            name: 'Actions',
             cell: row => (
                 <div className='btn-actions-user'>
                     <button
@@ -51,21 +52,21 @@ const StorageDashboard = () => {
                         className='btn-delete-user'
                         onClick={() => handleDelete(row)}
                     >
-                        <img src={deleteIcon} alt="Delete" style={{ width: "25px", height: "25px" }}/>
+                        <img src={deleteIcon} alt="Delete" style={{ width: "25px", height: "25px" }} />
                     </button>
                     <button
-                        className='btn-view-user'
-                        onClick={() => navigate(`view-location/${row.id}`, { 
-                        state: { 
-                            lat: row.location.latitude, 
-                            lng: row.location.altitude, 
-                            label: row.name, 
-                            title: row.name ,
-                            obj: row,
-                        } 
+                        className='btn-view-user-green'
+                        onClick={() => navigate(`view-location/${row.id}`, {
+                            state: {
+                                lat: row.location.latitude,
+                                lng: row.location.longitude, // <-- corrige si es necesario
+                                label: row.name,
+                                title: row.name,
+                                obj: row,
+                            }
                         })}
                     >
-                        View
+                        <img src={viewIcon} alt="View" style={{ width: "25px", height: "25px" }} />
                     </button>
                 </div>
             ),
@@ -129,16 +130,16 @@ const StorageDashboard = () => {
 
     const [records, setRecords] = useState([]);
     const [allStorages, setAllStorages] = useState([]);
-    
+
     useEffect(() => {
         const fetchStorages = async () => {
-            const response = await inven.getAllStorages();    
-        if (response.status === 200) {
-            setRecords(response.data);
-            setAllStorages(response.data);
-        } else {
-            setRecords([]);
-            setAllStorages([]);
+            const response = await inven.getAllStorages();
+            if (response.status === 200) {
+                setRecords(response.data);
+                setAllStorages(response.data);
+            } else {
+                setRecords([]);
+                setAllStorages([]);
             }
         };
         fetchStorages();
@@ -146,11 +147,11 @@ const StorageDashboard = () => {
 
     const handleFilter = (event) => {
         const newData = allStorages.filter(row => {
-          return row.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
-          row.location.city.toLowerCase().includes(event.target.value.toLowerCase()) ||
-            row.location.department.toLowerCase().includes(event.target.value.toLowerCase())
-    })
-    setRecords(newData);
+            return row.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+                row.location.city.toLowerCase().includes(event.target.value.toLowerCase()) ||
+                row.location.department.toLowerCase().includes(event.target.value.toLowerCase())
+        })
+        setRecords(newData);
     }
 
 
@@ -161,7 +162,7 @@ const StorageDashboard = () => {
                     <h1 className="storage-dashboard-title">Storages</h1>
                     <div className="search-box">
                         <input type="text" placeholder="Search" onChange={handleFilter} />
-                        <span className="icon"><img src={SearchIcon} alt="Search" 
+                        <span className="icon"><img src={SearchIcon} alt="Search"
                             style={{ width: "20px", height: "20px" }} /></span>
                     </div>
                 </div>
@@ -173,7 +174,7 @@ const StorageDashboard = () => {
                 pagination
                 customStyles={customStyles}
             />
-    
+
         </div>
     );
 }
