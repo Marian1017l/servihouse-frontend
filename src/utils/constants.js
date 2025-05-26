@@ -94,6 +94,7 @@ export const ENV = {
         GETALLSTOCKTRANSACTIONS: '/get',
         GETORDERSBYDELIVERY: '/getOrderByDeliveryId/',
         GETORDERBYNUMBER: '/get/',
+        GETMANAGERBYUSERID: '/getManagerByUserId/',
     }
 }
 

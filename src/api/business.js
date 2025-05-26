@@ -142,7 +142,7 @@ export class Business {
     async getOrdersByStorageId(storageId, token) {
         try {
             const response = await fetch(
-                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETORDERSBYSTORAGE}/${storageId}`,
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETORDERSBYSTORAGE}${storageId}`,
                 {
                     method: "GET",
                     headers: {
@@ -165,7 +165,7 @@ export class Business {
     async getStorageByManagerId(managerId) {
         try {
             const response = await fetch(
-                `${ENV.BASE_PATH_BUSINESS_MANAGER}${API_ROUTES_BUSINESS.GETSTORAGEBYMANAGER}/${managerId}`,
+                `${ENV.BASE_PATH_BUSINESS_MANAGER}${API_ROUTES_BUSINESS.GETSTORAGEBYMANAGER}${managerId}`,
                 {
                     method: "GET",
                     headers: {
@@ -272,6 +272,28 @@ export class Business {
             return {
                 success: false,
                 message: "Error fetching orders by delivery id",
+                error: error.message,
+            };
+        }
+    }
+    async getManagerByUserId(userId, token) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_MANAGER}${ENV.API_ROUTES_BUSINESS.GETMANAGERBYUSERID}${userId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching manager by user id",
                 error: error.message,
             };
         }

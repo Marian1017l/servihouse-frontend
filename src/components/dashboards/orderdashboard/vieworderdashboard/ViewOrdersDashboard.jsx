@@ -96,12 +96,19 @@ const ViewOrdersDashboard = () => {
     if (role === 'SUPERADMIN') {
       response = await business.getAllOrders(token);
     } else if (role === 'MANAGER') {
-      const storageResponse = await business.getStorageByManagerId(id_user);
-      if (storageResponse.success && storageResponse.data && storageResponse.data.length > 0) {
-        const storageId = storageResponse.data[0].id;
-        response = await business.getOrdersByStorageId(storageId);
+      const managerResp = await business.getManagerByUserId(id_user);
+      if (managerResp.success && managerResp.data) {
+        const managerId = managerResp.data.id;
+        const storageResponse = await business.getStorageByManagerId(managerId);
+        if (storageResponse.success && storageResponse.data && storageResponse.data.length > 0) {
+          const storageId = storageResponse.data[0].id;
+          response = await business.getOrdersByStorageId(storageId);
+        } else {
+          console.error('No storage found for this manager');
+          return;
+        }
       } else {
-        console.error('No storage found for this manager');
+        console.error('Manager not found for this user');
         return;
       }
     } else if (role === 'DISPATCHER') {
@@ -157,6 +164,15 @@ const ViewOrdersDashboard = () => {
   }, []);
 
 
+  const handleCreateOrder = () => {
+    if (role === "SUPERADMIN") {
+      navigate("/superadmin/orders/create");
+    } else if (role === "MANAGER") {
+      navigate("/manager/orders/products");
+    } else if (role === "DISPATCHER") {
+      navigate("/dispatcher/orders/stock");
+    }
+  };
 
   return (
     <div className="orders-table-container">
@@ -166,7 +182,7 @@ const ViewOrdersDashboard = () => {
           <div className="orders-table-btn-container">
             <button
               className="orders-table-create-btn"
-              onClick={() => navigate(`/${role.toLowerCase()}/orders/create`)}
+              onClick={handleCreateOrder}
             >
               CREATE
             </button>

@@ -34,7 +34,6 @@ import OrderView from "../components/dashboards/homepage/orderView/orderView";
 import ProductManagerDashboard from "../components/dashboards/orderdashboard/productmanagerdashboard/ProductManagerDashboard";
 import ProductStockDashboard from "../components/dashboards/orderdashboard/productstockdashboard/ProductStockDashboard";
 import { ROLES } from "../utils/constants";
-import ProductManagerDashboard from "../components/dashboards/orderdashboard/productmanagerdashboard/ProductManagerDashboard";
 
 export const AppRoutes = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -118,7 +117,7 @@ export const AppRoutes = () => {
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
       //orders
       { path: "orders/create", element: <OrdersDashboard /> },
-      { path: "orders/products/:storageId", element: <ProductStorageDashboard /> },
+      { path: "orders/stock", element: <ProductStockDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
