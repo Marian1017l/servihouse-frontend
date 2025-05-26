@@ -1,7 +1,8 @@
 import axios from "axios";
+import { ENV } from "../utils";
 const API_KEY =
-  process.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
-  process.env.VITE_GOOGLE_MAPS_API_KEY;
+  import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
+  import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export const geocodeAddress = async ({ address, language = "es" }) => {
   try {
@@ -42,3 +43,29 @@ export const getPlacePredictions = async (input) => {
     throw error;
   }
 };
+
+export const updateDeliveryLocation = async (user_id, lat, alt) => {
+  const payload = {
+    user_id: user_id,
+    location:{
+      latitude: lat,
+      altitude: alt
+    }
+  }
+  const response = await axios.put(
+    `${ENV.BASE_API_MAPDELIVERIES}${ENV.API_ROUTES_GEOLOCALIZATION_MAPDELIVERIES.UPDATDELIVERYLOCATION}`,
+    payload,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+
+  const result = response.data;
+  if (!response.ok) {
+    throw new Error(result.message || "Failed to update delivery location");
+  }
+  return result;
+}
