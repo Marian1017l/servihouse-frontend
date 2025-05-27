@@ -19,6 +19,8 @@ const ProductManagerDashboard = () => {
     const [cart, setCart] = useState([]);
     const [errorMsg, setErrorMsg] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [storageId, setStorageId] = useState("");
+
 
     const navigate = useNavigate();
     const role = localStorage.getItem("userRole");
@@ -41,6 +43,7 @@ const ProductManagerDashboard = () => {
             return;
         }
         const storageId = storageResp.data[0].id;
+        setStorageId(storageId);
 
         const productsResp = await inven.getProductsByStorage(storageId);
         if (productsResp.success && productsResp.data) {
@@ -210,7 +213,12 @@ const ProductManagerDashboard = () => {
                 });
             },
             preConfirm: () => {
-                navigate(`/${role.toLowerCase()}/orders/create-order`);
+                navigate(`/${role.toLowerCase()}/orders/create-order`, {
+                    state: {
+                        products: selectedProducts,
+                        storageId: storageId
+                    }
+                });
             }
         });
     };
