@@ -186,7 +186,7 @@ const ProductStorageDashboard = () => {
             preConfirm: () => {
                 // Aquí puedes poner la navegación o lógica para continuar con el pedido
                 // Por ejemplo:
-                // navigate("/ruta/para/crear/orden", { state: { products: selectedProducts, storageId } });
+                navigate("/superadmin/orders/create-order", { state: { products: selectedProducts, storageId } });
             }
         });
     };
