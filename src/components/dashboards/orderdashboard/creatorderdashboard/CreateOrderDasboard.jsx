@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import { business } from "../../../../api/business";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import { GoogleMap, Marker } from "@react-google-maps/api";
+import { useNavigate } from "react-router-dom";
+
 
 const geocoder = window.google ? new window.google.maps.Geocoder() : null;
 
@@ -23,6 +25,7 @@ const CreateOrderDashboard = () => {
     const [latitude, setLatitude] = useState("");
     const [altitude, setAltitude] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchDepartments();
