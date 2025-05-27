@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CreateOrderDashboard.css";
 import { auth } from "../../../../api/auth";
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { business } from "../../../../api/business";
-
+import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 
 const CreateOrderDashboard = () => {
     const location = useLocation();
     const { products, storageId } = location.state || {};
     console.log('Products:', products);
     console.log('Storage ID:', storageId);
-    
+
     const [departments, setDepartments] = useState([]);
     const [cities, setCities] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -20,6 +21,8 @@ const CreateOrderDashboard = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [latitude, setLatitude] = useState("");
+    const [altitude, setAltitude] = useState("");
 
     useEffect(() => {
         fetchDepartments();
@@ -33,6 +36,25 @@ const CreateOrderDashboard = () => {
             setSelectedCity("");
         }
     }, [selectedDepartment]);
+
+
+    const { isLoaded } = useJsApiLoader({
+        googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+        libraries: ["places"]
+    });
+
+    const autocompleteRef = useRef(null)
+
+    const handlePlaceChanged = () => {
+        const place = autocompleteRef.current.getPlace();
+        if (place && place.formatted_address) {
+            setAddress(place.formatted_address);
+            if (place.geometry && place.geometry.location) {
+                setLatitude(place.geometry.location.lat());
+                setAltitude(place.geometry.location.lng());
+            }
+        }
+    };
 
     const fetchDepartments = async () => {
         try {
@@ -66,10 +88,6 @@ const CreateOrderDashboard = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Aquí puedes obtener lat/lng del mapa si lo tienes, por ahora usa ""
-        const latitude = "";
-        const altitude = "";
 
         // Armar el cuerpo del request
         const orderBody = {
@@ -108,12 +126,26 @@ const CreateOrderDashboard = () => {
                     <h2>Create new Order:</h2>
                     <div>
                         <label>Address:</label>
-                        <input
-                            type="text"
-                            placeholder="Enter address"
-                            value={address}
-                            onChange={e => setAddress(e.target.value)}
-                        />
+                        {isLoaded ? (
+                            <Autocomplete
+                                onLoad={autocomplete => (autocompleteRef.current = autocomplete)}
+                                onPlaceChanged={handlePlaceChanged}
+                            >
+                                <input
+                                    type="text"
+                                    placeholder="Enter address"
+                                    value={address}
+                                    onChange={e => setAddress(e.target.value)}
+                                />
+                            </Autocomplete>
+                        ) : (
+                            <input
+                                type="text"
+                                placeholder="Enter address"
+                                value={address}
+                                onChange={e => setAddress(e.target.value)}
+                            />
+                        )}
                     </div>
                     <div>
                         <label>Department:</label>
@@ -172,8 +204,20 @@ const CreateOrderDashboard = () => {
                     </button>
                 </form>
                 {/* Espacio para el mapa */}
-                <div className="create-order-map-placeholder">
-                    Map here
+                <div className="create-order-map-placeholder" style={{ height: 300, marginTop: 24 }}>
+                    {isLoaded && latitude && altitude ? (
+                        <GoogleMap
+                            mapContainerStyle={{ width: "100%", height: "100%" }}
+                            center={{ lat: Number(latitude), lng: Number(altitude) }}
+                            zoom={16}
+                        >
+                            <Marker position={{ lat: Number(latitude), lng: Number(altitude) }} />
+                        </GoogleMap>
+                    ) : (
+                        <div style={{ textAlign: "center", color: "#888", paddingTop: 100 }}>
+                            Introduce an address to see it on the map
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
