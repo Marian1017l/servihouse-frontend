@@ -6,6 +6,7 @@ import "../productstoragedashboard/ProductStorageDashboard.css";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
 import trashIcon from "../../../../images/contenedor-de-basura.png";
+import { useNavigate } from "react-router-dom";
 
 
 const itemsPerPage = 8;
@@ -18,6 +19,9 @@ const ProductManagerDashboard = () => {
     const [cart, setCart] = useState([]);
     const [errorMsg, setErrorMsg] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+
+    const navigate = useNavigate();
+    const role = localStorage.getItem("userRole");
 
 
     const fetchProducts = async () => {
@@ -206,11 +210,7 @@ const ProductManagerDashboard = () => {
                 });
             },
             preConfirm: () => {
-                Swal.fire({
-                    icon: "success",
-                    title: "Order confirmed!",
-                    text: "Your order has been submitted.",
-                });
+                navigate(`/${role.toLowerCase()}/orders/create-order`);
             }
         });
     };

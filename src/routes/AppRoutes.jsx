@@ -33,6 +33,7 @@ import ViewLocationDashBoard from "../components/dashboards/mapsdashboard/viewlo
 import OrderView from "../components/dashboards/homepage/orderView/orderView";
 import ProductManagerDashboard from "../components/dashboards/orderdashboard/productmanagerdashboard/ProductManagerDashboard";
 import ProductStockDashboard from "../components/dashboards/orderdashboard/productstockdashboard/ProductStockDashboard";
+import CreateOrderDashboard from "../components/dashboards/orderdashboard/creatorderdashboard/CreateOrderDasboard";
 import { ROLES } from "../utils/constants";
 import MapWithRoute from "../components/dashboards/mapsdashboard/locationwithroutedashboard/LocationWithRouteDashboard";
 
@@ -75,10 +76,11 @@ export const AppRoutes = () => {
       { path: "orders/create", element: <OrdersDashboard /> },
       { path: "orders/products/:storageId", element: <ProductStorageDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
+      { path: "orders/create-order", element: <CreateOrderDashboard /> },
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps      
-      { path: "inventory/storages/view-location/:id", element: <ViewLocationDashBoard/> },
+      { path: "inventory/storages/view-location/:id", element: <ViewLocationDashBoard /> },
     ],
     [ROLES.MANAGER]: [
       //profile
@@ -97,6 +99,8 @@ export const AppRoutes = () => {
       { path: "orders/create", element: <OrdersDashboard /> },
       { path: "orders/products", element: <ProductManagerDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
+      { path: "orders/create-order", element: <CreateOrderDashboard /> },
+
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
@@ -120,6 +124,8 @@ export const AppRoutes = () => {
       { path: "orders/create", element: <OrdersDashboard /> },
       { path: "orders/stock", element: <ProductStockDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
+      { path: "orders/create-order", element: <CreateOrderDashboard /> },
+
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps 
@@ -158,9 +164,9 @@ export const AppRoutes = () => {
         <Route path="auth/activate-account-email" element={<ActivateAccountEmail />} />
         <Route path="auth/activate-account-phone" element={<ActivateAccountPhone />} />
         <Route path="location/view-route" element={<MapWithRoute
-                                                    origin={{ lat: 4.60971, lng: -74.08175 }}
-                                                    destination={{ lat: 6.2442, lng: -75.5812 }} 
-                                                  />} />
+          origin={{ lat: 4.60971, lng: -74.08175 }}
+          destination={{ lat: 6.2442, lng: -75.5812 }}
+        />} />
       </Route>
 
       {/* Rutas privadas */}

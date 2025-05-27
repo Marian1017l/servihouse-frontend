@@ -1,0 +1,74 @@
+.create-order-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 32px;
+    background: #f6f6f6;
+    min-height: 100vh;
+}
+
+.create-order-content {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 32px;
+    display: flex;
+    gap: 32px;
+    min-width: 700px;
+}
+
+.create-order-form {
+    flex: 1;
+    min-width: 320px;
+}
+
+.create-order-form h2 {
+    margin-bottom: 24px;
+}
+
+.create-order-form > div {
+    margin-bottom: 16px;
+}
+
+.create-order-form label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.create-order-form input,
+.create-order-form select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #eaeaea;
+    margin-top: 4px;
+    font-size: 15px;
+}
+
+.create-order-btn {
+    background: #03a791;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 32px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+    margin-top: 8px;
+}
+
+.create-order-map-placeholder {
+    width: 340px;
+    height: 320px;
+    background: #f3f3f3;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bbb;
+    font-size: 20px;
+}
