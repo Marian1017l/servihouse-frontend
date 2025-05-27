@@ -59,7 +59,7 @@ const StorageDashboard = () => {
                         onClick={() => navigate(`view-location/${row.id}`, {
                             state: {
                                 lat: row.location.latitude,
-                                lng: row.location.longitude, // <-- corrige si es necesario
+                                lng: row.location.altitude, 
                                 label: row.name,
                                 title: row.name,
                                 obj: row,

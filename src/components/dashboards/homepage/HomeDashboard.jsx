@@ -34,11 +34,18 @@ const HomeDashboard = () => {
         setError('');
         setSuccess(false);
 
-        if (!/^\d{6,}$/.test(number)) {
+        if (!number) {
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'The guide number must contain at least 6 digits.',
+                title: 'Warning',
+                icon: 'warning',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                color: '#000',
+                showCloseButton: true,
+                text: 'Please enter a guide number.',
+                textColor: '#fff'
             });
             return;
         }
@@ -48,16 +55,23 @@ const HomeDashboard = () => {
             const data = response.data;
             if (response.success) {
                 setSuccess(true);
+                
                 // navigate(`order`, 
                 //     { state: { order: data.order } }
                 // );
             } else {
                 Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'The guide number no exists.',
-            });
-                setError(response.message || "Invalid guide number.");
+                    title: 'Error',
+                    icon: 'error',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    color: '#000',
+                    showCloseButton: true,
+                    text: response.message || "Invalid guide number.",
+                    textColor: '#fff'
+                });
                 return
             }
         } catch (error) {
