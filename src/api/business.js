@@ -299,6 +299,30 @@ export class Business {
         }
     }
 
+    async createOrder(orderBody, token) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${ENV.API_ROUTES_BUSINESS.CREATEAORDER}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        ...(token && { Authorization: `Bearer ${token}` }),
+                    },
+                    body: JSON.stringify(orderBody),
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
+        }
+    }
+
 }
 
 export const business = new Business();
