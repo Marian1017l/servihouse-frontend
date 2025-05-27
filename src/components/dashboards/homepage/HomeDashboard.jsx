@@ -64,12 +64,12 @@ const HomeDashboard = () => {
                 navigate(`/location/following-order/${response.order.order_number}`, {
                     state: {
                         origin: {
-                            lat: Number(response.order.final_address.latitude),
-                            lng: Number(response.order.final_address.altitude)
-                        },
-                        destination: {
                             lat: Number(response.order.delivery.location.latitude),
                             lng: Number(response.order.delivery.location.altitude)
+                        },
+                        destination: {
+                            lat: Number(response.order.final_address.latitude),
+                            lng: Number(response.order.final_address.altitude)
                         },
                         delivery: response.order.delivery,
                         order: response.order,
