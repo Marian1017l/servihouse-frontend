@@ -104,6 +104,50 @@ export class Inventory {
             throw error;
         }
     }
+
+    async getStorageStockById(storageId) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_MANAGER}${ENV.API_ROUTES_INVENTORY.GETSTOCKBYSTORAGE}${storageId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching storage stock",
+                error: error.message,
+            };
+        }
+    }
+
+    async verifyStock(productId, storageId, amount) {
+        try {
+            const url = `${ENV.BASE_PATH_BUSINESS_MANAGER}${ENV.API_ROUTES_INVENTORY.VERIFYAMOUTNTOFPRODUCT}${productId}/${storageId}/${amount}`;
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    // "Authorization": `Bearer ${token}`, 
+                },
+            });
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error verifying stock",
+                error: error.message,
+            };
+        }
+    }
 }
 
 export const inven = new Inventory();
