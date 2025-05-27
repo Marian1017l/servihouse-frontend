@@ -100,3 +100,20 @@
   max-width: 60%;
   word-break: break-word;
 }
+
+.refresh-btn {
+  background: #27ae60;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 12px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+.refresh-btn:hover {
+  background: #219150;
+}
