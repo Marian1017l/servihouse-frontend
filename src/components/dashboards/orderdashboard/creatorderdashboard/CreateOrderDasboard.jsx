@@ -132,8 +132,10 @@ const CreateOrderDashboard = () => {
                 title: "Order created successfully!",
                 text: `Order number: ${response.order_number}`,
                 confirmButtonText: "OK"
+            }).then(() => {
+                const role = (localStorage.getItem("userRole")).toLowerCase();
+                navigate(`/${role}/orders/vieworders`);
             });
-            // Aquí puedes limpiar el formulario si lo deseas
         } else {
             Swal.fire({
                 icon: "error",
