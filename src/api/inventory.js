@@ -71,12 +71,14 @@ export class Inventory {
     async getProductsByStorage(storageId) {
         const token = localStorage.getItem("token");
         const url = `${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.GETPRODUCTSBYSTORAGE}${storageId}`;
+        console.log("Fetching products by storage ID:", url);
+        
 
         return fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
+                //"Authorization": `Bearer ${token}`,
             },
         })
             .then(response => response.json())
@@ -130,7 +132,7 @@ export class Inventory {
 
     async verifyStock(productId, storageId, amount) {
         try {
-            const url = `${ENV.BASE_PATH_BUSINESS_MANAGER}${ENV.API_ROUTES_INVENTORY.VERIFYAMOUTNTOFPRODUCT}${productId}/${storageId}/${amount}`;
+            const url = `${ENV.BASE_PATH_INVEN_STOCK}${ENV.API_ROUTES_INVENTORY.VERIFYAMOUTNTOFPRODUCT}${productId}/${storageId}/${amount}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {

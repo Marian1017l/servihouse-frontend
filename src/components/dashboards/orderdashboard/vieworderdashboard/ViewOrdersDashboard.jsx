@@ -97,6 +97,8 @@ const ViewOrdersDashboard = () => {
       response = await business.getAllOrders(token);
     } else if (role === 'MANAGER') {
       const managerResp = await business.getManagerByUserId(id_user);
+      console.log('Manager Response:', managerResp);
+      
       if (managerResp.success && managerResp.data) {
         const managerId = managerResp.data.id;
         const storageResponse = await business.getStorageByManagerId(managerId);

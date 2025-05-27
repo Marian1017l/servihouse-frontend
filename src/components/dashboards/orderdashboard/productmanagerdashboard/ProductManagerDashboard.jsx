@@ -49,8 +49,8 @@ const ProductManagerDashboard = () => {
     const handleAddToCart = async (product) => {
         setErrorMsg("");
         const quantity = quantities[product.id] || 1;
-        // Verifica stock en el backend usando el nuevo método
-        const verifyResp = await inven.verifyStock(product.id, product.storage_id, quantity);
+        const storage_id = product.stock && product.stock.length > 0 ? product.stock[0].storage_id : undefined;
+        const verifyResp = await inven.verifyStock(product.id, storage_id, quantity);
         if (verifyResp.success) {
             // Agrega al carrito
             setCart(prev => {
@@ -63,7 +63,11 @@ const ProductManagerDashboard = () => {
                 return [...prev, { ...product, quantity }];
             });
         } else {
-            setErrorMsg(verifyResp.message || `Not enough stock for ${product.name}.`);
+            Swal.fire({
+                icon: "error",
+                title: "Not enough stock",
+                text: verifyResp.message || `Not enough stock for ${product.name}.`,
+            });
         }
     };
 
