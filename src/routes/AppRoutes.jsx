@@ -35,6 +35,7 @@ import ProductManagerDashboard from "../components/dashboards/orderdashboard/pro
 import ProductStockDashboard from "../components/dashboards/orderdashboard/productstockdashboard/ProductStockDashboard";
 import { ROLES } from "../utils/constants";
 import MapWithRoute from "../components/dashboards/mapsdashboard/locationwithroutedashboard/LocationWithRouteDashboard";
+import MapWithRoutePage from "../components/dashboards/mapsdashboard/locationwithroutedashboard/MapWithRoutePage";
 
 export const AppRoutes = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -157,10 +158,7 @@ export const AppRoutes = () => {
         <Route path="auth/change-password" element={<ChangePassword />} />
         <Route path="auth/activate-account-email" element={<ActivateAccountEmail />} />
         <Route path="auth/activate-account-phone" element={<ActivateAccountPhone />} />
-        <Route path="location/view-route" element={<MapWithRoute
-                                                    origin={{ lat: 4.60971, lng: -74.08175 }}
-                                                    destination={{ lat: 6.2442, lng: -75.5812 }} 
-                                                  />} />
+        <Route path="location/following-order/:order_number" element={<MapWithRoutePage />} />
       </Route>
 
       {/* Rutas privadas */}

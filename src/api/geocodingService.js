@@ -69,3 +69,18 @@ export const updateDeliveryLocation = async (user_id, lat, alt) => {
   }
   return result;
 }
+
+export const getDeliveryLocation = async (deliveryId) => {
+  const response = await axios.get(
+    `${ENV.BASE_API_MAPDELIVERIES}${ENV.API_ROUTES_GEOLOCALIZATION_MAPDELIVERIES.GETDELIVERYLOCATION}${deliveryId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+  );
+
+  const result = response.data;
+  return result;
+}

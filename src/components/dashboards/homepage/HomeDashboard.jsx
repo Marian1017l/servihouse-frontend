@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './HomeDashboard.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Entrega from '../../../images/Entrega.png';
 import { business } from '../../../api/business';
+import { setLoading } from '../../../redux/authSlice';
 import Swal from 'sweetalert2';
 
 const HomeDashboard = () => {
@@ -15,14 +16,19 @@ const HomeDashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const location = useLocation();
+
     useEffect(() => {
-        if (isAuthenticated) {
+        if (
+            isAuthenticated &&
+            location.pathname === "/"
+        ) {
             const userRole = localStorage.getItem("userRole");
             if (userRole) {
                 navigate(`/${userRole.toLowerCase()}/profile`);
             }
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated, navigate, location.pathname]);
 
     const handleNumberChange = (e) => {
         setNumber(e.target.value);
@@ -50,15 +56,26 @@ const HomeDashboard = () => {
             return;
         }
         try {
+            dispatch(setLoading(true));
             const response = await business.getOrderByNumber(number);
-            console.log(response);
-            const data = response.data;
+            dispatch(setLoading(false));
             if (response.success) {
                 setSuccess(true);
-                
-                // navigate(`order`, 
-                //     { state: { order: data.order } }
-                // );
+                navigate(`/location/following-order/${response.order.order_number}`, {
+                    state: {
+                        origin: {
+                            lat: Number(response.order.final_address.latitude),
+                            lng: Number(response.order.final_address.altitude)
+                        },
+                        destination: {
+                            lat: Number(response.order.delivery.location.latitude),
+                            lng: Number(response.order.delivery.location.altitude)
+                        },
+                        delivery: response.order.delivery,
+                        order: response.order,
+                        final_address: response.order.final_address,
+                    }
+                })
             } else {
                 Swal.fire({
                     title: 'Error',
@@ -88,9 +105,9 @@ const HomeDashboard = () => {
             <img src={Entrega} alt="Order progress" className="progress-image" />
             <div className="input-container">
                 <input type="text" placeholder="Enter your guide number" value={number}
-                        onChange={handleNumberChange}/>
+                    onChange={handleNumberChange} />
                 <button onClick={handleSubmit}>
-                <i className="arrow">&#8594;</i>
+                    <i className="arrow">&#8594;</i>
                 </button>
             </div>
         </div>

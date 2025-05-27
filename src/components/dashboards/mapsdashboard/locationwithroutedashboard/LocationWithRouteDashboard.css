@@ -1,0 +1,102 @@
+.location-dashboard-flex {
+  display: flex;
+  width: 100%;
+  height: 79.5vh;
+}
+
+.map-container {
+  width: 70%;
+  height: 79.5vh
+}
+
+.map {
+  width: 100%;
+  height: 79.5vh;
+}
+
+.info-panel {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 0 10px #eee;
+}
+
+.back-btn {
+  background: #03A791;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 5px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-self: flex-start;
+  margin-left: 1rem;
+  transition: background 0.2s;
+}
+
+.info-panel {
+  width: 30%;
+  height: 100%;
+  background: #fff;
+  padding: 32px 24px;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+}
+
+.back-btn {
+  background: #03A791;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 5px;
+  cursor: pointer;
+  display: flex;
+  align-self: flex-start;
+  margin-left: 1rem;
+  transition: background 0.2s;
+}
+.back-btn:hover {
+  background: #028F7B;
+}
+
+.order-section, .delivery-section {
+  width: 100%;
+  background: #f7fafd;
+  border-radius: 10px;
+  padding: 10px 10px;
+  box-shadow: 0 1px 4px rgba(44, 62, 80, 0.07);
+}
+
+.order-section h3, .delivery-section h3 {
+  font-size: 1.2rem;
+  color: #028F7B;
+  margin-bottom: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.order-detail, .delivery-detail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+
+.label {
+  color: #555;
+  font-weight: 500;
+}
+
+.value {
+  color: #222;
+  font-weight: 400;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-word;
+}
