@@ -7,6 +7,8 @@ import { business } from "../../../../api/business";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 
+const geocoder = window.google ? new window.google.maps.Geocoder() : null;
+
 const CreateOrderDashboard = () => {
     const location = useLocation();
     const { products, storageId } = location.state || {};
@@ -55,6 +57,22 @@ const CreateOrderDashboard = () => {
             }
         }
     };
+
+    const handleMapClick = async (e) => {
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    setLatitude(lat);
+    setAltitude(lng);
+
+    if (window.google) {
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+            if (status === "OK" && results[0]) {
+                setAddress(results[0].formatted_address);
+            }
+        });
+    }
+};
 
     const fetchDepartments = async () => {
         try {
@@ -210,6 +228,7 @@ const CreateOrderDashboard = () => {
                             mapContainerStyle={{ width: "100%", height: "100%" }}
                             center={{ lat: Number(latitude), lng: Number(altitude) }}
                             zoom={16}
+                            onClick={handleMapClick}
                         >
                             <Marker position={{ lat: Number(latitude), lng: Number(altitude) }} />
                         </GoogleMap>
