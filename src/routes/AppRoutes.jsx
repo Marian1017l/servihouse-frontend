@@ -152,6 +152,7 @@ export const AppRoutes = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/home" />} />
       {/* Rutas públicas */}
       <Route path="/" element={<LayoutDashboard />}>
         <Route path="home" element={<HomeDashboard />} />
