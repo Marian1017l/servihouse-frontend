@@ -299,7 +299,7 @@ export class Business {
         }
     }
 
-    async createOrder(orderBody, token) {
+    async createOrder(orderBody) {
         try {
             const response = await fetch(
                 `${ENV.BASE_PATH_BUSINESS_ORDERS}${ENV.API_ROUTES_BUSINESS.CREATEAORDER}`,
@@ -307,7 +307,7 @@ export class Business {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        ...(token && { Authorization: `Bearer ${token}` }),
+                        //..(token && { Authorization: `Bearer ${token}` }),
                     },
                     body: JSON.stringify(orderBody),
                 }

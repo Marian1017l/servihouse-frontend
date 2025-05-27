@@ -112,8 +112,8 @@ const CreateOrderDashboard = () => {
             address,
             city: selectedCity,
             department: selectedDepartment,
-            altitude,
-            latitude,
+            altitude: String(altitude),
+            latitude: String(latitude),
             products: products.map(p => ({
                 product_id: p.product_id || p.id || p._id,
                 storage_id: p.storage_id || storageId,
