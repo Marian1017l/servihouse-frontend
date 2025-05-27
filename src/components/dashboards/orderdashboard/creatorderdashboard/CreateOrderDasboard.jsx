@@ -12,9 +12,6 @@ const geocoder = window.google ? new window.google.maps.Geocoder() : null;
 const CreateOrderDashboard = () => {
     const location = useLocation();
     const { products, storageId } = location.state || {};
-    console.log('Products:', products);
-    console.log('Storage ID:', storageId);
-
     const [departments, setDepartments] = useState([]);
     const [cities, setCities] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -25,6 +22,7 @@ const CreateOrderDashboard = () => {
     const [phone, setPhone] = useState("");
     const [latitude, setLatitude] = useState("");
     const [altitude, setAltitude] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         fetchDepartments();
@@ -39,13 +37,12 @@ const CreateOrderDashboard = () => {
         }
     }, [selectedDepartment]);
 
-
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries: ["places"]
     });
 
-    const autocompleteRef = useRef(null)
+    const autocompleteRef = useRef(null);
 
     const handlePlaceChanged = () => {
         const place = autocompleteRef.current.getPlace();
@@ -59,27 +56,25 @@ const CreateOrderDashboard = () => {
     };
 
     const handleMapClick = async (e) => {
-    const lat = e.latLng.lat();
-    const lng = e.latLng.lng();
-    setLatitude(lat);
-    setAltitude(lng);
+        const lat = e.latLng.lat();
+        const lng = e.latLng.lng();
+        setLatitude(lat);
+        setAltitude(lng);
 
-    if (window.google) {
-        const geocoder = new window.google.maps.Geocoder();
-        geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-            if (status === "OK" && results[0]) {
-                setAddress(results[0].formatted_address);
-            }
-        });
-    }
-};
+        if (window.google) {
+            const geocoder = new window.google.maps.Geocoder();
+            geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    setAddress(results[0].formatted_address);
+                }
+            });
+        }
+    };
 
     const fetchDepartments = async () => {
         try {
             const response = await auth.getDepartments();
             if (response.success) {
-                //console.log('Departments fetched successfully:', response.data);
-
                 setDepartments(response.data);
             } else {
                 console.error('Error fetching departments:', response.message);
@@ -87,7 +82,7 @@ const CreateOrderDashboard = () => {
         } catch (error) {
             console.error('Error fetching departments:', error);
         }
-    }
+    };
 
     const fetchCities = async (department) => {
         try {
@@ -106,8 +101,10 @@ const CreateOrderDashboard = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (isSubmitting) return;
 
-        // Armar el cuerpo del request
+        setIsSubmitting(true);
+
         const orderBody = {
             address,
             city: selectedCity,
@@ -119,20 +116,31 @@ const CreateOrderDashboard = () => {
                 storage_id: p.storage_id || storageId,
                 amount: p.quantity || p.amount || 1
             })),
-            restock: false,
+            restock: true,
             phone,
             email,
         };
 
-        // Llama a tu método de business.js
-        const token = localStorage.getItem("token"); // o como manejes tu token
+        const token = localStorage.getItem("token");
         const response = await business.createOrder(orderBody, token);
 
+        setIsSubmitting(false);
+
         if (response.success) {
-            alert("Order created successfully! Order number: " + response.order_number);
-            // Opcional: redirige o limpia el formulario
+            Swal.fire({
+                icon: "success",
+                title: "Order created successfully!",
+                text: `Order number: ${response.order_number}`,
+                confirmButtonText: "OK"
+            });
+            // Aquí puedes limpiar el formulario si lo deseas
         } else {
-            alert("Error creating order: " + (response.message || "Unknown error"));
+            Swal.fire({
+                icon: "error",
+                title: "Error creating order",
+                text: response.message || "Unknown error",
+                confirmButtonText: "OK"
+            });
         }
     };
 
@@ -217,8 +225,12 @@ const CreateOrderDashboard = () => {
                             onChange={e => setPhone(e.target.value)}
                         />
                     </div>
-                    <button type="submit" className="create-order-btn">
-                        CREATE
+                    <button
+                        type="submit"
+                        className="create-order-btn"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? "Loading..." : "CREATE"}
                     </button>
                 </form>
                 {/* Espacio para el mapa */}
@@ -241,6 +253,6 @@ const CreateOrderDashboard = () => {
             </div>
         </div>
     );
-}
+};
 
 export default CreateOrderDashboard;
