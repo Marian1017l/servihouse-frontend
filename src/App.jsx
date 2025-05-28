@@ -40,15 +40,17 @@ function App() {
           }
         }, (error) => {
           console.error("Error getting location: ", error);
-        });
+        },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
       }
     };
 
     getLocation();
-    const intervalId = setInterval(getLocation, 30000); 
+    const intervalId = setInterval(getLocation, 30000);
 
     return () => clearInterval(intervalId);
-  }, []); 
+  }, []);
 
   return (
     <div className="app-container">
