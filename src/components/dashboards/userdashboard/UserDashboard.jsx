@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import { auth } from '../../../api/auth';
-import './UserDashboard.css';
+import './UserDashBoard.css';
 import SearchIcon from '../../../images/image.png';
 import updateIcon from '../../../images/actualizar (1).png';
 import deleteIcon from '../../../images/eliminar.png';

@@ -1,5 +1,5 @@
 import React,  { useEffect, useState } from 'react';
-import './ViewUser.css';
+import './viewUser.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../../api/auth';

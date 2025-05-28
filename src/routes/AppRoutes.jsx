@@ -30,7 +30,7 @@ import ViewProduct from "../components/dashboards/inventorydashboard/productdash
 import ProductStorageDashboard from "../components/dashboards/orderdashboard/productstoragedashboard/ProductStorageDashboard";
 import ViewOrdersDashboard from "../components/dashboards/orderdashboard/vieworderdashboard/ViewOrdersDashboard";
 import ViewLocationDashBoard from "../components/dashboards/mapsdashboard/viewlocationdashboard/ViewLocationDashBoard";
-import OrderView from "../components/dashboards/homepage/orderView/orderView";
+import OrderView from "../components/dashboards/homepage/orderView/OrderView";
 import ProductManagerDashboard from "../components/dashboards/orderdashboard/productmanagerdashboard/ProductManagerDashboard";
 import ProductStockDashboard from "../components/dashboards/orderdashboard/productstockdashboard/ProductStockDashboard";
 import CreateOrderDashboard from "../components/dashboards/orderdashboard/creatorderdashboard/CreateOrderDasboard";

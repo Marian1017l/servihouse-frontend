@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ViewRoleDashboard.css';
+import './viewRoleDashboard.css';
 import { Auth } from '../../../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import updateIcon from '../../../../images/actualizar (1).png';
