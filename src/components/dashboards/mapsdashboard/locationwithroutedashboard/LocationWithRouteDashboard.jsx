@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { GoogleMap, DirectionsRenderer, useJsApiLoader, Marker } from "@react-google-maps/api";
 import deliveryImage from "../../../../assets/delivery.png";
 import houseImage from "../../../../assets/house.png";
-import "./locationwithroutedashboard.css";
+import "./LocationWithRouteDashboard.css";
 import { business } from "../../../../api/business";
 
 const containerStyle = { width: "100%", height: "79.5vh" };
