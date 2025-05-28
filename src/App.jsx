@@ -6,17 +6,22 @@ import { jwtDecode } from 'jwt-decode';
 
 function App() {
   useEffect(() => {
+    const role = localStorage.getItem("userRole") || '';
     const getLocation = () => {
+      if (role !== "DELIVERY") {
+        console.log("User is not a delivery person, skipping location update.");
+        return;
+      }
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
           const oldLat = localStorage.getItem("lat");
           const oldLon = localStorage.getItem("lon");
-          if (oldLat === lat.toString() && oldLon === lon.toString()) {
-            console.log("Location has not changed.");
-            return;
-          }
+          // if (oldLat === lat.toString() && oldLon === lon.toString()) {
+          //   console.log("Location has not changed.");
+          //   return;
+          // }
           localStorage.setItem("lat", lat);
           localStorage.setItem("lon", lon);
           const token = localStorage.getItem("token");

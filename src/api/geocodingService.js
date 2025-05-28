@@ -64,9 +64,6 @@ export const updateDeliveryLocation = async (user_id, lat, alt) => {
   );
 
   const result = response.data;
-  if (!response.ok) {
-    throw new Error(result.message || "Failed to update delivery location");
-  }
   return result;
 }
 
