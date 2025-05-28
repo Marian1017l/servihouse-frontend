@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     allowedHosts: [
       'localhost',
-      '92d5-190-107-17-17.ngrok-free.app', // Agrega este host
+      'servihouse-frontend.onrender.com',
     ],
   },
 });
