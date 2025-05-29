@@ -51,7 +51,7 @@ const LayoutDashboard = () => {
             "superadmin/inventory",
             "superadmin/orders/vieworders",
             "superadmin/reports",
-            "superadmin/maps",
+            "superadmin/delivery",
         ],
         manager: [
             "manager/profile",
@@ -59,19 +59,18 @@ const LayoutDashboard = () => {
             "manager/inventory",
             "manager/orders/vieworders",
             "manager/reports",
-            "manager/maps",
+            "manager/delivery",
         ],
         delivery: [
             "delivery/profile",
             "delivery/orders/vieworders",
-            "delivery/maps",
         ],
         dispatcher: [
             "dispatcher/profile",
             "dispatcher/inventory",
             "distpatcher/orders/vieworders",
             "dispatcher/reports",
-            "dispatcher/maps",
+            "dispatcher/delivery",
         ],
     };
 
@@ -114,9 +113,9 @@ const LayoutDashboard = () => {
                 label: "Reports",
             },
             {
-                key: `${userRole.toLowerCase()}/maps`,
+                key: `${userRole.toLowerCase()}/delivery`,
                 icon: <img src={mapsIcon} alt="Maps" style={{ width: "20px", height: "20px" }} />,
-                label: "Maps",
+                label: "Delivery",
             },
         ];
         const allowedMenuKeys = roleMenuKeys[userRole.toLowerCase()];

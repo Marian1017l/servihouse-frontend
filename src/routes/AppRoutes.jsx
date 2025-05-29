@@ -35,8 +35,8 @@ import ProductManagerDashboard from "../components/dashboards/orderdashboard/pro
 import ProductStockDashboard from "../components/dashboards/orderdashboard/productstockdashboard/ProductStockDashboard";
 import CreateOrderDashboard from "../components/dashboards/orderdashboard/creatorderdashboard/CreateOrderDasboard";
 import { ROLES } from "../utils/constants";
-import MapWithRoute from "../components/dashboards/mapsdashboard/locationwithroutedashboard/LocationWithRouteDashboard";
 import MapWithRoutePage from "../components/dashboards/mapsdashboard/locationwithroutedashboard/MapWithRoutePage";
+import DeliveryDashboard from "../components/dashboards/delivery/DeliveryDashboard";
 
 export const AppRoutes = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -82,6 +82,7 @@ export const AppRoutes = () => {
       { path: "reports", element: <ReportsDashboard /> },
       //maps      
       { path: "inventory/storages/view-location/:id", element: <ViewLocationDashBoard /> },
+      { path: "delivery", element: <DeliveryDashboard />}
     ],
     [ROLES.MANAGER]: [
       //profile
@@ -104,15 +105,15 @@ export const AppRoutes = () => {
 
       //reports
       { path: "reports", element: <ReportsDashboard /> },
-      //maps 
+      //delivery
+      { path: "delivery", element: <DeliveryDashboard />} 
 
     ],
     [ROLES.DELIVERY]: [
       //profile
       { path: "profile", element: <ProfileDashboard /> },
       //orders itself
-      { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
-      //maps 
+      { path: "orders/vieworders", element: <ViewOrdersDashboard /> }
     ],
     [ROLES.DISPATCHER]: [
       //profile
@@ -129,7 +130,8 @@ export const AppRoutes = () => {
 
       //reports
       { path: "reports", element: <ReportsDashboard /> },
-      //maps 
+      //delivery
+      { path: "delivery", element: <DeliveryDashboard />}
     ],
   };
 

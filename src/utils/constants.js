@@ -99,6 +99,7 @@ export const ENV = {
         GETORDERBYNUMBER: '/get/',
         GETMANAGERBYUSERID: '/getManagerByUserId/',
         CREATEAORDER:'/create',
+        GETDELIVERIES: '/get'
     }
 }
 

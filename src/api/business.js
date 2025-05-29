@@ -139,6 +139,7 @@ export class Business {
             };
         }
     }
+
     async getOrdersByStorageId(storageId, token) {
         try {
             const response = await fetch(
@@ -276,6 +277,7 @@ export class Business {
             };
         }
     }
+
     async getManagerByUserId(userId) {
         try {
             const response = await fetch(
@@ -318,6 +320,29 @@ export class Business {
             return {
                 success: false,
                 message: "Error creating order",
+                error: error.message,
+            };
+        }
+    }
+
+    async getAllDelivery(){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_DELIVERY}${API_ROUTES_BUSINESS.GETDELIVERIES}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching orders by delivery id",
                 error: error.message,
             };
         }
