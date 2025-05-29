@@ -47,7 +47,7 @@ function App() {
     };
 
     getLocation();
-    const intervalId = setInterval(getLocation, 30000);
+    const intervalId = setInterval(getLocation, 10000);
 
     return () => clearInterval(intervalId);
   }, []);
