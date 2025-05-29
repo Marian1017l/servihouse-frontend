@@ -9,7 +9,7 @@ function App() {
     const role = localStorage.getItem("userRole") || '';
     const getLocation = () => {
       if (role !== "DELIVERY") {
-        console.log("User is not a delivery person, skipping location update.");
+        console.log(`Skipping location update for role: ${role}`);
         return;
       }
       if (navigator.geolocation) {
