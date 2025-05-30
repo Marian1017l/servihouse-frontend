@@ -9,6 +9,7 @@ import updateIcon from '../../../images/actualizar (1).png';
 import deleteIcon from '../../../images/eliminar.png';
 import Swal from 'sweetalert2';
 import { setLoading } from '../../../redux/authSlice';
+import { business } from '../../../api/business';
 
 const UserDashboard = () => {
 
@@ -55,7 +56,7 @@ const UserDashboard = () => {
                 <div className='btn-actions-user'>
                     <button className='btn-update-user'><img src={updateIcon} alt="Update"
                         style={{ width: "25px", height: "25px" }} /></button>
-                    <button className='btn-delete-user' onClick={() => handleDelete(row.id)}><img src={deleteIcon} alt="Delete"
+                    <button className='btn-delete-user' onClick={() => handleDelete(row.id, row.rol, row.email)}><img src={deleteIcon} alt="Delete"
                         style={{ width: "25px", height: "25px" }} /></button>
                 </div>
             ),
@@ -134,7 +135,7 @@ const UserDashboard = () => {
         setRecords(newData);
     }
 
-    const handleDelete = (userId) => {
+    const handleDelete = (userId, role, email) => {
         Swal.fire({
             title: 'Do you want to delete this user?',
             text: "You won't be able to revert this!",
@@ -144,8 +145,30 @@ const UserDashboard = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
+                    let responseDelivery = {
+                        status: 400
+                    }
+                    let responseManager = {
+                        succes: 400
+                    }
+                    let responseDispatcher = {
+                        succes: 400
+                    }
+                    if(role == 'DELIVERY'){
+                        responseDelivery = await business.deleteDelivery({
+                            email: email
+                        })
+                    }else if(role == 'MANAGER'){
+                        responseManager = await business.deleteManager({
+                            email: email
+                        })
+                    }else if(role == 'DISPATCHER'){
+                        responseDispatcher = await business.deleteDispatcher({
+                            email: email
+                        })
+                    }
                     const response = await auth.deleteUser(userId);
-                    if (response.status === 200) {
+                    if (response.status === 200 && (responseDelivery.status == 200 || responseManager.status == 200 || responseDispatcher.status == 200)) {
                         Swal.fire({
                             title: 'Deleted!',
                             text: 'User has been deleted.',

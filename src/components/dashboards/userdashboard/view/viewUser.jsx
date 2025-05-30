@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../../api/auth';
 import { setLoading } from '../../../../redux/authSlice'
 import Swal from 'sweetalert2';
+import { business } from '../../../../api/business';
 
 
 const ViewUser = () => {
@@ -144,15 +145,96 @@ const ViewUser = () => {
           try {
             dispatch(setLoading(true));
             const response = await auth.createUser({ ...formData});
-  
-  
             if (response.success) {
+              if(formData.rol_name == 'DELIVERY'){
+                const id = response.data.userId;
+                console.log(id);
+                const data = {
+                  user_id: id,
+                  full_name: formData.full_name,
+                  location_id: 1072,
+                  email: formData.email
+                }
+                const delivery = await business.createDelivery(data);
+                if(delivery.success){
+                  Swal.fire({
+                    title: 'User Delivery created successfully',
+                    text: 'Please check your email for the password.',
+                    icon: 'success',
+                  });
+                }else{
+                  await auth.deleteUser(id);
+                  setErrors({ general: response.message || 'Registration failed' });
+                  Swal.fire({
+                  title: 'Creation Delivery failed!',
+                  text: response.error,
+                  icon: 'error',
+                });
+                dispatch(setLoading(false));
+                return;
+                }
+              }else if(formData.rol_name == 'MANAGER'){
+                const id = response.data.userId;
+                console.log(id);
+                const data = {
+                  user_id: id,
+                  full_name: formData.full_name,
+                  email: formData.email,
+                  phone: formData.phone
+                }
+                const manager = await business.createManager(data);
+                if(manager.success){
+                  Swal.fire({
+                    title: 'User Manager created successfully',
+                    text: 'Please check your email for the password.',
+                    icon: 'success',
+                  });
+                }else{
+                  await auth.deleteUser(id);
+                  setErrors({ general: response.message || 'Registration failed' });
+                  Swal.fire({
+                  title: 'Creation Manager failed!',
+                  text: response.error,
+                  icon: 'error',
+                });
+                dispatch(setLoading(false));
+                return;
+              }
+              }else if(formData.rol_name == 'DISPATCHER'){
+              const id = response.data.userId;
+                const data = {
+                  user_id: id,
+                  full_name: formData.full_name,
+                  email: formData.email,
+                  phone: formData.phone
+                }
+                const dispatcher = await business.createDispatcher(data);
+                if(dispatcher.success){
+                  Swal.fire({
+                    title: 'User Dispatcher created successfully',
+                    text: 'Please check your email for the password.',
+                    icon: 'success',
+                  });
+                }else{
+                  await auth.deleteUser(id);
+                  setErrors({ general: response.message || 'Registration failed' });
+                  Swal.fire({
+                  title: 'Creation Dispatcher failed!',
+                  text: response.error,
+                  icon: 'error',
+                });
+                dispatch(setLoading(false));
+                return;
+              }
+            }else{
               Swal.fire({
-                title: 'User created successfully',
-                text: 'Please check your email for the password.',
-                icon: 'success',
-              });
-            } else {
+                    title: 'User created successfully',
+                    text: 'Please check your email for the password.',
+                    icon: 'success',
+                  });
+            }
+            navigate(-1);
+          } else {
               setErrors({ general: response.message || 'Creation failed' });
               dispatch(setLoading(false));
               return;

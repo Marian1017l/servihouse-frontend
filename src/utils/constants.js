@@ -45,8 +45,8 @@ export const ENV = {
         UPDATEROL: '/Update',
         DELETEROL: '/Delete',
         GETALLROLES: '/GetAll',
-        CREATEUSER: '/',
-        DELETEUSER: '/:id',
+        CREATEUSER: '',
+        DELETEUSER: '/DeleteUser/',
     },
 
     BASE_PATH_INVENTORY: SERVER_INVENTORY_IP,
@@ -65,7 +65,7 @@ export const ENV = {
         GETALLPRODUCTS: '/GetAll',
         CREATEPRODUCT: '/create',
         UPDATEPRODUCT: '/update',
-        DELETEPRODUCT: '/delete/:id',
+        DELETEPRODUCT: '/delete',
         GETPRODUCTSBYSTORAGE: '/getProductsByStorage/',
     },
 
@@ -85,21 +85,32 @@ export const ENV = {
     BASE_PATH_BUSINESS_ORDERS: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_ORDERS}`,
     BASE_PATH_STOCK_TRANSACTION: `${SERVER_BUSINESS_IP}${BUSINESS_ROUTE}${ROUTE_STOCK_TRANSACTION}`,
     API_ROUTES_BUSINESS: {
+        //LOCATION
         GETALLLOCATIONS: '/get',
+        //MANAGER
         GETMANAGERS: '/get',
+        GETMANAGERBYUSERID: '/getManagerByUserId/',
+        DELETEMANAGER: '/delete',
+        //DELIBERY
+        GETDELIVERIES: '/get',
+        CREATEDELIVERY: '/create',
+        DELETEDELIVERY: '/delete',
+        //DISPATCHER
+        DELETEDISPATCHER: '/delete',
+        //STOCK
         GETSTOCKBYDISPATCHER: '/getStock/',
+        GETALLSTOCKTRANSACTIONS: '/get',
+        //ORDERS
         GETALLORDERS: '/getAll',
         GETORDERSBYDISPATCHER: '/getOrdersByDispatcherId/',
         GETORDERSBYSTORAGE: '/getOrdersByStorageId/',
-        GETSTORAGEBYMANAGER: '/getStorageByManagerId/',
         GETORDERWITHDELIVERY: '/getOrderWithDelivery/',
-        GETSTORAGEBYORDERID: '/getOrderStorage/',
-        GETALLSTOCKTRANSACTIONS: '/get',
         GETORDERSBYDELIVERY: '/getOrderByDeliveryId/',
         GETORDERBYNUMBER: '/get/',
-        GETMANAGERBYUSERID: '/getManagerByUserId/',
         CREATEAORDER:'/create',
-        GETDELIVERIES: '/get'
+        //STORAGE
+        GETSTORAGEBYMANAGER: '/getStorageByManagerId/',
+        GETSTORAGEBYORDERID: '/getOrderStorage/',
     }
 }
 

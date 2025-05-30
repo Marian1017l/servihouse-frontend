@@ -3,6 +3,7 @@ import './Register.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../api/auth';
+import { business } from '../../../api/business';
 import { setLoading } from '../../../redux/authSlice'
 import Swal from 'sweetalert2';
 
@@ -99,28 +100,50 @@ const SignUp = () => {
         try {
           dispatch(setLoading(true));
           const response = await auth.signUp({ ...formData, email_notification });
-
-
           if (response.success) {
-            localStorage.setItem('pendingUser', formData.user_name);
-
-            Swal.fire({
-              title: 'Registration Successful',
-              text: 'Please check your email or phone for the verification code.',
-              icon: 'success',
-            });
+            const id = response.data.userId;
+            console.log(id);
+            const data = {
+              user_id: id,
+              full_name: formData.full_name,
+              location_id: 1072,
+              email: formData.email
+            }
+            const delivery = await business.createDelivery(data);
+            if (delivery.success){
+              console.log("Llegue a crear el delivery");
+              localStorage.setItem('pendingUser', formData.user_name);
+              Swal.fire({
+                title: 'Registration Successful',
+                text: 'Please check your email or phone for the verification code.',
+                icon: 'success',
+              });
+            }else{
+              await auth.deleteUser(id);
+              setErrors({ general: response.message || 'Registration failed' });
+              Swal.fire({
+                title: 'Registration failed!',
+                text: response.error,
+                icon: 'error',
+              });
+              dispatch(setLoading(false));
+              return;
+            }
           } else {
             setErrors({ general: response.message || 'Registration failed' });
+              Swal.fire({
+                title: 'Registration failed',
+                text: response.error,
+                icon: 'error',
+              });
             dispatch(setLoading(false));
             return;
           }
-
           if (email_notification) {
             navigate('/auth/activate-account-email');
           } else {
-            navigate('/auth/verify-code-phone');
+            navigate('/auth/activate-account-email');
           }
-
         } catch (error) {
           console.error('Error during sign up:', error);
           setErrors({ general: 'An error occurred. Please try again.' });

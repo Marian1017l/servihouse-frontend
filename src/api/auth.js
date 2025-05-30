@@ -90,14 +90,14 @@ export class Auth {
                 body: JSON.stringify(payload),
             });
 
-            console.log("Payload sent:", payload);
-            console.log("Response object:", response);
-
             const result = await response.json();
             return result;
         } catch (error) {
-            console.error("Error in signUp:", error);
-            throw error;
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
         }
     }
 
@@ -276,18 +276,17 @@ export class Auth {
     }
     async createUser(data) {
         try {
+            const token = localStorage.getItem("token");
             const { user_name, full_name, email, phone, rol_name, department, city } = data;
             const payload = { user_name, full_name, email, phone, rol_name, department, city };
             const response = await fetch(`${ENV.BASE_API_AUTH_USERS}${API_ROUTES.CREATEUSER}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
             });
-
-            console.log("Payload sent:", payload);
-            console.log("Response object:", response);
 
             const result = await response.json();
             return result;
@@ -299,7 +298,7 @@ export class Auth {
 
     deleteUser = async (userId) => {
         try {
-            const url = `${ENV.BASE_API_AUTH_USERS}${API_ROUTES.DELETEUSER}/${userId}`;
+            const url = `${ENV.BASE_API_AUTH_USERS}${API_ROUTES.DELETEUSER}${userId}`;
             const response = await fetch(url, {
                 method: 'DELETE',
                 headers: {

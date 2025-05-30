@@ -348,6 +348,144 @@ export class Business {
         }
     }
 
+    async createDelivery(deliveryBody){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_DELIVERY}${ENV.API_ROUTES_BUSINESS.CREATEAORDER}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(deliveryBody),
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
+        }
+    }
+
+    async createManager(managerBody){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_MANAGER}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(managerBody),
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
+        }
+    }
+
+    async createDispatcher(dispatcherBody){
+       try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_DISPATCHER}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(dispatcherBody),
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
+        } 
+    }
+
+    async deleteDelivery(deliveryBody){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_DELIVERY}${ENV.API_ROUTES_BUSINESS.DELETEDELIVERY}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(deliveryBody),
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
+        } 
+    }
+
+    async deleteManager(managerBody){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_MANAGER}${ENV.API_ROUTES_BUSINESS.DELETEMANAGER}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(managerBody),
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
+        } 
+    }
+
+    async deleteDispatcher(dispatcherBody){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_DISPATCHER}${ENV.API_ROUTES_BUSINESS.DELETEDISPATCHER}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(dispatcherBody),
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error creating order",
+                error: error.message,
+            };
+        } 
+    }
+
 }
 
 export const business = new Business();
