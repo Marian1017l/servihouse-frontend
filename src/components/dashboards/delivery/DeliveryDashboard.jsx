@@ -5,10 +5,8 @@ import SearchIcon from '../../../images/image.png';
 import updateIcon from '../../../images/actualizar (1).png';
 import viewIcon from '../../../images/view.png';
 import { business } from '../../../api/business';
-import { Drawer, Typography } from 'antd';
+import { Drawer } from 'antd';
 import './DeliveryDashboard.css'
-import Swal from 'sweetalert2';
-const { Title, Text } = Typography;
 const defaultCenter = {
   lat: 4.6097,
   lng: -74.0817,
@@ -203,10 +201,10 @@ const DeliveryDashboard = () => {
                 ) : loadError ? (
                     <div>Error al cargar el mapa</div>
                 ) : (
-                <div className="location-dashboard-flex">
-                    <div className="map-container">
+                <div className="location-delivery-dashboard-flex">
+                    <div className="map-delivery-container">
                     <GoogleMap
-                        mapContainerClassName="map"
+                        mapContainerClassName="map-delivery"
                         center={center}
                         zoom={zoom}
                         onLoad={onLoad}

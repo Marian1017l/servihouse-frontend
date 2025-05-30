@@ -101,17 +101,17 @@
     background-color: #219150;
 }
 
-.location-dashboard-flex {
+.location-delivery-dashboard-flex {
   display: flex;
   flex-direction: column;
 }
 
-.map-container {
+.map-delivery-container {
   height: 400px;
   width: 100%;
 }
 
-.map {
+.map-delivery {
   height: 100%;
   width: 100%;
 }
