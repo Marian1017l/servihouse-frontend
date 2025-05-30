@@ -49,15 +49,15 @@ export class Business {
         }
     }
 
-    async getStockByDispatcher(dispatcherId, token) {
+    async getStockByDispatcher(dispatcherId) {
         try {
             const response = await fetch(
-                `${ENV.BASE_PATH_STOCK}${API_ROUTES_BUSINESS.GETSTOCKBYDISPATCHER}${dispatcherId}`,
+                `${ENV.BASE_PATH_BUSINESS_DISPATCHER}${API_ROUTES_BUSINESS.GETSTOCKBYDISPATCHER}${dispatcherId}`,
                 {
                     method: "GET",
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                        //Authorization: `Bearer ${token}`,
                     },
                 }
             );
@@ -120,7 +120,7 @@ export class Business {
     async getOrdersByDispatcherId(dispatcherId, token) {
         try {
             const response = await fetch(
-                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETORDERSBYDISPATCHER}/${dispatcherId}`,
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${API_ROUTES_BUSINESS.GETORDERSBYDISPATCHER}${dispatcherId}`,
                 {
                     method: "GET",
                     headers: {
@@ -486,6 +486,51 @@ export class Business {
         } 
     }
 
+    async getDeliveryByUserId(userId){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_DELIVERY}${ENV.API_ROUTES_BUSINESS.GETDELIVERYBYUSERID}${userId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching manager by user id",
+                error: error.message,
+            };
+        }
+    }
+
+    async getDispatcherByUserId(userId){
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_DISPATCHER}${ENV.API_ROUTES_BUSINESS.GETDISPATCHERBYUSERID}${userId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error fetching manager by user id",
+                error: error.message,
+            };
+        }
+    }
 }
 
 export const business = new Business();

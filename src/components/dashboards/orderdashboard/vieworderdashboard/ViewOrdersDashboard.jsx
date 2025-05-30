@@ -4,47 +4,54 @@ import { useDispatch } from 'react-redux'
 import { business } from '../../../../api/business'
 import { auth } from '../../../../api/auth'
 import './ViewOrdersDashboard.css'
+import PickedIcon from '../../../../images/recoger.png'
 import DataTable from 'react-data-table-component'
 
 
 
-export const orderColumns = [
+export const orderColumns = (role) => [
   {
     name: 'Order Number',
-    selector: row => row.order_number, sortable: true
+    selector: row => row.order.order_number, 
+    sortable: true
   },
   {
     name: 'State',
-    selector: row => row.state, sortable: true
-  },
-  {
-    name: 'Delivery ID',
-    selector: row => row.delivery_id
+    selector: row => row.order.state, 
+    sortable: true
   },
   {
     name: 'Delivery Name',
-    selector: row => row.deliveryFullName || '', sortable: true
-  },
-  {
-    name: 'Storage ID',
-    selector: row => row.storageId || '', sortable: true
+    selector: row => row.order.delivery,
+    sortable: true
   },
   {
     name: 'Storage Name',
-    selector: row => row.storageName || '', sortable: true
+    selector: row => row.order.storage, 
+    sortable: true
   },
   {
-    name: 'Final Address ID',
-    selector: row => row.final_address_id
+    name: 'Email Client',
+    selector: row => row.order.email || 'Not assigned', sortable: true
   },
   {
-    name: 'Created At',
-    selector: row => new Date(row.createdAt).toLocaleString(), sortable: true
+    name: 'Phone Client',
+    selector: row => row.order.phone || 'Not assigned', sortable: true
   },
   {
-    name: 'Updated At',
-    selector: row => new Date(row.updatedAt).toLocaleString(), sortable: true
+    name: 'Last Address',
+    selector: row => row.location?.address || 'Not Localizated'
   },
+  {
+    name: 'Actions',
+    cell: row => (
+      role === 'DELIVERY' ? (
+        <button className='btn-update-user'>
+          <img src={PickedIcon} alt="Picked" className="icon-img" />
+        </button>
+      ) : null
+    )
+  }
 ];
 
 const customStyles = {
@@ -95,6 +102,8 @@ const ViewOrdersDashboard = () => {
     let response;
     if (role === 'SUPERADMIN') {
       response = await business.getAllOrders(token);
+      console.log(response);
+      
     } else if (role === 'MANAGER') {
       const managerResp = await business.getManagerByUserId(id_user);
       console.log('Manager Response:', managerResp);
@@ -114,65 +123,51 @@ const ViewOrdersDashboard = () => {
         return;
       }
     } else if (role === 'DISPATCHER') {
-      response = await business.getOrdersByDispatcherId(id_user);
-    }
-    else if (role === 'DELIVERY') {
-      response = await business.getOrdersByDeliveryId(id_user);
+      const dispatcherResp = await business.getDispatcherByUserId(id_user);
+      if(dispatcherResp.success && dispatcherResp.data){
+        const dispatcher_id = dispatcherResp.data.id
+        response = await business.getOrdersByDispatcherId(dispatcher_id);
+      }
+    } else if (role === 'DELIVERY') {
+      const deliveryResp = await business.getDeliveryByUserId(id_user);
+      if(deliveryResp.success && deliveryResp.data){
+        const delivery_id = deliveryResp.data.id;
+        response = await business.getOrdersByDeliveryId(delivery_id);
+      }
     }
 
     if (response && response.success) {
-      // Para cada orden, trae delivery y storage y agrega los datos al objeto
-      const ordersWithDetails = await Promise.all(
-        response.orders.map(async (order) => {
-          // Traer delivery
-          let deliveryFullName = '';
-          try {
-            const deliveryResp = await business.getOrderWithDelivery(order.id);
-            if (deliveryResp.success && deliveryResp.order && deliveryResp.order.delivery) {
-              deliveryFullName = deliveryResp.order.delivery.full_name;
-            }
-          } catch (e) { }
-
-          // Traer storage
-          let storageId = '';
-          let storageName = '';
-          try {
-            const storageResp = await business.getOrderStorage(order.id);
-            if (
-              storageResp.success &&
-              storageResp.storages &&
-              storageResp.storages.length > 0
-            ) {
-              storageId = storageResp.storages[0].id;
-              storageName = storageResp.storages[0].name;
-            }
-          } catch (e) { }
-
-          return {
-            ...order,
-            deliveryFullName,
-            storageId,
-            storageName,
-          };
-        })
-      );
-      setOrders(ordersWithDetails);
+      setOrders(response.orders);
     } else if (response) {
       console.error(response.message);
     }
   };
+
   useEffect(() => {
     fetchOrders();
   }, []);
 
+  const storageId = async () =>{
+   if (role === "DISPATCHER") {
+      const dispatcher = await business.getDispatcherByUserId(id_user);
+      if(dispatcher.success && dispatcher.data){
+        const dispt_id = dispatcher.data.id;
+        const stock = await business.getStockByDispatcher(dispt_id);
+        if(dispatcher.success && dispatcher.data){
+          return stock.data.storage_id;
+        }
+      }
+    }
+    return null;
+  }
 
   const handleCreateOrder = () => {
     if (role === "SUPERADMIN") {
       navigate("/superadmin/orders/create");
     } else if (role === "MANAGER") {
-      navigate("/manager/orders/products");
+      navigate(`/manager/orders/products`);
     } else if (role === "DISPATCHER") {
-      navigate("/dispatcher/orders/stock");
+      navigate(`/dispatcher/orders/stock`);
     }
   };
 
@@ -180,7 +175,7 @@ const ViewOrdersDashboard = () => {
     <div className="orders-table-container">
       <div className="orders-table-header">
         <h2 className="orders-table-title">Orders </h2>
-        {role.toLowerCase() !== "DELIVERY" && (
+        {role !== "DELIVERY" && (
           <div className="orders-table-btn-container">
             <button
               className="orders-table-create-btn"
@@ -192,7 +187,7 @@ const ViewOrdersDashboard = () => {
         )}
       </div>
       <DataTable
-        columns={orderColumns}
+        columns={orderColumns(role)}
         data={orders}
         pagination
         customStyles={customStyles}

@@ -95,8 +95,10 @@ export const ENV = {
         GETDELIVERIES: '/get',
         CREATEDELIVERY: '/create',
         DELETEDELIVERY: '/delete',
+        GETDELIVERYBYUSERID: '/getUserId/',
         //DISPATCHER
         DELETEDISPATCHER: '/delete',
+        GETDISPATCHERBYUSERID: '/getByUserId/',
         //STOCK
         GETSTOCKBYDISPATCHER: '/getStock/',
         GETALLSTOCKTRANSACTIONS: '/get',

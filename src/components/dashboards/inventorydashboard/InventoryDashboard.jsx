@@ -17,17 +17,17 @@ const modules = [
     },
     {
         title: "Managers",
-        desc: "Here, you can upload your csv document for the manager:",
+        desc: "Here, you can see all the manager:",
         viewPath: "/inventory/managers"
     },
     {
         title: "Providers",
-        desc: "Here, you can upload your csv document for the providers:",
+        desc: "Here, you can see all the providers:",
         viewPath: "/inventory/providers"
     },
     {
         title: "Stock Transaction",
-        desc: "Here, you can upload your CSV document for stock transactions:",
+        desc: "Here, you can see all stock transactions:",
         viewPath: "/inventory/stock-transactions"
     },
 ];
