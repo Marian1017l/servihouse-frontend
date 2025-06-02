@@ -3,6 +3,7 @@ import "./StockTransactionDashboard.css";
 import { business } from "../../../../api/business";
 import { useNavigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import { setLoading } from "../../../../redux/authSlice";
 
 
 const stockTransactionColumns = [
@@ -58,17 +59,31 @@ const StockTransaction = () => {
     const [transactions, setTransactions] = useState([]);
     const userRole = localStorage.getItem("userRole");
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchTransactions();
     }, []);
 
     const fetchTransactions = async () => {
+        setLoading(true);
         const response = await business.getAllStockTransactions();
+        setLoading(false);
         if (response.success) {
             setTransactions(response.data);
         }
     };
+
+    if (loading) {
+        return (
+            <div className="orders-loading-overlay">
+                <div className="orders-spinner">
+                    <div className="orders-spinner-circle"></div>
+                    <div className="orders-spinner-text">Loading</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="stock-transaction-dashboard-container">
