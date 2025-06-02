@@ -8,12 +8,12 @@ import { business } from '../../../api/business';
 import { Drawer } from 'antd';
 import './DeliveryDashboard.css'
 const defaultCenter = {
-  lat: 4.6097,
-  lng: -74.0817,
+    lat: 4.6097,
+    lng: -74.0817,
 };
 const API_KEY =
-  import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
-  import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+    import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const DeliveryDashboard = () => {
     const columns = [
         {
@@ -37,7 +37,7 @@ const DeliveryDashboard = () => {
             selector: row => row.location.department
         },
         {
-            name:'Last Logged',
+            name: 'Last Logged',
             selector: row => {
                 const date = new Date(row.location.updatedAt);
                 return date.toLocaleString(); // Ejemplo: "29/5/2024, 2:23:45 p. m."
@@ -50,8 +50,8 @@ const DeliveryDashboard = () => {
                     <button className='btn-update-delivery'><img src={updateIcon} alt="Update"
                         style={{ width: "25px", height: "25px" }} /></button>
                     <button className='btn-view-delivery-green'
-                     onClick={() => showMapDrawer(row)}><img src={viewIcon} alt="View" 
-                        style={{ width: "25px", height: "25px" }} /></button>
+                        onClick={() => showMapDrawer(row)}><img src={viewIcon} alt="View"
+                            style={{ width: "25px", height: "25px" }} /></button>
                 </div>
             ),
         }
@@ -101,6 +101,7 @@ const DeliveryDashboard = () => {
         },
     };
 
+    const [loading, setLoading] = useState(false);
     const [records, setRecords] = useState([]);
     const [allDeliveries, setAllDeliveries] = useState([]);
     const [drawerVisible, setDrawerVisible] = useState(false);
@@ -109,8 +110,8 @@ const DeliveryDashboard = () => {
     const [center, setCenter] = useState(defaultCenter)
     const zoom = 15;
     const onLoad = map => {
-    // Puedes hacer algo cuando el mapa cargue
-    console.log('Mapa cargado');
+        // Puedes hacer algo cuando el mapa cargue
+        console.log('Mapa cargado');
     };
     const markers = (location && !isNaN(location.lat) && !isNaN(location.lng)) ? [{
         id: 1,
@@ -124,7 +125,9 @@ const DeliveryDashboard = () => {
     useEffect(() => {
         const fetchDelivery = async () => {
 
+            setLoading(true);
             const response = await business.getAllDelivery();
+            setLoading(false);
 
             if (response.status === 200) {
                 setRecords(response.data);
@@ -148,25 +151,36 @@ const DeliveryDashboard = () => {
     const showMapDrawer = (delivery) => {
         const newLocation = {
             lat: delivery.location.latitude,
-            lng: delivery.location.altitude, 
+            lng: delivery.location.altitude,
             label: delivery.full_name,
             title: delivery.full_name,
             obj: delivery
         }
         setdeliverySelected(delivery);
         setLocation(newLocation)
-        const actualcenter = newLocation.lat && newLocation.lng ? 
-            { lat: Number(newLocation.lat), lng: Number(newLocation.lng) } 
+        const actualcenter = newLocation.lat && newLocation.lng ?
+            { lat: Number(newLocation.lat), lng: Number(newLocation.lng) }
             : defaultCenter;
         setCenter(actualcenter)
         // Limpiar selección anterior
         setDrawerVisible(true);
-  };
+    };
     const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: API_KEY,
-    libraries: ["places"],
-  });
+        googleMapsApiKey: API_KEY,
+        libraries: ["places"],
+    });
 
+    if (loading) {
+        return (
+            <div className="orders-loading-overlay">
+                <div className="orders-spinner">
+                    <div className="orders-spinner-circle"></div>
+                    <div className="orders-spinner-text">Loading</div>
+                </div>
+            </div>
+        );
+    }
+    
     return (
         <div>
             <div className="delivery-dashboard-content">
@@ -188,40 +202,40 @@ const DeliveryDashboard = () => {
                 />
             </div>
             <Drawer
-            title= {`Last location of ${deliverySelected ? deliverySelected.full_name : ''}`}
-            width={650}
-            placement="right"
-            onClose={() => {
-                setDrawerVisible(false);
-            }}
-            open={drawerVisible}
+                title={`Last location of ${deliverySelected ? deliverySelected.full_name : ''}`}
+                width={650}
+                placement="right"
+                onClose={() => {
+                    setDrawerVisible(false);
+                }}
+                open={drawerVisible}
             >
                 {!isLoaded ? (
                     <div>Cargando mapa...</div>
                 ) : loadError ? (
                     <div>Error al cargar el mapa</div>
                 ) : (
-                <div className="location-delivery-dashboard-flex">
-                    <div className="map-delivery-container">
-                    <GoogleMap
-                        mapContainerClassName="map-delivery"
-                        center={center}
-                        zoom={zoom}
-                        onLoad={onLoad}
-                    >
-                        {markers.map(marker => (
-                        <Marker
-                            key={marker.id}
-                            position={marker.position}
-                            title={marker.title}
-                            label={marker.label}
-                        />
-                ))}
-                {children}
-              </GoogleMap>
-            </div>
-          </div>
-        )}
+                    <div className="location-delivery-dashboard-flex">
+                        <div className="map-delivery-container">
+                            <GoogleMap
+                                mapContainerClassName="map-delivery"
+                                center={center}
+                                zoom={zoom}
+                                onLoad={onLoad}
+                            >
+                                {markers.map(marker => (
+                                    <Marker
+                                        key={marker.id}
+                                        position={marker.position}
+                                        title={marker.title}
+                                        label={marker.label}
+                                    />
+                                ))}
+                                {children}
+                            </GoogleMap>
+                        </div>
+                    </div>
+                )}
             </Drawer>
         </div>
     );
