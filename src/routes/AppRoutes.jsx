@@ -81,7 +81,7 @@ export const AppRoutes = () => {
       //reports
       { path: "reports", element: <ReportsDashboard /> },
       //maps      
-      { path: "inventory/storages/view-location/:id", element: <ViewLocationDashBoard /> },
+      { path: "inventory/storages/view-location", element: <ViewLocationDashBoard /> },
       { path: "delivery", element: <DeliveryDashboard />}
     ],
     [ROLES.MANAGER]: [
@@ -97,6 +97,7 @@ export const AppRoutes = () => {
       { path: "inventory/storages", element: <StorageDashboard /> },
       { path: "inventory/providers", element: <ProviderDashboard /> },
       { path: "inventory/stock-transactions", element: <StockTransactionDashboard /> },
+      { path: "inventory/storages/view-location", element: <ViewLocationDashBoard /> },
       //orders
       { path: "orders/create", element: <OrdersDashboard /> },
       { path: "orders/products", element: <ProductManagerDashboard /> },
@@ -127,6 +128,7 @@ export const AppRoutes = () => {
       { path: "orders/stock", element: <ProductStockDashboard /> },
       { path: "orders/vieworders", element: <ViewOrdersDashboard /> },
       { path: "orders/create-order", element: <CreateOrderDashboard /> },
+      { path: "inventory/storages/view-location", element: <ViewLocationDashBoard /> },
 
       //reports
       { path: "reports", element: <ReportsDashboard /> },

@@ -39,7 +39,7 @@ const StorageDashboard = () => {
             selector: row => row.location.department,
         },
         {
-            name: 'Actions',
+            name: 'Actions', 
             cell: row => (
                 <div className='btn-actions-user'>
                     <button
@@ -54,23 +54,12 @@ const StorageDashboard = () => {
                     >
                         <img src={deleteIcon} alt="Delete" style={{ width: "25px", height: "25px" }} />
                     </button>
-                    <button
-                        className='btn-view-user-green'
-                        onClick={() => navigate(`view-location/${row.id}`, {
-                            state: {
-                                lat: row.location.latitude,
-                                lng: row.location.altitude, 
-                                label: row.name,
-                                title: row.name,
-                                obj: row,
-                            }
-                        })}
-                    >
-                        <img src={viewIcon} alt="View" style={{ width: "25px", height: "25px" }} />
-                    </button>
+                    
                 </div>
             ),
-        }
+        },
+        
+        
     ];
 
     // Example handler functions
@@ -133,6 +122,19 @@ const StorageDashboard = () => {
 
     useEffect(() => {
         const fetchStorages = async () => {
+            const role = localStorage.getItem("userRole") || '';
+            if (role === 'MANAGER'){
+                const userId = localStorage.getItem("token") ? JSON.parse(atob(localStorage.getItem("token").split('.')[1])).id : null;
+                const response = await inven.getStoragesByManager(userId);
+                if (response.status === 200) {
+                    setRecords(response.data);
+                    setAllStorages(response.data);
+                } else {
+                    setRecords([]);
+                    setAllStorages([]);
+                }
+                return;
+            }
             const response = await inven.getAllStorages();
             if (response.status === 200) {
                 setRecords(response.data);
@@ -156,27 +158,56 @@ const StorageDashboard = () => {
 
 
     return (
-        <div className="storage-dashboard-content">
-            <div className="storage-dashboard-header">
-                <div className="storage-dashboard-header-left">
-                    <h1 className="storage-dashboard-title">Storages</h1>
-                    <div className="search-box">
-                        <input type="text" placeholder="Search" onChange={handleFilter} />
-                        <span className="icon"><img src={SearchIcon} alt="Search"
-                            style={{ width: "20px", height: "20px" }} /></span>
-                    </div>
+    <div className="storage-dashboard-content">
+        <div className="storage-dashboard-header">
+            <div className="storage-dashboard-header-left">
+                <h1 className="storage-dashboard-title">Storages</h1>
+                <div className="search-box">
+                    <input type="text" placeholder="Search" onChange={handleFilter} />
+                    <span className="icon">
+                        <img src={SearchIcon} alt="Search" style={{ width: "20px", height: "20px" }} />
+                    </span>
                 </div>
-                <button className="storage-dashboard-create-btn" onClick={() => navigate("/superadmin/inventory")}>BACK</button>
             </div>
-            <DataTable
-                columns={columns}
-                data={records}
-                pagination
-                customStyles={customStyles}
-            />
-
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <button
+                    className="storage-dashboard-create-btn"
+                    onClick={() => navigate("/superadmin/inventory")}
+                >
+                    BACK
+                </button>
+                {allStorages.length > 0 && (
+                    <button
+                        className="btn-view-all-green"
+                        style={{
+                            background: "#03a791",
+                            border: "none",
+                            borderRadius: "8px",
+                            padding: "6px 10px",
+                            cursor: "pointer",
+                            display: "inline-flex",
+                            alignItems: "center"
+                        }}
+                        title="Ver todos en el mapa"
+                        onClick={() => navigate(`view-location`, {
+                            state: {
+                                objs: allStorages,
+                            }
+                        })}
+                    >
+                        <img src={viewIcon} alt="View All" style={{ width: "22px", height: "22px" }} />
+                    </button>
+                )}
+            </div>
         </div>
-    );
+        <DataTable
+            columns={columns}
+            data={records}
+            pagination
+            customStyles={customStyles}
+        />
+    </div>
+);
 }
 
 export default StorageDashboard;

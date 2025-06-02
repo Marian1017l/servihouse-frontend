@@ -1,95 +1,91 @@
-import React from "react";
+import React, { use, useState } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
-import { useParams, useLocation } from "react-router-dom";
 import "./ViewLocationDashBoard.css";
+import { useLocation } from "react-router-dom";
 
 const defaultCenter = {
   lat: 4.6097,
   lng: -74.0817,
 };
 
-
 const API_KEY =
   import.meta.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
   import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-const ViewLocationDashBoard = ({ 
-  zoom = 7,
-  children,
-  onLoad,
+const ViewLocationDashBoard = ({
+  props,
+  onLoad = null,
+  zoom = 12,
+  children = null,
 
 }) => {
   const location = useLocation();
-  const { lat, lng, label, title, obj} = location.state || {};
-   const isStorage = location.pathname.includes("storages");
-    const isOrder = location.pathname.includes("orders");
-  const center = lat && lng ? { lat: Number(lat), lng: Number(lng) } : defaultCenter;
-   const markers = [
-    {
-      id: 1,
-      position: center,
-      title,
-      label,
-    },
-  ];
+  const objs = location.state?.objs || [];
+  const [selectedObj, setSelectedObj] = useState(objs[0] || null);
+
+  const center =
+    objs.length > 0
+      ? {
+          lat: Number(objs[0].location.latitude),
+          lng: Number(objs[0].location.altitude),
+        }
+      : defaultCenter;
+
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
     libraries: ["places"],
   });
+
   if (loadError) {
     return <div>Error al cargar Google Maps</div>;
   }
   if (!isLoaded) {
     return <div>Cargando mapa...</div>;
   }
-  return (
-  <div className="location-dashboard-flex">
-    <div className="info-panel">
-      <button className="back-btn" onClick={() => window.history.back()}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M15 18l-6-6 6-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>      
-      {isStorage && (
-        <>
-          <h2>Storage: {title}</h2>
-          <p>Latitude: {lat}</p>
-          <p>Longitude: {lng}</p>
-          <p>Address: {obj.location.address}</p>
-          <p>City: {obj.location.city}</p>
-          <p>Department: {obj.location.department}</p>
-          <p>Manager: {obj.manager.full_name}</p>
-          <p>Capacity: {obj.capacity}</p>
-        </>
-      )}
-      {isOrder && (
-        <>
-          <h2>Order Information</h2>
-          {/* Aquí puedes poner info de la orden */}
-        </>
-      )}
+
+   return (
+    <div className="location-dashboard-flex">
+      <div className="info-panel">
+        <button className="back-btn" onClick={() => window.history.back()}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18l-6-6 6-6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <div>
+          <h2>Show All Locations For Manager</h2>
+          <p>
+            In this map, you can see all the locations of the warehouses
+            registered in the system. Click on a marker to see more details about
+          </p>
+          <p>
+            Total Locations: {objs.length}
+          </p>
+        </div>
+      </div>
+      <div className="map-container">
+        <GoogleMap
+          mapContainerClassName="map"
+          center={center}
+          zoom={zoom}
+          onLoad={onLoad}
+        >
+          {objs.map((obj, index) => (
+            <Marker
+              key={obj.id || index}
+              position={{
+                lat: Number(obj.location.latitude),
+                lng: Number(obj.location.altitude),
+              }}
+              title={obj.title || obj.location.address}
+              label={obj.name}
+              onClick={() => setSelectedObj(obj)}
+            />
+          ))}
+          {children}
+        </GoogleMap>
+      </div>
     </div>
-    <div className="map-container">
-      <GoogleMap
-        mapContainerClassName="map"
-        center={center}
-        zoom={zoom}
-        onLoad={onLoad}
-      >
-        {markers.map((marker, index) => (
-          <Marker
-            key={marker.id}
-            position={marker.position}
-            title={marker.title}
-            label={marker.label}
-          />
-        ))}
-        {children}
-      </GoogleMap>
-    </div>
-    
-  </div>
-);
+  );
 };
 
 export default React.memo(ViewLocationDashBoard);

@@ -91,6 +91,7 @@ export const ENV = {
         GETMANAGERS: '/get',
         GETMANAGERBYUSERID: '/getManagerByUserId/',
         DELETEMANAGER: '/delete',
+        GETSTORAGEBYMANAGER: '/getStorageByManagerId/',
         //DELIBERY
         GETDELIVERIES: '/get',
         CREATEDELIVERY: '/create',

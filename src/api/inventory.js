@@ -25,6 +25,26 @@ export class Inventory {
         }
     }
 
+    async getStoragesByManager(managerId) {
+        try {
+            const url = `${ENV.BASE_PATH_BUSINESS_MANAGER}${ENV.API_ROUTES_BUSINESS.GETSTORAGEBYMANAGER}${managerId}`;
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                    // "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error("Error fetching storages by manager:", error);
+            throw error;
+        }
+    }
+
+
     async getAllProducts() {
         try {
             // const token = localStorage.getItem("token");
@@ -72,7 +92,7 @@ export class Inventory {
         const token = localStorage.getItem("token");
         const url = `${ENV.BASE_PATH_INVEN_PRODUCT}${ENV.API_ROUTES_INVENTORY_PRODUCT.GETPRODUCTSBYSTORAGE}${storageId}`;
         console.log("Fetching products by storage ID:", url);
-        
+
 
         return fetch(url, {
             method: "GET",
