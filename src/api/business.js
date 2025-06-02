@@ -496,6 +496,7 @@ export class Business {
                         "Content-Type": "application/json",
                         //Authorization: `Bearer ${token}`,
                     },
+                    
                 }
             );
             const result = await response.json();
@@ -527,6 +528,30 @@ export class Business {
             return {
                 success: false,
                 message: "Error fetching manager by user id",
+                error: error.message,
+            };
+        }
+    }
+
+    async updateOrderState(orderId, state) {
+        try {
+            const response = await fetch(
+                `${ENV.BASE_PATH_BUSINESS_ORDERS}${ENV.API_ROUTES_BUSINESS.UPDATEORDERSTATE}${orderId}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        //Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ state }),
+                },
+            );
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            return {
+                success: false,
+                message: "Error updating order state",
                 error: error.message,
             };
         }

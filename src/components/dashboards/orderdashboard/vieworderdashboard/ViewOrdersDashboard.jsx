@@ -6,6 +6,8 @@ import { auth } from '../../../../api/auth'
 import './ViewOrdersDashboard.css'
 import PickedIcon from '../../../../images/recoger.png'
 import DataTable from 'react-data-table-component'
+import Swal from 'sweetalert2'
+import { setLoading } from '../../../../redux/authSlice'
 
 
 
@@ -46,7 +48,31 @@ export const orderColumns = (role) => [
     name: 'Actions',
     cell: row => (
       role === 'DELIVERY' ? (
-        <button className='btn-update-user'>
+        <button className='btn-update-user' onClick={async () => {
+          const orderId = row.order.id;
+          const newState = row.order.state === 'PENDING' ? 'PICKED UP' : 'DELIVERED';
+          setLoading(true);
+          const response = await business.updateOrderState(orderId, newState);
+          setLoading(false);
+          if (response.success) {
+            Swal.fire({
+              title: 'Order Updated',
+              text: `Order state changed to ${newState}`,
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              window.location.reload();
+            });
+          }
+          else{
+            Swal.fire({
+              title: 'Error',
+              text: response.error || 'Failed to update order state',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        }}>
           <img src={PickedIcon} alt="Picked" className="icon-img" />
         </button>
       ) : null
@@ -92,6 +118,7 @@ const customStyles = {
 
 const ViewOrdersDashboard = () => {
   const [orders, setOrders] = useState([])
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token');
   const role = auth.getRoleFromToken(token);
   const id_user = auth.getUserIdFromToken(token);
@@ -100,6 +127,7 @@ const ViewOrdersDashboard = () => {
 
   const fetchOrders = async () => {
     let response;
+    setLoading(true);
     if (role === 'SUPERADMIN') {
       response = await business.getAllOrders(token);
       console.log(response);
@@ -135,12 +163,17 @@ const ViewOrdersDashboard = () => {
         response = await business.getOrdersByDeliveryId(delivery_id);
       }
     }
-
     if (response && response.success) {
-      setOrders(response.orders);
+      if (role === 'DELIVERY') {
+        const filteredOrders = response.orders.filter(order => order.order.state === 'PENDING' || order.order.state === 'PICKED UP');
+        setOrders(filteredOrders);
+      } else {
+        setOrders(response.orders);
+      }
     } else if (response) {
       console.error(response.message);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -170,6 +203,18 @@ const ViewOrdersDashboard = () => {
       navigate(`/dispatcher/orders/stock`);
     }
   };
+
+  if (loading) {
+  return (
+    <div className="orders-loading-overlay">
+      <div className="orders-spinner">
+        <div className="orders-spinner-circle"></div>
+        <div className="orders-spinner-text">Loading</div>
+      </div>
+    </div>
+  );
+}
+
 
   return (
     <div className="orders-table-container">

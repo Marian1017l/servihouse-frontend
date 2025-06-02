@@ -111,6 +111,7 @@ export const ENV = {
         GETORDERSBYDELIVERY: '/getOrderByDeliveryId/',
         GETORDERBYNUMBER: '/get/',
         CREATEAORDER:'/create',
+        UPDATEORDERSTATE: '/changeOrderState/',
         //STORAGE
         GETSTORAGEBYMANAGER: '/getStorageByManagerId/',
         GETSTORAGEBYORDERID: '/getOrderStorage/',
