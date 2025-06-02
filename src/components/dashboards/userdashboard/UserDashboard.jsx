@@ -109,11 +109,14 @@ const UserDashboard = () => {
 
     const [records, setRecords] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchUsers = async () => {
 
+            setLoading(true);
             const response = await auth.getAllUsers();
+            setLoading(false);
 
             if (response.status === 200) {
 
@@ -154,15 +157,15 @@ const UserDashboard = () => {
                     let responseDispatcher = {
                         succes: 400
                     }
-                    if(role == 'DELIVERY'){
+                    if (role == 'DELIVERY') {
                         responseDelivery = await business.deleteDelivery({
                             email: email
                         })
-                    }else if(role == 'MANAGER'){
+                    } else if (role == 'MANAGER') {
                         responseManager = await business.deleteManager({
                             email: email
                         })
-                    }else if(role == 'DISPATCHER'){
+                    } else if (role == 'DISPATCHER') {
                         responseDispatcher = await business.deleteDispatcher({
                             email: email
                         })
@@ -189,6 +192,16 @@ const UserDashboard = () => {
         });
     }
 
+    if (loading) {
+        return (
+            <div className="orders-loading-overlay">
+                <div className="orders-spinner">
+                    <div className="orders-spinner-circle"></div>
+                    <div className="orders-spinner-text">Loading</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="user-dashboard-content">
