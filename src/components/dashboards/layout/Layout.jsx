@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Header.css";
 import "./Footer.css";
 import "./Sidebar.css"
@@ -158,6 +158,19 @@ const LayoutDashboard = () => {
                         <ul className="nav-links">
                             {isAuthenticated ? (
                                 <li>
+                                    {userRole && (
+                                        <span
+                                            style={{
+                                                fontWeight: "bold",
+                                                color: "#fff",
+                                                textTransform: "capitalize",
+                                                fontSize: "15px",
+                                                marginRight: "10px"
+                                            }}
+                                        >
+                                            {userRole.toLowerCase()}
+                                        </span>
+                                    )}
                                     <button
                                         className="logout-button"
                                         onClick={handleLogOut}
