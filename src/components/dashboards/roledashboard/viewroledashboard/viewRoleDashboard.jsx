@@ -9,6 +9,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const ViewRoleDashboard = () => {
     const [roles, setRoles] = useState([]);
+    const [loading, setLoading] = useState(false);
     const auth = new Auth();
     const navigate = useNavigate();
     const MySwal = withReactContent(Swal);
@@ -19,7 +20,9 @@ const ViewRoleDashboard = () => {
 
     const fetchRoles = async () => {
         try {
+            setLoading(true);
             const res = await auth.getAllRoles();
+            setLoading(false);
             if (res.success) {
                 setRoles(res.data);
             }
@@ -90,6 +93,16 @@ const ViewRoleDashboard = () => {
         });
     };
 
+    if (loading) {
+        return (
+            <div className="orders-loading-overlay">
+                <div className="orders-spinner">
+                    <div className="orders-spinner-circle"></div>
+                    <div className="orders-spinner-text">Loading</div>
+                </div>
+            </div>
+        );
+    }
     return (
         <div className="roles-dashboard-content">
             <div className="roles-dashboard-header">

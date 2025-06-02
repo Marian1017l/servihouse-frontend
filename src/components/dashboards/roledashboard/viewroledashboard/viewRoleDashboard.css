@@ -45,7 +45,7 @@
 
 .roles-dashboard-table th {
     background: #F6F6F6;
-    color : #03a791;
+    color: #03a791;
     padding: 12px 8px;
     font-weight: 600;
     text-align: left;
@@ -56,7 +56,7 @@
     padding: 12px 8px;
 }
 
-.btn-actions-role{
+.btn-actions-role {
     display: flex;
     align-items: center;
     gap: 2px;
@@ -75,7 +75,7 @@
 }
 
 .btn-delete-role {
-    background:rgb(2, 124, 108);
+    background: rgb(2, 124, 108);
     border: none;
     border-radius: 5px;
     padding: 5px 6px;
@@ -83,10 +83,11 @@
 }
 
 .btn-delete-role:hover {
-    background:rgb(1, 104, 94);
+    background: rgb(1, 104, 94);
 }
 
-.swal2-input, .swal2-textarea {
+.swal2-input,
+.swal2-textarea {
     border-radius: 6px !important;
     border: 1px solid #03a791 !important;
     padding: 10px 14px !important;
@@ -94,10 +95,11 @@
     background: #E8E7E7 !important;
     color: #222 !important;
     margin-bottom: 10px !important;
-    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important; 
+    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important;
 }
 
-.swal2-confirm, .swal2-cancel {
+.swal2-confirm,
+.swal2-cancel {
     background: #03a791 !important;
     color: #fff !important;
     border: none !important;
@@ -107,11 +109,58 @@
     font-weight: 600 !important;
     margin: 0 8px !important;
     box-shadow: none !important;
-    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important; 
+    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important;
 }
 
-.swal2-confirm:hover, .swal2-cancel:hover {
+.swal2-confirm:hover,
+.swal2-cancel:hover {
     background: #028c7e !important;
     color: #fff !important;
-    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important; 
+    font-family: 'Segoe UI', 'Arial', 'sans-serif' !important;
+}
+
+en el css esto .orders-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(3, 167, 145, 0.08);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orders-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orders-spinner-circle {
+    border: 8px solid #e0f7f4;
+    border-top: 8px solid #03a791;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 18px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.orders-spinner-text {
+    color: #03a791;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
