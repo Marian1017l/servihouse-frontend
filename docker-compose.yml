@@ -4,3 +4,9 @@ services:
     ports:
       - "4000:80"
     restart: always
+    networks:
+      - gateway-network
+
+networks:
+  gateway-network:
+    external: true
