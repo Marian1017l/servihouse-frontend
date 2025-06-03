@@ -37,7 +37,7 @@ const ProductManagerDashboard = () => {
         }
         const managerId = managerResp.data.id;
 
-        const storageResp = await business.getStorageByManagerId(managerId);
+        const storageResp = await business.getStorageByManagerId(userId);
         if (!storageResp.success || !storageResp.data || storageResp.data.length === 0) {
             setLoading(false);
             return;

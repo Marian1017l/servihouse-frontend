@@ -8,18 +8,19 @@ import PickedIcon from '../../../../images/recoger.png'
 import DataTable from 'react-data-table-component'
 import Swal from 'sweetalert2'
 import { setLoading } from '../../../../redux/authSlice'
+import { report } from '../../../../api/report'
 
 
 
 export const orderColumns = (role) => [
   {
     name: 'Order Number',
-    selector: row => row.order.order_number, 
+    selector: row => row.order.order_number,
     sortable: true
   },
   {
     name: 'State',
-    selector: row => row.order.state, 
+    selector: row => row.order.state,
     sortable: true
   },
   {
@@ -29,7 +30,7 @@ export const orderColumns = (role) => [
   },
   {
     name: 'Storage Name',
-    selector: row => row.order.storage, 
+    selector: row => row.order.storage,
     sortable: true
   },
   {
@@ -64,7 +65,7 @@ export const orderColumns = (role) => [
               window.location.reload();
             });
           }
-          else{
+          else {
             Swal.fire({
               title: 'Error',
               text: response.error || 'Failed to update order state',
@@ -131,14 +132,14 @@ const ViewOrdersDashboard = () => {
     if (role === 'SUPERADMIN') {
       response = await business.getAllOrders(token);
       console.log(response);
-      
+
     } else if (role === 'MANAGER') {
       const managerResp = await business.getManagerByUserId(id_user);
       console.log('Manager Response:', managerResp);
-      
+
       if (managerResp.success && managerResp.data) {
         const managerId = managerResp.data.id;
-        const storageResponse = await business.getStorageByManagerId(managerId);
+        const storageResponse = await business.getStorageByManagerId(id_user);
         if (storageResponse.success && storageResponse.data && storageResponse.data.length > 0) {
           const storageId = storageResponse.data[0].id;
           response = await business.getOrdersByStorageId(storageId);
@@ -152,13 +153,13 @@ const ViewOrdersDashboard = () => {
       }
     } else if (role === 'DISPATCHER') {
       const dispatcherResp = await business.getDispatcherByUserId(id_user);
-      if(dispatcherResp.success && dispatcherResp.data){
+      if (dispatcherResp.success && dispatcherResp.data) {
         const dispatcher_id = dispatcherResp.data.id
         response = await business.getOrdersByDispatcherId(dispatcher_id);
       }
     } else if (role === 'DELIVERY') {
       const deliveryResp = await business.getDeliveryByUserId(id_user);
-      if(deliveryResp.success && deliveryResp.data){
+      if (deliveryResp.success && deliveryResp.data) {
         const delivery_id = deliveryResp.data.id;
         response = await business.getOrdersByDeliveryId(delivery_id);
       }
@@ -180,13 +181,13 @@ const ViewOrdersDashboard = () => {
     fetchOrders();
   }, []);
 
-  const storageId = async () =>{
-   if (role === "DISPATCHER") {
+  const storageId = async () => {
+    if (role === "DISPATCHER") {
       const dispatcher = await business.getDispatcherByUserId(id_user);
-      if(dispatcher.success && dispatcher.data){
+      if (dispatcher.success && dispatcher.data) {
         const dispt_id = dispatcher.data.id;
         const stock = await business.getStockByDispatcher(dispt_id);
-        if(dispatcher.success && dispatcher.data){
+        if (dispatcher.success && dispatcher.data) {
           return stock.data.storage_id;
         }
       }
@@ -205,15 +206,15 @@ const ViewOrdersDashboard = () => {
   };
 
   if (loading) {
-  return (
-    <div className="orders-loading-overlay">
-      <div className="orders-spinner">
-        <div className="orders-spinner-circle"></div>
-        <div className="orders-spinner-text">Loading</div>
+    return (
+      <div className="orders-loading-overlay">
+        <div className="orders-spinner">
+          <div className="orders-spinner-circle"></div>
+          <div className="orders-spinner-text">Loading</div>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
 
   return (
@@ -227,6 +228,68 @@ const ViewOrdersDashboard = () => {
               onClick={handleCreateOrder}
             >
               CREATE
+            </button>
+            <button
+              className="orders-table-create-btn"
+              title="Report"
+              onClick={async () => {
+                const result = await Swal.fire({
+  title: 'You are about to download a report of all delivered orders',
+  text: 'In which format would you like it?',
+  icon: 'info',
+  showCancelButton: true,
+  confirmButtonText: 'PDF',
+  cancelButtonText: 'Excel',
+  showDenyButton: true,
+  denyButtonText: 'Cancel',
+  reverseButtons: true,
+  customClass: {
+    confirmButton: 'swal2-confirm-green',
+    cancelButton: 'swal2-cancel-blue'
+  }
+});
+                if (result.isConfirmed) {
+                  setLoading(true);
+                  const response = await report.getDeliveredOrdersReport('pdf');
+                  setLoading(false);
+                  if (response.success) {
+                    Swal.fire({
+                      title: 'Report Downloaded',
+                      text: 'The report has been downloaded successfully.',
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                    });
+                  } else {
+                    Swal.fire({
+                      title: 'Error',
+                      text: response.error || 'Failed to download report',
+                      icon: 'error',
+                      confirmButtonText: 'OK'
+                    });
+                  }
+} else if (result.dismiss === Swal.DismissReason.cancel) {
+                  setLoading(true);
+                  const response = await report.getDeliveredOrdersReport('excel');
+                  setLoading(false);
+                  if (response.success) {
+                    Swal.fire({
+                      title: 'Report Downloaded',
+                      text: 'The report has been downloaded successfully.',
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                    });
+                  } else {
+                    Swal.fire({
+                      title: 'Error',
+                      text: response.error || 'Failed to download report',
+                      icon: 'error',
+                      confirmButtonText: 'OK'
+                    });
+                  }
+                }
+              }}
+            >
+              <span role="img" aria-label="report">📄</span>
             </button>
           </div>
         )}

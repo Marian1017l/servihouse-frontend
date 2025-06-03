@@ -20,6 +20,8 @@ const ROUTE_STOCK_TRANSACTION = import.meta.env.VITE_STOCK_TRANSACTIONS_ROUTE;
 const SERVER_GEOLOCALIZATION_IP = import.meta.env.VITE_DEV_GEO_URL;
 const ROUTE_GEOLOCALIZATION = import.meta.env.VITE_GEOLOCALIZATION_ROUTE;
 const ROUTE_MAPDELIVERIES = import.meta.env.VITE_MAPDELIVERIES_ROUTE;
+const SERVER_REPORTS_IP = import.meta.env.VITE_DEV_REPORTS_URL;
+const ROUTE_REPORTS = import.meta.env.VITE_REPORTS_ROUTE;
 
 export const ENV = {
     BASE_PATH: SERVER_IP,
@@ -115,7 +117,13 @@ export const ENV = {
         //STORAGE
         GETSTORAGEBYMANAGER: '/getStorageByManagerId/',
         GETSTORAGEBYORDERID: '/getOrderStorage/',
+    },
+    BASE_PATH_REPORTS: `${SERVER_REPORTS_IP}${ROUTE_REPORTS}`,
+    API_ROUTES_REPORTS: {
+        GETDELIVEREDORDERSBYDELIVERY: '/delivery/',
+        GETDELIVEREDORDERS : '/all/',
     }
+
 }
 
 export const ROLES = {

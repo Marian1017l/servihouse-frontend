@@ -3,10 +3,13 @@ import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import DataTable from 'react-data-table-component';
 import SearchIcon from '../../../images/image.png';
 import updateIcon from '../../../images/actualizar (1).png';
+import reportIcon from '../../../images/report.png';
 import viewIcon from '../../../images/view.png';
 import { business } from '../../../api/business';
 import { Drawer } from 'antd';
+import { report } from '../../../api/report';
 import './DeliveryDashboard.css'
+import Swal from 'sweetalert2';
 const defaultCenter = {
     lat: 4.6097,
     lng: -74.0817,
@@ -47,11 +50,71 @@ const DeliveryDashboard = () => {
             name: 'Actions',
             cell: row => (
                 <div className='btn-actions-delivery'>
-                    <button className='btn-update-delivery'><img src={updateIcon} alt="Update"
-                        style={{ width: "25px", height: "25px" }} /></button>
-                    <button className='btn-view-delivery-green'
-                        onClick={() => showMapDrawer(row)}><img src={viewIcon} alt="View"
-                            style={{ width: "25px", height: "25px" }} /></button>
+                    <button className='btn-update-delivery'>
+                        <img src={updateIcon} alt="Update" style={{ width: "25px", height: "25px" }} />
+                    </button>
+                    <button className='btn-view-delivery-green' onClick={() => showMapDrawer(row)}>
+                        <img src={viewIcon} alt="View" style={{ width: "25px", height: "25px" }} />
+                    </button>
+                    <button
+                        className='btn-report-delivery'
+                        onClick={async () => {
+                            const result = await Swal.fire({
+                                title: 'You are about to generate a report of orders delivered today by this delivery person.',
+                                text: 'In which format would you like it?',
+                                icon: 'info',
+                                showCancelButton: true,
+                                confirmButtonText: 'PDF',
+                                cancelButtonText: 'Excel',
+                                showDenyButton: true,
+                                denyButtonText: 'Cancel',
+                                reverseButtons: true,
+                                customClass: {
+                                    confirmButton: 'swal2-confirm-green',
+                                    cancelButton: 'swal2-cancel-blue'
+                                }
+                            });
+
+                            let response;
+                            setLoading(true);
+                            if (result.isConfirmed) {
+                                // PDF
+                                response = await report.getOrdersDeliveredByDelivery(row.id, 'pdf');
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                // Excel
+                                response = await report.getOrdersDeliveredByDelivery(row.id, 'excel');
+                            } else {
+                                setLoading(false);
+                                return; // Cancelled
+                            }
+                            setLoading(false);
+
+                            if (response.success) {
+                                Swal.fire({
+                                    title: 'Report Generated',
+                                    text: `The report has been generated successfully.`,
+                                    icon: 'success',
+                                    confirmButtonText: 'OK',
+                                    customClass: {
+                                        confirmButton: 'swal2-confirm-green'
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: response.message || 'Failed to generate report',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK',
+                                    customClass: {
+                                        confirmButton: 'swal2-confirm-red'
+                                    }
+                                });
+                            }
+                        }}
+                        title="Generate report"
+                    >
+                        <img src={reportIcon} alt="Report" style={{ width: "25px", height: "25px" }} />
+                    </button>
                 </div>
             ),
         }
@@ -110,7 +173,6 @@ const DeliveryDashboard = () => {
     const [center, setCenter] = useState(defaultCenter)
     const zoom = 15;
     const onLoad = map => {
-        // Puedes hacer algo cuando el mapa cargue
         console.log('Mapa cargado');
     };
     const markers = (location && !isNaN(location.lat) && !isNaN(location.lng)) ? [{
@@ -119,7 +181,7 @@ const DeliveryDashboard = () => {
         title: location.title,
         label: location.label,
     }] : [];
-    const children = null; // Puedes agregar overlays personalizados si necesitas
+    const children = null;
 
 
     useEffect(() => {
@@ -180,7 +242,7 @@ const DeliveryDashboard = () => {
             </div>
         );
     }
-    
+
     return (
         <div>
             <div className="delivery-dashboard-content">
